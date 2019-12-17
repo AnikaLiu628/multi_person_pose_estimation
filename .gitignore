@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__
+models/*
+!models/.gitkeep 
+data/*
+!data/.gitkeep 
+

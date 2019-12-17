@@ -1,0 +1,157 @@
+import math
+from functools import partial
+
+import numpy as np
+import tensorflow as tf
+
+from preprocesses import Preprocess
+
+
+class Pipeline():
+    def __init__(self, ):
+        pass
+
+    def _parse_function(self, example_proto):
+        features = {'image/height': tf.FixedLenFeature((), tf.int64),
+                    'image/width': tf.FixedLenFeature((), tf.int64),
+                    'image/filename': tf.FixedLenFeature((), tf.string),
+                    'image/encoded': tf.FixedLenFeature((), tf.string),
+                    'image/format': tf.FixedLenFeature((), tf.string),
+                    'image/human/bbox/xmin': tf.VarLenFeature(tf.int64),
+                    'image/human/bbox/xmax': tf.VarLenFeature(tf.int64),
+                    'image/human/bbox/ymin': tf.VarLenFeature(tf.int64),
+                    'image/human/bbox/ymax': tf.VarLenFeature(tf.int64),
+                    'image/human/num_keypoints': tf.VarLenFeature(tf.int64),
+                    'image/human/keypoints/x': tf.VarLenFeature(tf.int64),
+                    'image/human/keypoints/y': tf.VarLenFeature(tf.int64),
+                    'image/human/keypoints/v': tf.VarLenFeature(tf.int64)}
+        parsed_features = tf.parse_single_example(example_proto, features)
+        parsed_features['image/decoded'] = tf.image.decode_image(
+            parsed_features['image/encoded'],
+            channels=3
+        )
+        parsed_features['image/human'] = parsed_features['image/decoded']
+        bx1 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/xmin'], default_value=0)
+        parsed_features['image/human/bbox/xmin'] = bx1
+        bx2 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/xmax'], default_value=0)
+        parsed_features['image/human/bbox/xmax'] = bx2
+        by1 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/ymin'], default_value=0)
+        parsed_features['image/human/bbox/ymin'] = by1
+        by2 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/ymax'], default_value=0)
+        parsed_features['image/human/bbox/ymax'] = by2
+
+        xs = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/x'], default_value=0)
+        parsed_features['image/human/keypoints/x'] = xs
+        ys = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/y'], default_value=0)
+        parsed_features['image/human/keypoints/y'] = ys
+        vs = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/v'], default_value=0)
+        parsed_features['image/human/keypoints/v'] = vs
+        nkp = tf.sparse_tensor_to_dense(parsed_features['image/human/num_keypoints'], default_value=0)
+        parsed_features['image/human/num_keypoints'] = nkp
+        return parsed_features
+
+
+    def _preprocess_function(self, parsed_features, params={}):
+        
+        w = 640
+        h = 360
+        if not params['do_data_augmentation']:
+            parsed_features['image/human'] = parsed_features['image/decoded']
+        else:
+            parsed_features['image/human'] = parsed_features['image/human']
+        parsed_features['image/human'].set_shape([None, None, 3])
+
+        parsed_features['image/human/resized'] = tf.image.resize_images(parsed_features['image/human'], [h, w], method=tf.image.ResizeMethod.AREA)
+        parsed_features['image/human/resized'].set_shape([h, w, 3])
+        image = tf.cast(parsed_features['image/human/resized'], tf.uint8)
+        bgr_avg = tf.constant(127.5)
+        parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
+
+        return image, \
+               parsed_features['image/human/resized_and_subtract_mean'], \
+               parsed_features['image/pif/intensities'], \
+               parsed_features['image/pif/fields_reg'], \
+               parsed_features['image/pif/fields_scale'], \
+               parsed_features['image/paf/intensities'], \
+               parsed_features['image/paf/fields_reg1'], \
+               parsed_features['image/paf/fields_reg2'], \
+               parsed_features['image/filename']
+
+
+    def data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
+        pp = Preprocess()
+        tfd = tf.data
+        dataset = tfd.Dataset.from_tensor_slices(tf_record_path)
+        dataset = dataset.interleave(
+            lambda x: tfd.TFRecordDataset(x).repeat().shuffle(buffer_size=300),
+            cycle_length=params['dataset_split_num']
+        )
+        dataset = dataset.map(
+            self._parse_function,
+            num_parallel_calls=num_parallel_calls
+        )
+        if params['do_data_augmentation']:
+            dataset = dataset.map(
+                pp.data_augmentation,
+                num_parallel_calls=num_parallel_calls
+            )
+
+        dataset = dataset.map(
+            pp.pyfn_interface_input,
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.map(
+            lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
+                pp.head_encoder,
+                [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
+                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32])
+            ),
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.map(
+            pp.pyfn_interface_output,
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.map(
+            partial(self._preprocess_function, params=params),
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
+        iterator = dataset.make_one_shot_iterator()
+        img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
+        return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
+
+
+    def eval_data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
+        pp = Preprocess()
+        tfd = tf.data
+        dataset = tfd.TFRecordDataset(tf_record_path)
+        dataset = dataset.map(
+            self._parse_function,
+            num_parallel_calls=num_parallel_calls
+        )
+
+        dataset = dataset.map(
+            pp.pyfn_interface_input,
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.map(
+            lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
+                pp.head_encoder,
+                [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
+                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32])
+            ),
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.map(
+            pp.pyfn_interface_output,
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.map(
+            partial(self._preprocess_function, params=params),
+            num_parallel_calls=num_parallel_calls
+        )
+        dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
+        iterator = dataset.make_one_shot_iterator()
+        img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
+        return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
