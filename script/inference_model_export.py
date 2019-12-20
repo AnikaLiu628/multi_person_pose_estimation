@@ -92,7 +92,7 @@ def save_and_frezze_model(sess,
     input_arrays = input_nodes.split(',')
     output_arrays = output_nodes.split(',')
 
-    converter = tf.contrib.lite.TFLiteConverter.from_frozen_graph(
+    converter = tf.lite.TFLiteConverter.from_frozen_graph(
         output_graph_path, input_arrays, output_arrays)
     tflite_model = converter.convert()
     with open(tflite_path, 'wb') as tflite_f:
