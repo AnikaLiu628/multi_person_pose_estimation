@@ -22,10 +22,10 @@ class MobilePifPaf():
             if is_training:
                 x = tf.nn.dropout(x, keep_prob=0.5)
             out_features = n_fields * 4
-            class_net = tf.layers.conv2d(x, out_features, kernel_size, name='cls')
+            classes_x = tf.layers.conv2d(x, out_features, kernel_size, name='cls')
 
             if not is_training:
-                classes_x = tf.keras.activations.sigmoid(class_net)
+                classes_x = tf.keras.activations.sigmoid(classes_x)
 
             classes_x = tf.nn.depth_to_space(classes_x, 2)
             classes_x = tf.transpose(classes_x, [0, 3, 1, 2], name='class_out')

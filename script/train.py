@@ -158,9 +158,13 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
 
         bce_masks = pif_intensities_l[:, :-1] + pif_intensities_l[:, -1:] > 0.5
         bce_masks.set_shape(pif_shape)
-        ce_loss = tf.losses.sigmoid_cross_entropy(
+        # ce_loss = tf.losses.sigmoid_cross_entropy(
+        #     tf.boolean_mask(pif_intensities_l[:, :-1, :, :], bce_masks),
+        #     tf.boolean_mask(pif_intensities_x, bce_masks))
+
+        mse_loss = tf.losses.mean_squared_error(
             tf.boolean_mask(pif_intensities_l[:, :-1, :, :], bce_masks),
-            tf.boolean_mask(pif_intensities_x, bce_masks))
+            tf.boolean_mask(pif_intensities_x[:, :, :-1, :], bce_masks))
 
         # ce_loss = tf.nn.weighted_cross_entropy_with_logits(
         #     tf.boolean_mask(pif_intensities_l[:, :-1, :, :], bce_masks),
@@ -171,42 +175,46 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         reg_masks = pif_intensities_l[:, :-1] > 0.5
         reg_masks.set_shape(pif_shape)
         reg_losses = laplace_loss(
-            tf.boolean_mask(pif_regression_x[:, :, 0, :, :], reg_masks),
-            tf.boolean_mask(pif_regression_x[:, :, 1, :, :], reg_masks),
-            tf.boolean_mask(pif_spreads_x, reg_masks),
+            tf.boolean_mask(pif_regression_x[:, :, 0, :-1, :], reg_masks),
+            tf.boolean_mask(pif_regression_x[:, :, 1, :-1, :], reg_masks),
+            tf.boolean_mask(pif_spreads_x[:, :, :-1, :], reg_masks),
             tf.boolean_mask(pif_regression_l[:, :, 0, :, :], reg_masks),
             tf.boolean_mask(pif_regression_l[:, :, 1, :, :], reg_masks)) \
                 / 1000.0 / batch_size
 
         scale_losses = tf.losses.absolute_difference(
             tf.boolean_mask(pif_scale_l, reg_masks),
-            tf.boolean_mask(pif_scale_x, reg_masks)) / 1000.0
+            tf.boolean_mask(pif_scale_x[:, :, :-1, :], reg_masks)) / 1000.0
 
         paf_bce_masks = paf_intensities_l[:, :-1] + paf_intensities_l[:, -1:] > 0.5
         paf_bce_masks.set_shape(paf_shape)
-        paf_ce_loss = tf.losses.sigmoid_cross_entropy(
+        # paf_ce_loss = tf.losses.sigmoid_cross_entropy(
+        #     tf.boolean_mask(paf_intensities_l[:, :-1, :, :], paf_bce_masks),
+        #     tf.boolean_mask(paf_intensities_x, paf_bce_masks))
+
+        paf_mse_loss = tf.losses.mean_squared_error(
             tf.boolean_mask(paf_intensities_l[:, :-1, :, :], paf_bce_masks),
-            tf.boolean_mask(paf_intensities_x, paf_bce_masks))
+            tf.boolean_mask(paf_intensities_x[:, :, :-1, :], paf_bce_masks))
 
         paf_reg_masks = paf_intensities_l[:, :-1] > 0.5
         paf_reg_masks.set_shape(paf_shape)
         paf_reg1_losses = laplace_loss(
-            tf.boolean_mask(paf_regression1_x[:, :, 0, :, :], paf_reg_masks),
-            tf.boolean_mask(paf_regression1_x[:, :, 1, :, :], paf_reg_masks),
-            tf.boolean_mask(paf_spreads1_x, paf_reg_masks),
+            tf.boolean_mask(paf_regression1_x[:, :, 0, :-1, :], paf_reg_masks),
+            tf.boolean_mask(paf_regression1_x[:, :, 1, :-1, :], paf_reg_masks),
+            tf.boolean_mask(paf_spreads1_x[:, :, :-1, :], paf_reg_masks),
             tf.boolean_mask(paf_regression1_l[:, :, 0, :, :], paf_reg_masks),
             tf.boolean_mask(paf_regression1_l[:, :, 1, :, :], paf_reg_masks)) \
                 / 1000.0 / batch_size
         paf_reg2_losses = laplace_loss(
-            tf.boolean_mask(paf_regression2_x[:, :, 0, :, :], paf_reg_masks),
-            tf.boolean_mask(paf_regression2_x[:, :, 1, :, :], paf_reg_masks),
-            tf.boolean_mask(paf_spreads2_x, paf_reg_masks),
+            tf.boolean_mask(paf_regression2_x[:, :, 0, :-1, :], paf_reg_masks),
+            tf.boolean_mask(paf_regression2_x[:, :, 1, :-1, :], paf_reg_masks),
+            tf.boolean_mask(paf_spreads2_x[:, :, :-1, :], paf_reg_masks),
             tf.boolean_mask(paf_regression2_l[:, :, 0, :, :], paf_reg_masks),
             tf.boolean_mask(paf_regression2_l[:, :, 1, :, :], paf_reg_masks)) \
                 / 1000.0 / batch_size
 
-        loss = 30 * ce_loss + 2 * reg_losses + 2 * scale_losses + \
-                50 * paf_ce_loss + 3 * paf_reg1_losses + 3 * paf_reg2_losses
+        loss = 30 * mse_loss + 2 * reg_losses + 2 * scale_losses + \
+                50 * paf_mse_loss + 3 * paf_reg1_losses + 3 * paf_reg2_losses
 
     elif loss_fn =='dice':
         pif_intensities_l = labels[0]
