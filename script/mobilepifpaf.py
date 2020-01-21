@@ -22,30 +22,30 @@ class MobilePifPaf():
             if is_training:
                 x = tf.nn.dropout(x, keep_prob=0.5)
             out_features = n_fields * 4
-            classes_x = tf.layers.conv2d(x, out_features, kernel_size, name='cls')
+            classes_x = tf.layers.conv2d(x, out_features, kernel_size, name='cls') # [b, h, w, 17*4]
 
             if not is_training:
                 classes_x = tf.keras.activations.sigmoid(classes_x)
 
-            classes_x = tf.nn.depth_to_space(classes_x, 2)
-            classes_x = tf.transpose(classes_x, [0, 3, 1, 2], name='class_out')
+            classes_x = tf.nn.depth_to_space(classes_x, 2) # [b, h, w, 17]
+            classes_x = tf.transpose(classes_x, [0, 3, 1, 2], name='class_out') # [b, 17, h, w]
             nets.append(classes_x)
             for n in range(n_vectors):
-                reg_net = tf.layers.conv2d(x, 2 * out_features, kernel_size, name='reg' + str(n))
-                regs_x = tf.nn.depth_to_space(reg_net, 2)
-                regs_x = tf.reshape(regs_x, [-1, regs_x.shape[1], regs_x.shape[2], regs_x.shape[3] // 2, 2])
-                regs_x = tf.transpose(regs_x, [0, 3, 4, 1, 2], name='regression_out')
+                reg_net = tf.layers.conv2d(x, 2 * out_features, kernel_size, name='reg' + str(n)) # [b, h, w, 17*4*2]
+                regs_x = tf.nn.depth_to_space(reg_net, 2) # [b, h, w, 17*2]
+                regs_x = tf.reshape(regs_x, [-1, regs_x.shape[1], regs_x.shape[2], regs_x.shape[3] // 2, 2]) # [b, h, w, 17, 2]
+                regs_x = tf.transpose(regs_x, [0, 3, 4, 1, 2], name='regression_out') # [b, 17, 2, h, w]
                 nets.append(regs_x)
             for n in range(n_vectors):
-                spreads_net = tf.layers.conv2d(x, out_features, kernel_size, name='spr' + str(n))
+                spreads_net = tf.layers.conv2d(x, out_features, kernel_size, name='spr' + str(n)) # [b, h, w, 17*4]
                 # spreads_net = tf.nn.leaky_relu(spreads_net + 2.0, alpha=0.01) - 2.0
                 spreads_net = tf.nn.relu(spreads_net)
-                regs_x_spread = tf.nn.depth_to_space(spreads_net, 2)
-                regs_x_spread = tf.transpose(regs_x_spread, [0, 3, 1, 2], name='spread_out')
+                regs_x_spread = tf.nn.depth_to_space(spreads_net, 2) # [b, h, w, 17]
+                regs_x_spread = tf.transpose(regs_x_spread, [0, 3, 1, 2], name='spread_out') # [b, 17, h, w]
                 nets.append(regs_x_spread)
             for n in range(n_scales):
                 scale_net = tf.layers.conv2d(x, out_features, kernel_size, name='scl' + str(n))
-                scale_net = tf.keras.activations.relu(scale_net)
+                scale_net = tf.nn.relu(scale_net)
                 scales_x = tf.nn.depth_to_space(scale_net, 2)
                 scales_x = tf.transpose(scales_x, [0, 3, 1, 2], name='scale_out')
                 nets.append(scales_x)

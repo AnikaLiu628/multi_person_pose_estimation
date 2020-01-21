@@ -15,7 +15,6 @@ class Preprocess():
         ]
         self.kernel_size = kernel_size
         self.sink = self.create_sink(self.kernel_size)
-        self.min_size = 3
 
     def pyfn_interface_input(self, parsed_features):
         return parsed_features['image/decoded'], parsed_features['image/filename'], \
@@ -29,14 +28,6 @@ class Preprocess():
                               pif_intensities, pif_fields_reg, pif_fields_scale,
                               paf_intensities, paf_fields_reg1, paf_fields_reg2,
                               keypoint_sets):
-        # parsed_features = {
-        #     'image/decoded': img, 'image/filename': source,
-        #     'image/height': h, 'image/width': w, 
-        #     'image/human/bbox/xmin': bx1, 'image/human/bbox/xmax': bx2,
-        #     'image/human/bbox/ymin': by1, 'image/human/bbox/ymax': by2, 
-        #     'image/human/keypoints/x': kx, 'image/human/keypoints/y': ky,
-        #     'image/human/keypoints/v': kv, 'image/human/num_keypoints': nkp
-        # }
         parsed_features = {
             'image/decoded': img, 'image/filename': source,
             'image/pif/intensities': pif_intensities, 'image/pif/fields_reg': pif_fields_reg,
@@ -99,99 +90,20 @@ class Preprocess():
         pif_intensities = np.zeros((num_keypoints, field_h, field_w), dtype=np.float32)
         pif_fields_reg = np.zeros((num_keypoints, 2, field_h, field_w), dtype=np.float32)
         pif_fields_reg_l = np.full((num_keypoints, field_h, field_w), np.inf, dtype=np.float32)
-        pif_fields_scale = np.zeros((num_keypoints, field_h, field_w), dtype=np.float32)
-        
-        # # ijs = keypoint_sets[:, :2] - s_offset + padding
-        # # offsets = keypoint_sets[:, :2] - (ijs.astype(np.float32) + s_offset - padding)
-        # ijs = np.round(keypoint_sets[:, :2] - s_offset).astype(np.int) + padding
-        # offsets = keypoint_sets[:, :2] - (ijs + s_offset - padding)
-
-        # # offsets = np.reshape(offsets, [-1, 2, 1, 1])
-        # # xy_offsets = np.concatenate([np.reshape(ijs, [-1, 2, 1, 1]), offsets], axis=1)
-        # xy_offsets = np.concatenate([ijs, offsets], axis=1)
-
+        pif_fields_scale = np.zeros((num_keypoints, field_h, field_w), dtype=np.float32)  
         keypoint_sets = np.reshape(keypoint_sets, [-1, num_keypoints, 3])
         self.pif_generator(pif_intensities, pif_fields_reg, pif_fields_reg_l, pif_fields_scale, keypoint_sets, vs)
 
-        # scales = []
-        # t1 = time()
-        # for kps in keypoint_sets:
-        #     bool_mask = kps[:, 2] > 0
-        #     omit_zeros = kps[bool_mask]
-        #     valid_p_minx = np.amin(omit_zeros[:, 0])
-        #     valid_p_maxx = np.amax(omit_zeros[:, 0])
-        #     valid_p_miny = np.amin(omit_zeros[:, 1])
-        #     valid_p_maxy = np.amax(omit_zeros[:, 1])
-        #     scale = (valid_p_maxx - valid_p_minx) * (valid_p_maxy - valid_p_miny)
-        #     scales.append(np.sqrt(scale))
-
-        # #t7 = time()
-        # scales = np.tile(scales, [num_keypoints])
-        # scales = np.reshape(scales, [num_keypoints, -1])
-        # scales = np.transpose(scales, [1, 0])
-
-        # #t2 = time()
-        
-        # ss = np.reshape(scales, [-1, 1])
-        # for i, (xy_offset, s, v) in enumerate(zip(xy_offsets, ss, vs)):
-        #     if v <= 0:
-        #         continue
-        #     #xy_offset, s = data
-        #     xy = np.round(xy_offset[:2]).astype(np.int32)
-        #     intensities[i%17, xy[1]:xy[1]+4, xy[0]:xy[0]+4] = 1
-        #     offset = xy_offset[2:]
-        #     sink_reg = self.sink + offset.reshape([2, 1, 1])
-        #     sink_l = np.linalg.norm(sink_reg, axis=0)
-        #     mask = sink_l < fields_reg_l[i%17, xy[1]:xy[1]+4, xy[0]:xy[0]+4]
-        #     fields_reg[i%17, :, xy[1]:xy[1]+4, xy[0]:xy[0]+4][:, mask] = \
-        #         sink_reg[:, mask]
-        #     fields_reg_l[i%17, xy[1]:xy[1]+4, xy[0]:xy[0]+4][mask] = sink_l[mask]
-        #     fields_scale[i%17, xy[1]:xy[1]+4, xy[0]:xy[0]+4][mask] = s
-
-        # t3 = time()
-        
-        # #t5 = time()
-
-        # X_intensities = np.zeros((17, field_h, field_w), dtype=np.float32)
-        # X_fields_reg = np.zeros((17, 2, field_h, field_w), dtype=np.float32)
-        # X_fields_reg_l = np.full((17, field_h, field_w), np.inf, dtype=np.float32)
-        # X_fields_scale = np.zeros((17, field_h, field_w), dtype=np.float32)
-        # t6 = time()
-
-        # for keypoints in keypoint_sets:
-        #     bool_mask = keypoints[:, 2] > 0
-        #     if not np.any(bool_mask):
-        #         continue
-
-        #     omit_zeros = keypoints[bool_mask]
-        #     valid_p_minx = np.amin(omit_zeros[:, 0])
-        #     valid_p_maxx = np.amax(omit_zeros[:, 0])
-        #     valid_p_miny = np.amin(omit_zeros[:, 1])
-        #     valid_p_maxy = np.amax(omit_zeros[:, 1])
-        #     scale = (valid_p_maxx - valid_p_minx) * (valid_p_maxy - valid_p_miny)
-        #     scale = np.sqrt(scale)
-        #     for f, xyv in enumerate(keypoints):
-        #         if xyv[2] <= 0:
-        #             continue
-
-        #         self.fill_coordinate(f, xyv, scale, X_intensities, X_fields_reg, X_fields_reg_l, X_fields_scale)
-
-        # t7 = time()
         paf_n_fields = 19
         paf_intensities = np.zeros((paf_n_fields, field_h, field_w), dtype=np.float32)
         paf_fields_reg1 = np.zeros((paf_n_fields, 2, field_h, field_w), dtype=np.float32)
         paf_fields_reg2 = np.zeros((paf_n_fields, 2, field_h, field_w), dtype=np.float32)
         paf_fields_reg_l = np.full((paf_n_fields, field_h, field_w), np.inf, dtype=np.float32)
-        # fields_scale = np.zeros((17, field_h, field_w), dtype=np.float32)
         self.paf_generator(paf_intensities, paf_fields_reg1, paf_fields_reg2, paf_fields_reg_l, keypoint_sets)
 
-        #t4 = time()
         pif_intensities = np.concatenate([pif_intensities, bg], axis=0)
         paf_intensities = np.concatenate([paf_intensities, bg], axis=0)
-        #X_intensities = np.concatenate([X_intensities, bg], axis=0)
-        
-        #print('temp:', t7-t6, 'ori:', t3-t1)
-        #print(t5-t4,'==',t4-t3,'==',t3-t2,'==',t2-t1,'==')
+
         return img, source, \
            pif_intensities[:, padding:-padding, padding:-padding], \
            pif_fields_reg[:, :, padding:-padding, padding:-padding], \
@@ -201,8 +113,6 @@ class Preprocess():
            paf_fields_reg2[:, :, padding:-padding, padding:-padding], \
            keypoint_sets
            
-           
-
     def pif_generator(self, intensities, fields_reg, fields_reg_l, fields_scale, keypoint_sets, vs, num_keypoints=17, padding=10):
         for keypoints in keypoint_sets:
             bool_mask = keypoints[:, 2] > 0
@@ -249,27 +159,15 @@ class Preprocess():
 
     def paf_generator(self, intensities, fields_reg1, fields_reg2, fields_reg_l, keypoint_sets):
         for keypoints in keypoint_sets:
-            bool_mask = keypoints[:, 2] > 0
-            if not np.any(bool_mask):
-                continue
-
-            omit_zeros = keypoints[bool_mask]
-            valid_p_minx = np.amin(omit_zeros[:, 0])
-            valid_p_maxx = np.amax(omit_zeros[:, 0])
-            valid_p_miny = np.amin(omit_zeros[:, 1])
-            valid_p_maxy = np.amax(omit_zeros[:, 1])
-            scale = (valid_p_maxx - valid_p_minx) * (valid_p_maxy - valid_p_miny)
-            scale = np.sqrt(scale)
-
             for i, (joint1i, joint2i) in enumerate(self.skeleton):
                 joint1 = keypoints[joint1i - 1]
                 joint2 = keypoints[joint2i - 1]
                 if joint1[2] <= 0 or joint2[2] <= 0:
                     continue
 
-                self.fill_association(i, joint1, joint2, scale, intensities, fields_reg1, fields_reg2, fields_reg_l)
+                self.fill_association(i, joint1, joint2, intensities, fields_reg1, fields_reg2, fields_reg_l)
 
-    def fill_association(self, i, joint1, joint2, scale, intensities, fields_reg1, fields_reg2, fields_reg_l, padding=10):
+    def fill_association(self, i, joint1, joint2, intensities, fields_reg1, fields_reg2, fields_reg_l, padding=10):
         # offset between joints
         offset = joint2[:2] - joint1[:2]
         offset_d = np.linalg.norm(offset)
@@ -318,5 +216,3 @@ class Preprocess():
                 sink2[:, mask]
             fields_reg_l[i, fminy:fmaxy, fminx:fmaxx][mask] = sink_l[mask]
 
-            # update scale
-            # fields_scale[i, fminy:fmaxy, fminx:fmaxx][mask] = scale
