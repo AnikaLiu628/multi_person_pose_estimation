@@ -9,12 +9,12 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'model',
-    '../models/PE_SHUFFLENET_V2_1.0_MSE_COCO_256_320_v1/model.ckpt-142000',
+    '../models/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1/model.ckpt-25000',
     'CKPT PATH'
 )
 flags.DEFINE_string(
     'output_graph',
-    'PE_SHUFFLENET_V2_1.0_MSE_COCO_256_320_v1.pb',
+    'MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1.pb',
     'PB PATH'
 )
 flags.DEFINE_string(
@@ -24,7 +24,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'shufflenet_v2',
+    'mobilenet_v1',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2]'
 )
 flags.DEFINE_string(

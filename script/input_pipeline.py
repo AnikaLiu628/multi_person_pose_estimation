@@ -132,6 +132,7 @@ class Pipeline():
             self._parse_function,
             num_parallel_calls=num_parallel_calls
         )
+
         dataset = dataset.map(
             preprocess.pyfn_interface_input,
             num_parallel_calls=num_parallel_calls

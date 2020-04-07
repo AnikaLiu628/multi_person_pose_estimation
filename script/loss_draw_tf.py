@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 
 #MPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_vsp_1.log
 def main():
-    model_name = 'PE_SHUFFLENET_V2_1.0_MSE_COCO_256_320_v1'
+    model_name = 'MPPE_MOBILENET_V2_1.0_MSE_COCO_360_640_v2'
     path_root = '../logs/{}.log'.format(model_name)
     print('Model: ', model_name)
     training_data = []
@@ -85,13 +85,13 @@ def main():
     # plt.plot(training_data[100:, 0], training_data[100:, 1], 'b')
     # plt.plot(evaluation_data[0:, 0], evaluation_data[10:, 1], 'k')
 
-    plt.plot(training_data[1000:, 0], training_data[1000:, 1], 'b')
-    plt.plot(evaluation_data[100:, 0], evaluation_data[100:, 1], 'k')
-    plt.ylim(40, 150)
+    plt.plot(training_data[10:, 0], training_data[10:, 1], 'b')
+    plt.plot(evaluation_data[1:, 0], evaluation_data[1:, 1], 'k')
+    plt.ylim(0,70)
     # plt.ylim(3.0, 15.0)
     avg_e_loss = np.average(evaluation_data[:, 1])
     min_e_loss = np.min(evaluation_data[:, 1])
-    avg = np.average(evaluation_data[100:, 1])
+    avg = np.average(evaluation_data[1:, 1])
     plt.axhline(avg, color= 'r')
     min_e_ind = evaluation_data[np.argmin(evaluation_data[:, 1]), 0]
     # min_t_loss = training_data[np.argmin(evaluation_data[:, 1]) * 2, 1]
@@ -131,14 +131,14 @@ def main():
     
 
     PP = plt.figure(2)
-    plt.plot(training_data[100:, 0], training_data[100:, 2], 'b')
-    plt.plot(evaluation_data[10:, 0], evaluation_data[10:, 2], 'k')
-    plt.ylim(0.02, 0.05)
+    plt.plot(training_data[10:, 0], training_data[10:, 2], 'b')
+    plt.plot(evaluation_data[1:, 0], evaluation_data[1:, 2], 'k')
+    plt.ylim(-0.000000001, 0.9)
     plt.title(model_name + '\n' + 'Training hm Loss: blue line   ' + ', Evaluation Loss: black line')
     PPP = plt.figure(3)
-    plt.plot(training_data[100:, 0], training_data[100:, 3], 'b')
-    plt.plot(evaluation_data[10:, 0], evaluation_data[10:, 3], 'k')
-    plt.ylim(10, 30)
+    plt.plot(training_data[10:, 0], training_data[10:, 3], 'b')
+    plt.plot(evaluation_data[1:, 0], evaluation_data[1:, 3], 'k')
+    plt.ylim(-0.00000000001, 20)
     plt.title(model_name + '\n' + 'Training paf Loss: blue line   ' + ', Evaluation Loss: black line')
 
     plt.show()

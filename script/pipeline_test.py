@@ -13,7 +13,7 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'dataset_path',
-    '../data/coco_keypoints_val.record-00000-of-00001',
+    '../data/coco_mp_keypoints_train_100.record-00000-of-00001',
     'Training data'
 )
 flags.DEFINE_string(
@@ -53,7 +53,7 @@ flags.DEFINE_boolean(
 )
 flags.DEFINE_boolean(
     'data_augmentation',
-    False,
+    True,
     'Add data augmentation to preprocess'
 )
 flags.DEFINE_string(
@@ -102,37 +102,37 @@ def _parse_function(example_proto):
                 'image/filename': tf.FixedLenFeature((), tf.string),
                 'image/encoded': tf.FixedLenFeature((), tf.string),
                 'image/format': tf.FixedLenFeature((), tf.string),
-                'image/object/bbox/xmin': tf.VarLenFeature(tf.int64),
-                'image/object/bbox/xmax': tf.VarLenFeature(tf.int64),
-                'image/object/bbox/ymin': tf.VarLenFeature(tf.int64),
-                'image/object/bbox/ymax': tf.VarLenFeature(tf.int64),
-                'image/object/num_keypoints': tf.VarLenFeature(tf.int64),
-                'image/object/keypoints/x': tf.VarLenFeature(tf.int64),
-                'image/object/keypoints/y': tf.VarLenFeature(tf.int64),
-                'image/object/keypoints/v': tf.VarLenFeature(tf.int64)}
+                'image/human/bbox/xmin': tf.VarLenFeature(tf.int64),
+                'image/human/bbox/xmax': tf.VarLenFeature(tf.int64),
+                'image/human/bbox/ymin': tf.VarLenFeature(tf.int64),
+                'image/human/bbox/ymax': tf.VarLenFeature(tf.int64),
+                'image/human/num_keypoints': tf.VarLenFeature(tf.int64),
+                'image/human/keypoints/x': tf.VarLenFeature(tf.int64),
+                'image/human/keypoints/y': tf.VarLenFeature(tf.int64),
+                'image/human/keypoints/v': tf.VarLenFeature(tf.int64)}
     parsed_features = tf.parse_single_example(example_proto, features)
     parsed_features['image/decoded'] = tf.image.decode_image(
         parsed_features['image/encoded'],
         channels=3
     )
-    parsed_features['image/object'] = parsed_features['image/decoded']
-    bx1 = tf.sparse_tensor_to_dense(parsed_features['image/object/bbox/xmin'], default_value=0)
-    parsed_features['image/object/bbox/xmin'] = bx1
-    bx2 = tf.sparse_tensor_to_dense(parsed_features['image/object/bbox/xmax'], default_value=0)
-    parsed_features['image/object/bbox/xmax'] = bx2
-    by1 = tf.sparse_tensor_to_dense(parsed_features['image/object/bbox/ymin'], default_value=0)
-    parsed_features['image/object/bbox/ymin'] = by1
-    by2 = tf.sparse_tensor_to_dense(parsed_features['image/object/bbox/ymax'], default_value=0)
-    parsed_features['image/object/bbox/ymax'] = by2
+    parsed_features['image/human'] = parsed_features['image/decoded']
+    bx1 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/xmin'], default_value=0)
+    parsed_features['image/human/bbox/xmin'] = bx1
+    bx2 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/xmax'], default_value=0)
+    parsed_features['image/human/bbox/xmax'] = bx2
+    by1 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/ymin'], default_value=0)
+    parsed_features['image/human/bbox/ymin'] = by1
+    by2 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/ymax'], default_value=0)
+    parsed_features['image/human/bbox/ymax'] = by2
 
-    xs = tf.sparse_tensor_to_dense(parsed_features['image/object/keypoints/x'], default_value=0)
-    parsed_features['image/object/keypoints/x'] = xs
-    ys = tf.sparse_tensor_to_dense(parsed_features['image/object/keypoints/y'], default_value=0)
-    parsed_features['image/object/keypoints/y'] = ys
-    vs = tf.sparse_tensor_to_dense(parsed_features['image/object/keypoints/v'], default_value=0)
-    parsed_features['image/object/keypoints/v'] = vs
-    nkp = tf.sparse_tensor_to_dense(parsed_features['image/object/num_keypoints'], default_value=0)
-    parsed_features['image/object/num_keypoints'] = nkp
+    xs = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/x'], default_value=0)
+    parsed_features['image/human/keypoints/x'] = xs
+    ys = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/y'], default_value=0)
+    parsed_features['image/human/keypoints/y'] = ys
+    vs = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/v'], default_value=0)
+    parsed_features['image/human/keypoints/v'] = vs
+    nkp = tf.sparse_tensor_to_dense(parsed_features['image/human/num_keypoints'], default_value=0)
+    parsed_features['image/human/num_keypoints'] = nkp
     return parsed_features
 
 
@@ -141,19 +141,19 @@ def _preprocess_function(parsed_features, params={}):
     w = 640
     h = 360
     if not params['do_data_augmentation']:
-        parsed_features['image/object'] = parsed_features['image/decoded']
+        parsed_features['image/human'] = parsed_features['image/decoded']
     else:
-        parsed_features['image/object'] = parsed_features['image/object']
-    parsed_features['image/object'].set_shape([None, None, 3])
+        parsed_features['image/human'] = parsed_features['image/human']
+    parsed_features['image/human'].set_shape([None, None, 3])
 
-    parsed_features['image/object/resized'] = tf.image.resize_images(parsed_features['image/object'], [h, w], method=tf.image.ResizeMethod.AREA)
-    parsed_features['image/object/resized'].set_shape([h, w, 3])
-    image = tf.cast(parsed_features['image/object/resized'], tf.uint8)
+    parsed_features['image/human/resized'] = tf.image.resize_images(parsed_features['image/human'], [h, w], method=tf.image.ResizeMethod.AREA)
+    parsed_features['image/human/resized'].set_shape([h, w, 3])
+    image = tf.cast(parsed_features['image/human/resized'], tf.uint8)
     bgr_avg = tf.constant(127.5)
-    parsed_features['image/object/resized_and_subtract_mean'] = (parsed_features['image/object/resized'] - bgr_avg) * tf.constant(0.0078125)
+    parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
 
     return image, \
-            parsed_features['image/object/resized_and_subtract_mean'], \
+            parsed_features['image/human/resized_and_subtract_mean'], \
             parsed_features['image/paf/intensities'], \
             parsed_features['image/paf/fields_reg3'], \
             parsed_features['image/filename'], \
@@ -211,7 +211,7 @@ def main(_):
     np.set_printoptions(threshold=np.inf)
     task_graph = tf.Graph()
     with task_graph.as_default():
-        data, hm_kps, hm_limbs, kps_shape, n_kps = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': False, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
+        data, hm_kps, hm_limbs, kps_shape, n_kps = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
         sess = tf.Session()
         while True:
             try:

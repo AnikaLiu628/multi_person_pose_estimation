@@ -25,7 +25,7 @@ flags.DEFINE_string(
 ########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v1',
+    '../models/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
@@ -40,7 +40,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_v2',
+    'mobilenet_v1',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2]'
 )
 flags.DEFINE_string(
@@ -80,7 +80,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_float(
     'learning_rate',
-    0.000001,
+    0.0000001,
     'Learning rate for training process'
 )
 flags.DEFINE_integer(
@@ -130,21 +130,20 @@ class EvalCheckpointSaverListener(tf.train.CheckpointSaverListener):
 
 
 def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0, ohem_top_k=8):
-    
     if loss_fn == 'MSE':
         paf_intensities_l = labels[0] #ground thruth field map
         paf_regression3_l = labels[1] #ground thruth vector map
         
         paf_intensities_x = net_dict['PAF'][0][0] #len(3) # predict field map (xs, ys, vs)
         paf_regression3_x = net_dict['PAF'][0][1]#?, 19, 46, 80 # predict vector map
-        
-        # paf_shape = [None,18,46,80]
-        # reg_shape = [None,38,46,80]
+        # print(labels[0].shape)
+        paf_shape = [None,18,46,80]
+        reg_shape = [None,38,46,80]
        
-        hm_loss = tf.losses.mean_squared_error(paf_intensities_l[:, :, :, :], paf_intensities_x[:, :, :-1, :])
-        paf_loss = tf.losses.mean_squared_error(paf_regression3_l[:, :, :, :], paf_regression3_x[:, :, :-1, :])
+        hm_loss = tf.losses.mean_squared_error(paf_intensities_l[:, :, :, :], paf_intensities_x[:, :, :-2, :])
+        paf_loss = tf.losses.mean_squared_error(paf_regression3_l[:, :, :, :], paf_regression3_x[:, :, :-2, :])
 
-        # paf_bce_masks = paf_intensities_l[:, :-1] + paf_intensities_l[:, -1:] > 0.5   #except bkground #
+        # paf_bce_masks = paf_intensities_l[:, :-1] + paf_intensities_l[:, -1:] > 0.5  
         # paf_bce_masks.set_shape(paf_shape)  #
         
         # hm_loss = tf.losses.mean_squared_error(
