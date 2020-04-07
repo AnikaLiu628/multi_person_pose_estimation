@@ -51,6 +51,7 @@ class Pipeline():
         return parsed_features
 
 
+
     def _preprocess_function(self, parsed_features, params={}):
         
         w = 640
@@ -67,19 +68,18 @@ class Pipeline():
         bgr_avg = tf.constant(127.5)
         parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
 
+
+
         return image, \
                parsed_features['image/human/resized_and_subtract_mean'], \
-               parsed_features['image/pif/intensities'], \
-               parsed_features['image/pif/fields_reg'], \
-               parsed_features['image/pif/fields_scale'], \
                parsed_features['image/paf/intensities'], \
-               parsed_features['image/paf/fields_reg1'], \
-               parsed_features['image/paf/fields_reg2'], \
+               parsed_features['image/paf/fields_reg3'], \
                parsed_features['image/filename']
 
 
     def data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
-        pp = Preprocess()
+        #preprocess.py -preprocess()
+        preprocess = Preprocess()
         tfd = tf.data
         dataset = tfd.Dataset.from_tensor_slices(tf_record_path)
         dataset = dataset.interleave(
@@ -92,24 +92,23 @@ class Pipeline():
         )
         if params['do_data_augmentation']:
             dataset = dataset.map(
-                pp.data_augmentation,
+                preprocess.data_augmentation,
                 num_parallel_calls=num_parallel_calls
             )
-
         dataset = dataset.map(
-            pp.pyfn_interface_input,
+            preprocess.pyfn_interface_input,
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.map(
             lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
-                pp.head_encoder,
+                preprocess.head_encoder,
                 [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
-                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32])
+                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
             ),
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.map(
-            pp.pyfn_interface_output,
+            preprocess.pyfn_interface_output,
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.map(
@@ -118,33 +117,35 @@ class Pipeline():
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
         iterator = dataset.make_one_shot_iterator()
-        img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
-        return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
+        # img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
+        # return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
+        img, data, paf_cla, paf_reg3, name = iterator.get_next()
+        return data, [paf_cla, paf_reg3]
+
 
 
     def eval_data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
-        pp = Preprocess()
+        preprocess = Preprocess()
         tfd = tf.data
         dataset = tfd.TFRecordDataset(tf_record_path)
         dataset = dataset.map(
             self._parse_function,
             num_parallel_calls=num_parallel_calls
         )
-
         dataset = dataset.map(
-            pp.pyfn_interface_input,
+            preprocess.pyfn_interface_input,
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.map(
             lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
-                pp.head_encoder,
+                preprocess.head_encoder,
                 [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
-                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32, tf.float32])
+                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
             ),
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.map(
-            pp.pyfn_interface_output,
+            preprocess.pyfn_interface_output,
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.map(
@@ -153,5 +154,7 @@ class Pipeline():
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
         iterator = dataset.make_one_shot_iterator()
-        img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
-        return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
+        # img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
+        # return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
+        img, data, paf_cla, paf_reg3, name = iterator.get_next()
+        return data, [paf_cla, paf_reg3]

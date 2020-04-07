@@ -5,6 +5,7 @@ slim = tf.contrib.slim
 
 
 def channel_shuffle(x, groups):
+    # print('x;===========',x.shape)
     N, H, W, C = x.shape
     channels_per_group = C // groups
 
@@ -110,6 +111,7 @@ class ShuffleNetV2():
         end_points = {}
         with tf.variable_scope('shufflenet_v2', reuse=tf.AUTO_REUSE):
             with tf.variable_scope('conv1', reuse=tf.AUTO_REUSE):
+                # print('x:=============', x)
                 net = tf.pad(x, [[0, 0], [1, 1], [1, 1], [0, 0]])
                 net = tf.layers.conv2d(net, self.stage_out_channels[0], [3, 3],
                                        strides=2,
@@ -148,15 +150,15 @@ def main(_):
     model = ShuffleNetV2(depth_multiplier=1.0, is_training=False)
 
     inputs = tf.placeholder(tf.float32,
-                            shape=(1, 360, 640, 3),
+                            shape=(1, 256, 320, 3),
                             name='image')
     end_point = model.build(inputs)
     saver = tf.train.Saver()
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
     saver.save(sess, 'ShuffleNetV2/shufflenet_v2_1.0_360_640')
-    output = sess.run(end_point, feed_dict={inputs: np.zeros((1, 360, 640, 3))})
-    print(output.shape)
+    output = sess.run(end_point, feed_dict={inputs: np.zeros((1, 256, 320, 3))})
+    print(output)
 
 
 if __name__ == '__main__':

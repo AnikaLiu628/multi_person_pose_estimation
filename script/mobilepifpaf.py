@@ -1,19 +1,19 @@
 import tensorflow as tf
 import numpy as np
 
-# from mobilenet_v1 import mobilenet_v1
-# from mobilenet_v2 import mobilenet, training_scope
+from mobilenet_v1 import mobilenet_v1
+from mobilenet_v2 import mobilenet, training_scope
 from shufflenet_v2 import ShuffleNetV2
 
 
 class MobilePifPaf():
-    def __init__(self, backbone, is_training, depth_multiplier=1.0, number_keypoints=17):
+    def __init__(self, backbone, is_training, depth_multiplier=1.0, number_keypoints=18):
         self.backbone = backbone
         self.is_training = is_training
         self.depth_multiplier = depth_multiplier
         self.number_keypoints = number_keypoints
 
-    def headnet(self, head_name, x,
+    def headnet(self, head_name, x, n_hm=None,
                 n_fields=None, n_vectors=None, n_scales=None,
                 kernel_size=1, padding=0, dilation=1, is_training=False):
 
@@ -21,71 +21,60 @@ class MobilePifPaf():
             nets = []
             if is_training:
                 x = tf.nn.dropout(x, keep_prob=0.5)
-            out_features = n_fields * 4
-            classes_x = tf.layers.conv2d(x, out_features, kernel_size, name='cls')
-
+            hm_out_features = n_hm * 4
+            paf_out_features = n_fields * 4
+            classes_x = tf.layers.conv2d(x, hm_out_features, kernel_size, name='cls1')
+            classes_x = tf.layers.conv2d(classes_x, hm_out_features, kernel_size, name='cls2')
             if not is_training:
                 classes_x = tf.keras.activations.sigmoid(classes_x)
 
             classes_x = tf.nn.depth_to_space(classes_x, 2)
             classes_x = tf.transpose(classes_x, [0, 3, 1, 2], name='class_out')
             nets.append(classes_x)
-            for n in range(n_vectors):
-                reg_net = tf.layers.conv2d(x, 2 * out_features, kernel_size, name='reg' + str(n))
-                regs_x = tf.nn.depth_to_space(reg_net, 2)
-                regs_x = tf.reshape(regs_x, [-1, regs_x.shape[1], regs_x.shape[2], regs_x.shape[3] // 2, 2])
-                regs_x = tf.transpose(regs_x, [0, 3, 4, 1, 2], name='regression_out')
-                nets.append(regs_x)
-            for n in range(n_vectors):
-                spreads_net = tf.layers.conv2d(x, out_features, kernel_size, name='spr' + str(n))
-                # spreads_net = tf.nn.leaky_relu(spreads_net + 2.0, alpha=0.01) - 2.0
-                spreads_net = tf.nn.relu(spreads_net)
-                regs_x_spread = tf.nn.depth_to_space(spreads_net, 2)
-                regs_x_spread = tf.transpose(regs_x_spread, [0, 3, 1, 2], name='spread_out')
-                nets.append(regs_x_spread)
-            for n in range(n_scales):
-                scale_net = tf.layers.conv2d(x, out_features, kernel_size, name='scl' + str(n))
-                scale_net = tf.keras.activations.relu(scale_net)
-                scales_x = tf.nn.depth_to_space(scale_net, 2)
-                scales_x = tf.transpose(scales_x, [0, 3, 1, 2], name='scale_out')
-                nets.append(scales_x)
-            
 
-        return nets
+            for n in range(n_vectors):
+                reg_net = tf.layers.conv2d(x, 2 * paf_out_features, kernel_size, name='reg1_' + str(n))
+                reg_net = tf.layers.conv2d(reg_net, 2 * paf_out_features, kernel_size, name='reg2_' + str(n))
+                # print('reg_net:=======',reg_net)
+                regs_x = tf.nn.depth_to_space(reg_net, 2)
+                # print('regs_x:=======', regs_x)
+                regs_x = tf.reshape(regs_x, [-1, regs_x.shape[1], regs_x.shape[2], regs_x.shape[3]])
+                regs_x = tf.transpose(regs_x, [0, 3, 1, 2], name='regression_out')
+                nets.append(regs_x)
+                
+        return nets, classes_x, regs_x
 
     def build(self, features):
-        pif_nfields = 17
+        # pif_nfields = 17
+        n_heatmaps = 18
         paf_nfields = 19
-        pif_nvectors = 1
+        # pif_nvectors = 1
         paf_nvectors = 2
-        pif_nscales = 1
+        # pif_nscales = 1
         paf_nscales = 0
+        # print(features)
+        if self.backbone == 'mobilenet_v1':
+            logits, end_points = mobilenet_v1(features, num_classes=False, is_training=self.is_training, depth_multiplier=self.depth_multiplier)
+            backbone_end = end_points['Conv2d_13_pointwise']
 
-        # if self.backbone == 'mobilenet_v1':
-        #     logits, end_points = mobilenet_v1(features,
-        #                                       num_classes=False,
-        #                                       is_training=self.is_training,
-        #                                       depth_multiplier=self.depth_multiplier)
-        #     backbone_end = end_points['Conv2d_13_pointwise']
-        # elif self.backbone == 'mobilenet_v2':
-        #     with tf.contrib.slim.arg_scope(training_scope(is_training=self.is_training)):
-        #         logits, end_points = mobilenet(features,
-        #                                        num_classes=False,
-        #                                        depth_multiplier=self.depth_multiplier)
+        elif self.backbone == 'mobilenet_v2':
+            with tf.contrib.slim.arg_scope(training_scope(is_training=self.is_training)):
+                logits, end_points = mobilenet(features, num_classes=False, depth_multiplier=self.depth_multiplier)
+            backbone_end = end_points['layer_19']
+        # print(features.shape)
+        elif self.backbone == 'shufflenet_v2':
+            basenet = ShuffleNetV2(depth_multiplier=self.depth_multiplier, is_training=self.is_training)
+            end_points = basenet.build(features)
+            backbone_end = end_points['base_net/out']
 
-        #     backbone_end = end_points['layer_19']
-        # elif self.backbone == 'shufflenet_v2':
-        basenet = ShuffleNetV2(depth_multiplier=self.depth_multiplier,
-                               is_training=self.is_training)
-        end_points = basenet.build(features)
-        backbone_end = end_points['base_net/out']
+        # pif = self.headnet('pif', backbone_end, pif_nfields, pif_nvectors, pif_nscales)
+        nets = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
 
-        pif = self.headnet('pif', backbone_end, pif_nfields, pif_nvectors, pif_nscales)
-        paf = self.headnet('paf', backbone_end, paf_nfields, paf_nvectors, paf_nscales)
 
-        end_points['PIF'] = pif
-        end_points['PAF'] = paf
-        end_points['outputs'] = [pif, paf]
+        # end_points['PIF'] = pif
+        end_points['PAF'] = nets
+        end_points['outputs'] = [nets]
+
 
         return end_points
 
@@ -98,12 +87,16 @@ def main(_):
                             shape=(1, 360, 640, 3),
                             name='image')
     end_points = model.build(inputs)
-    print(end_points['outputs'])
+    print(end_points['PAF'])
+
+    print(end_points['PAF'][0][0])
+    print(end_points['PAF'][0][1])
+
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
-    PIF, PAF = sess.run(end_points['outputs'], feed_dict={inputs: np.zeros((1, 360, 640, 3))})
-    print(PIF[0].shape, PIF[1].shape, PIF[2].shape, PIF[3].shape)
-    print(PAF[0].shape, PAF[1].shape, PAF[2].shape, PAF[3].shape, PAF[4].shape)
+    PAF = sess.run(end_points['outputs'], feed_dict={inputs: np.zeros((1, 360, 640, 3))})
+    # print(PIF[0].shape, PIF[1].shape, PIF[2].shape, PIF[3].shape)
+    # print(PAF[0].shape, PAF[1].shape, PAF[2].shape, PAF[3].shape, PAF[4].shape)
 
 
 if __name__ == '__main__':

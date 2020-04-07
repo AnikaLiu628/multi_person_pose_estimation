@@ -5,3 +5,5 @@ models/*
 data/*
 !data/.gitkeep 
 
+script/camera.py
+script/fig_test.py

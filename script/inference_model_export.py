@@ -9,12 +9,12 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'model',
-    '../models/MPPE_MOBILENET_V1_0.5_360_640_v5/model.ckpt-87000',
+    '../models/PE_SHUFFLENET_V2_1.0_MSE_COCO_256_320_v1/model.ckpt-142000',
     'CKPT PATH'
 )
 flags.DEFINE_string(
     'output_graph',
-    'MPPE_MOBILENET_V1_0.5_360_640_v5.pb',
+    'PE_SHUFFLENET_V2_1.0_MSE_COCO_256_320_v1.pb',
     'PB PATH'
 )
 flags.DEFINE_string(
@@ -24,8 +24,8 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_v1',
-    'Model backbone in [mobilenet_v1, mobilenet_v2]'
+    'shufflenet_v2',
+    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2]'
 )
 flags.DEFINE_string(
     'input_node',
@@ -34,12 +34,13 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'output_nodes',
-    'pif/transpose,pif/transpose_1,pif/transpose_2,pif/transpose_3,paf/transpose,paf/transpose_1,paf/transpose_2,paf/transpose_3,paf/transpose_4',
+    # 'pif/transpose,pif/transpose_1,pif/transpose_2,pif/transpose_3,paf/transpose,paf/transpose_1,paf/transpose_2,paf/transpose_3,paf/transpose_4',
+    'paf/class_out,paf/regression_out',
     'Nodes of output, seperated by comma'
 )
 flags.DEFINE_float(
     'layer_depth_multiplier',
-    0.5,
+    1.0,
     'Depth multiplier of mobilenetv1 architecture'
 )
 FLAGS = flags.FLAGS
@@ -139,7 +140,7 @@ def main(_):
                        depth_multiplier=FLAGS.layer_depth_multiplier)
 
     inputs = tf.placeholder(tf.float32,
-                            shape=(None, 360, 640, 3),
+                            shape=(None, 320, 256, 3),
                             name=FLAGS.input_node)
     end_points = model.build(inputs)
 
