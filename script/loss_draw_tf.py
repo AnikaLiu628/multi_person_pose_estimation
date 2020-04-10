@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 
 #MPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_vsp_1.log
 def main():
-    model_name = 'MPPE_MOBILENET_V2_1.0_MSE_COCO_360_640_v2'
+    model_name = 'MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1'
     path_root = '../logs/{}.log'.format(model_name)
     print('Model: ', model_name)
     training_data = []
@@ -133,12 +133,12 @@ def main():
     PP = plt.figure(2)
     plt.plot(training_data[10:, 0], training_data[10:, 2], 'b')
     plt.plot(evaluation_data[1:, 0], evaluation_data[1:, 2], 'k')
-    plt.ylim(-0.000000001, 0.9)
+    plt.ylim(0, 0.13)
     plt.title(model_name + '\n' + 'Training hm Loss: blue line   ' + ', Evaluation Loss: black line')
     PPP = plt.figure(3)
     plt.plot(training_data[10:, 0], training_data[10:, 3], 'b')
     plt.plot(evaluation_data[1:, 0], evaluation_data[1:, 3], 'k')
-    plt.ylim(-0.00000000001, 20)
+    plt.ylim(0, 15)
     plt.title(model_name + '\n' + 'Training paf Loss: blue line   ' + ', Evaluation Loss: black line')
 
     plt.show()
