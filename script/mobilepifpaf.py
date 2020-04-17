@@ -68,12 +68,13 @@ class MobilePifPaf():
             backbone_end = end_points['base_net/out']
 
         # pif = self.headnet('pif', backbone_end, pif_nfields, pif_nvectors, pif_nscales)
-        nets = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
-
+        nets, classes_x, regs_x = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
 
         # end_points['PIF'] = pif
-        end_points['PAF'] = nets
-        end_points['outputs'] = [nets]
+
+        end_points['PAF'] = regs_x
+        end_points['heat_map'] = classes_x
+        end_points['outputs'] = nets
 
 
         return end_points
@@ -87,16 +88,17 @@ def main(_):
                             shape=(1, 360, 640, 3),
                             name='image')
     end_points = model.build(inputs)
-    print(end_points['PAF'])
+    print(end_points['PAF']) #([class, paf1, paf2], class, paf)
 
-    print(end_points['PAF'][0][0])
-    print(end_points['PAF'][0][1])
+    # print(end_points['PAF'][0][0])
+    # print(end_points['PAF'][0][1])
 
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
-    PAF = sess.run(end_points['outputs'], feed_dict={inputs: np.zeros((1, 360, 640, 3))})
-    # print(PIF[0].shape, PIF[1].shape, PIF[2].shape, PIF[3].shape)
-    # print(PAF[0].shape, PAF[1].shape, PAF[2].shape, PAF[3].shape, PAF[4].shape)
+    PAF = sess.run(end_points['PAF'], feed_dict={inputs: np.zeros((1, 360, 640, 3))})
+    print(PAF.shape)
+    # print(PAF[0][0])
+    # print(PAF[1])
 
 
 if __name__ == '__main__':
