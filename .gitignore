@@ -4,6 +4,7 @@ models/*
 !models/.gitkeep 
 data/*
 !data/.gitkeep 
-
-script/camera.py
-script/fig_test.py
+figures/*
+!figures/.gitkeep 
+script/GTimage_test.py
+script/eval.py

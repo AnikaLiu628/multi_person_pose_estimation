@@ -151,25 +151,23 @@ def _preprocess_function(parsed_features, params={}):
     image = tf.cast(parsed_features['image/human/resized'], tf.uint8)
     bgr_avg = tf.constant(127.5)
     parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
-
-    return image, \
-            parsed_features['image/human/resized_and_subtract_mean'], \
-            parsed_features['image/paf/intensities'], \
-            parsed_features['image/paf/fields_reg3'], \
-            parsed_features['image/filename'], \
-            parsed_features['image/kps_shape'], \
-            parsed_features['image/keypoint_sets']
+    
+    
+    # return image, \
+    #        parsed_features['image/human/resized_and_subtract_mean'], \
+    #        parsed_features['heatmap'], \
+    #        parsed_features['PAF'], \
+    #        parsed_features['image/filename']
+    return parsed_features['image/human/resized_and_subtract_mean'], \
+            {0:parsed_features['heatmap'], 
+            1:parsed_features['PAF']}
 
 
 def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
     #preprocess.py -preprocess()
     preprocess = Preprocess()
     tfd = tf.data
-    dataset = tfd.Dataset.from_tensor_slices(tf_record_path)
-    dataset = dataset.interleave(
-        lambda x: tfd.TFRecordDataset(x).repeat().shuffle(buffer_size=300),
-        cycle_length=params['dataset_split_num']
-    )
+    dataset = tfd.TFRecordDataset(tf_record_path)
     dataset = dataset.map(
         _parse_function,
         num_parallel_calls=num_parallel_calls
@@ -178,7 +176,7 @@ def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8
         dataset = dataset.map(
             preprocess.data_augmentation,
             num_parallel_calls=num_parallel_calls
-        )
+    )
     dataset = dataset.map(
         preprocess.pyfn_interface_input,
         num_parallel_calls=num_parallel_calls
@@ -201,29 +199,32 @@ def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8
     )
     dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
     iterator = dataset.make_one_shot_iterator()
-    # img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
-    # return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
-    img, data, paf_cla, paf_reg3, name, kps_shape, n_kps = iterator.get_next()
-    return img, paf_cla, paf_reg3, kps_shape, n_kps
+    data, paf_cla, paf_reg3 = iterator.get_next()
+    return data, [paf_cla, paf_reg3]
+    # return dataset
 
 
 def main(_):
     np.set_printoptions(threshold=np.inf)
     task_graph = tf.Graph()
     with task_graph.as_default():
+<<<<<<< HEAD
         data, hm_kps, hm_limbs, kps_shape, n_kps = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
+=======
+        data, paf_cla, paf_reg3 = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': False, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
+>>>>>>> shufflenetv2_d2s_mulgpu
         sess = tf.Session()
         while True:
             try:
-                r_image, prid_kp_np, prid_limb, kps_shape_np , new_kps = sess.run([data, hm_kps, hm_limbs, kps_shape, n_kps])
+                dataset = sess.run([data, paf_cla, paf_reg3])
             except tf.errors.OutOfRangeError:
                 break
 
-            image = cv2.cvtColor(r_image[0], cv2.COLOR_RGB2BGR)
-            cv2.imshow('image', image)
+            # image = cv2.cvtColor(r_image[0], cv2.COLOR_RGB2BGR)
+            # cv2.imshow('image', image)
             # print(prid_kp_np.shape)
             # print(x)
-            prid_kp_np = prid_kp_np[0]
+            # prid_kp_np = prid_kp_np[0]
             # prid_kp_np = (prid_kp_np*255).astype("uint8")
             # cv2.imshow('prid_kp_np', prid_kp_np[6])
 
@@ -232,23 +233,23 @@ def main(_):
             #     cv2.imshow('kp', (prid_kp_np[i]* 255).astype("uint8"))
             #     if cv2.waitKey(0) & 0xFF == ord('q'):
             #         break
-            
-            print(new_kps)
-            con_hm = np.zeros_like(prid_kp_np[0])
-            for i in range(18):
-                con_hm += prid_kp_np[i]
-                mask = con_hm > 1
-                con_hm[mask] = 1
+            print(dataset)
+        #     print(new_kps)
+        #     con_hm = np.zeros_like(prid_kp_np[0])
+        #     for i in range(18):
+        #         con_hm += prid_kp_np[i]
+        #         mask = con_hm > 1
+        #         con_hm[mask] = 1
 
-            con_hm = (con_hm * 255).astype("uint8")
+        #     con_hm = (con_hm * 255).astype("uint8")
             
-            print(kps_shape_np)
+        #     print(kps_shape_np)
 
-            cv2.imshow('con_hm', con_hm)
+        #     cv2.imshow('con_hm', con_hm)
             
-            if cv2.waitKey(0) & 0xFF == ord('q'):
-                break
-        cv2.destroyAllWindows()
+        #     if cv2.waitKey(0) & 0xFF == ord('q'):
+        #         break
+        # cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':

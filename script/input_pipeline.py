@@ -50,8 +50,6 @@ class Pipeline():
         parsed_features['image/human/num_keypoints'] = nkp
         return parsed_features
 
-
-
     def _preprocess_function(self, parsed_features, params={}):
         
         w = 640
@@ -67,18 +65,18 @@ class Pipeline():
         image = tf.cast(parsed_features['image/human/resized'], tf.uint8)
         bgr_avg = tf.constant(127.5)
         parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
-
-
-
-        return image, \
-               parsed_features['image/human/resized_and_subtract_mean'], \
-               parsed_features['image/paf/intensities'], \
-               parsed_features['image/paf/fields_reg3'], \
-               parsed_features['image/filename']
-
+        
+        
+        # return image, \
+        #        parsed_features['image/human/resized_and_subtract_mean'], \
+        #        parsed_features['heatmap'], \
+        #        parsed_features['PAF'], \
+        #        parsed_features['image/filename']
+        return parsed_features['image/human/resized_and_subtract_mean'], \
+               {0:parsed_features['heatmap'], 
+               1:parsed_features['PAF']}
 
     def data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
-        #preprocess.py -preprocess()
         preprocess = Preprocess()
         tfd = tf.data
         dataset = tfd.Dataset.from_tensor_slices(tf_record_path)
@@ -116,11 +114,10 @@ class Pipeline():
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
-        iterator = dataset.make_one_shot_iterator()
-        # img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
-        # return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
-        img, data, paf_cla, paf_reg3, name = iterator.get_next()
-        return data, [paf_cla, paf_reg3]
+        # iterator = dataset.make_one_shot_iterator()
+        # img, data, paf_cla, paf_reg3, name = iterator.get_next()
+        # return data, [paf_cla, paf_reg3]
+        return dataset
 
 
 
@@ -154,8 +151,7 @@ class Pipeline():
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
-        iterator = dataset.make_one_shot_iterator()
-        # img, data, cla, reg, scale, paf_cla, paf_reg1, paf_reg2, name = iterator.get_next()
-        # return data, [cla, reg, scale, paf_cla, paf_reg1, paf_reg2]
-        img, data, paf_cla, paf_reg3, name = iterator.get_next()
-        return data, [paf_cla, paf_reg3]
+        # iterator = dataset.make_one_shot_iterator()
+        # img, data, paf_cla, paf_reg3, name = iterator.get_next()
+        # return data, [paf_cla, paf_reg3]
+        return dataset

@@ -25,12 +25,12 @@ flags.DEFINE_string(
 ########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1',
+    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v12',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
     'pretrained_model_path',
-    '../models/MPPE_SHUFFLENET_V1_1.0_MSE_COCO_360_640_v3/model.ckpt-36000',
+    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v3/model.ckpt-36000',
     'Path of pretrained model(ckpt)'
 )
 flags.DEFINE_string(
@@ -40,7 +40,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_v1',
+    'shufflenet_v2',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2]'
 )
 flags.DEFINE_string(
@@ -55,7 +55,7 @@ flags.DEFINE_float(
 )
 flags.DEFINE_integer(
     'number_keypoints',
-    17,
+    18,
     'Number of keypoints in [17, 12]'
 )
 flags.DEFINE_integer(
@@ -80,7 +80,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_float(
     'learning_rate',
-    0.0000001,
+    0.001,
     'Learning rate for training process'
 )
 flags.DEFINE_integer(
@@ -131,37 +131,22 @@ class EvalCheckpointSaverListener(tf.train.CheckpointSaverListener):
 
 def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0, ohem_top_k=8):
     if loss_fn == 'MSE':
-        paf_intensities_l = labels[0] #ground thruth field map
-        paf_regression3_l = labels[1] #ground thruth vector map
+        hm_l = labels[0] #ground thruth heat map
+        paf_l = labels[1] #ground thruth vector map
+        hm_x = net_dict['heat_map'] #len(3) # predict heat map (xs, ys, vs)
+        paf_x = net_dict['PAF']#?, 19, 46, 80 # predict vector map
         
-        paf_intensities_x = net_dict['PAF'][0][0] #len(3) # predict field map (xs, ys, vs)
-        paf_regression3_x = net_dict['PAF'][0][1]#?, 19, 46, 80 # predict vector map
-        # print(labels[0].shape)
         paf_shape = [None,18,46,80]
         reg_shape = [None,38,46,80]
-       
-        hm_loss = tf.losses.mean_squared_error(paf_intensities_l[:, :, :, :], paf_intensities_x[:, :, :-2, :])
-        paf_loss = tf.losses.mean_squared_error(paf_regression3_l[:, :, :, :], paf_regression3_x[:, :, :-2, :])
 
-        # paf_bce_masks = paf_intensities_l[:, :-1] + paf_intensities_l[:, -1:] > 0.5  
-        # paf_bce_masks.set_shape(paf_shape)  #
+        # hm_x = hm_x[:, :, :-2, :]
+        # paf_x = paf_x[:, :, :-2, :]
         
-        # hm_loss = tf.losses.mean_squared_error(
-        #     tf.boolean_mask(paf_intensities_l[:, :-1, :, :], paf_bce_masks),  #
-        #     tf.boolean_mask(paf_intensities_x[:, :, :, :], paf_bce_masks)) #?, 19, 45, 80 [:, :-1 <-background]  #
-        
-        # paf_reg_masks = paf_intensities_l[:, :-1] > 0.5   #
-        # paf_reg_masks.set_shape(reg_shape)    #
+        with tf.device('/cpu:0'):
+            hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
+            paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
 
-        # paf_loss = tf.losses.mean_squared_error(
-        #     tf.boolean_mask(paf_regression3_x[:, :, :, :], paf_reg_masks), #
-        #     tf.boolean_mask(paf_regression3_l[:, :, :, :], paf_reg_masks)) #
-        
-        # paf_reg3_losses = paf_reg3_losses_1
-        
-        # hm_loss = paf_mse_loss
-        # paf_loss = paf_reg3_losses
-        loss = hm_loss + 5 * paf_loss
+        loss = hm_loss + paf_loss
 
     elif loss_fn =='dice':
         paf_intensities_l = labels[1]
@@ -175,9 +160,7 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         paf_spreads2_x = net_dict['PAF'][4]
 
         smooth = 1.0
-        # intersection = pif_intensities_l[:, :-1] * pif_intensities_x
-        # loss = (2.0 * tf.reduce_sum(intersection) + smooth) / \
-        #     (tf.reduce_sum(pif_intensities_l[:, :-1]) * tf.reduce_sum(pif_intensities_x) + smooth)
+
     elif loss_fn =='WCE':
         paf_intensities_l = labels[3]
         paf_regression1_l = labels[4]
@@ -188,17 +171,6 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         paf_regression2_x = net_dict['PAF'][2]
         paf_spreads1_x = net_dict['PAF'][3]
         paf_spreads2_x = net_dict['PAF'][4]
-
-        # batch_size = tf.cast(tf.shape(pif_intensities_l)[0], tf.float32)
-        # all_num = tf.reduce_prod(tf.cast(tf.shape(pif_intensities_l[:, :-1]), tf.float32))
-        # pos_num = tf.reduce_sum(pif_intensities_l[:, :-1])
-        # wce_loss = tf.nn.weighted_cross_entropy_with_logits(
-        #     pif_intensities_l[:, :-1, :, :],
-        #     pif_intensities_x,
-        #     pos_weight=(all_num - pos_num) * pos_num)
-        # wce_loss = tf.reduce_sum(wce_loss) / (all_num - pos_num) / 1000.0 / batch_size
-
-        # loss = wce_loss
 
     elif loss_fn == 'MSMSE':
         loss = MSMSE(net_dict, labels)
@@ -243,7 +215,7 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
     elif Optimizer == 'Adagrad':
         optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate)
     elif Optimizer == 'Adam':
-        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate, epsilon=1e-8)
     elif Optimizer == 'RMSProp':
         optimizer = tf.train.RMSPropOptimizer(learning_rate=learning_rate)
     elif Optimizer == 'Nadam':
@@ -309,7 +281,27 @@ def model_fn(features, labels, mode, params):
         ohem_top_k=params['ohem_top_k']
     )
 
+    def find_keypoints(heat_map):
+        inds = []
+        # num_ppl = params['number_keypoints'] / tf.constant(18)
+        for k in range(params['number_keypoints']):
+            ind = tf.unravel_index(
+                tf.argmax(
+                    tf.reshape(heat_map[k, :, :], [-1])),
+                [45, 80]
+            )
+            inds.append(tf.cast(ind, tf.float32))
+        return tf.stack(inds)
+
+
     if mode == tf.estimator.ModeKeys.EVAL:
+        # keypoints_pridict = tf.map_fn(find_keypoints,
+        #                               end_points[output],
+        #                               back_prop=False)
+        # keypoints_labels = tf.map_fn(find_keypoints,
+        #                              multi_head_labels[0],
+        #                              back_prop=False)
+
         mean_loss, mean_loss_op = tf.metrics.mean(loss)
         evaluation_hook = tf.train.LoggingTensorHook(
             {'Global Steps': tf.train.get_global_step(),
@@ -422,9 +414,11 @@ def main(_):
 
         session_config = tf.ConfigProto()
         session_config.gpu_options.allow_growth = True
+        strategy = tf.distribute.MirroredStrategy()
         config = (
             tf.estimator
-            .RunConfig()
+            # .RunConfig()
+            .RunConfig(train_distribute=strategy)
             .replace(
                 session_config=session_config,
                 save_summary_steps=1000,
@@ -471,6 +465,10 @@ def main(_):
 if __name__ == '__main__':
     if not os.path.exists('../logs'):
         os.makedir('../logs')
+    root = logging.getLogger()
+    if root.handlers:
+        for handler in root.handlers:
+            root.removeHandler(handler)
     logging.basicConfig(
         filename='../logs/' + FLAGS.output_model_path.split('/')[-1] + '.log',
         level=logging.INFO

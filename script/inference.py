@@ -14,7 +14,7 @@ import time
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tensorflow Openpose Inference')
-    parser.add_argument('--imgpath', type=str, default='../images/COCO_val2014_000000537548.jpg')
+    parser.add_argument('--imgpath', type=str, default='../data/p2.jpg')
     parser.add_argument('--input-width', type=int, default=640)
     parser.add_argument('--input-height', type=int, default=360)
     args = parser.parse_args()
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     from tensorflow.core.framework import graph_pb2
     graph_def = graph_pb2.GraphDef()
     # Download model from https://www.dropbox.com/s/2dw1oz9l9hi9avg/optimized_openpose.pb
-    with open('../models/PE_MOBILENET_V1_1.0_MSE_COCO_256_320_v1/output_model_89000/PE_MOBILENET_V1_1.0_MSE_COCO_256_320_v1.pb', 'rb') as f:
+    with open('../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v2/output_model_92000/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v2.pb', 'rb') as f:
         graph_def.ParseFromString(f.read())
     tf.import_graph_def(graph_def, name='')
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     print(t1 - t0)
 
     inputs = tf.get_default_graph().get_tensor_by_name('image:0')
-    outputs = tf.get_default_graph().get_tensor_by_name('MobilenetV1/MobilenetV1/Conv2d_13_pointwise/Relu:0')
+    outputs = tf.get_default_graph().get_tensor_by_name('shufflenet_v2/conv5/Relu:0')
     heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('paf/class_out:0')
     pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf/regression_out:0')
 

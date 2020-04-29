@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 def init_models():
     graph = tf.Graph()
-    POSE = '../models/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1/output_model_25000/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1.pb'
+    POSE = '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v1/output_model_67000/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v1.pb'
     with graph.as_default():
         graph_def = tf.GraphDef()
         with tf.gfile.GFile(POSE, 'rb') as fid:
@@ -24,8 +24,8 @@ def main(_):
     with graph.as_default():
         with tf.Session(graph=graph, config=config) as sess:
             input_tensor = graph.get_tensor_by_name('image:0')
-            # output_tensor = graph.get_tensor_by_name('shufflenet_v2/conv5/Relu:0')
-            output_tensor = graph.get_tensor_by_name('MobilenetV1/MobilenetV1/Conv2d_13_pointwise/Relu:0')
+            output_tensor = graph.get_tensor_by_name('shufflenet_v2/conv5/Relu:0')
+            # output_tensor = graph.get_tensor_by_name('MobilenetV1/MobilenetV1/Conv2d_13_pointwise/Relu:0')
             class_tensor = graph.get_tensor_by_name('paf/class_out:0')
             regre_tensor = graph.get_tensor_by_name('paf/regression_out:0')
 
@@ -52,8 +52,8 @@ def main(_):
                 max_feature = np.max(class_feature[i])
                 print(class_feature[i])
                 # print(max_feature)
-                for j in range(23):
-                    for k in range(40):
+                for j in range(46):
+                    for k in range(80):
                         if class_feature[i][j][k] == max_feature:
                             class_feature[i][j][k] = 1
                         else:

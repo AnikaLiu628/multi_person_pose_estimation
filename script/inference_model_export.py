@@ -9,12 +9,12 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'model',
-    '../models/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1/model.ckpt-25000',
+    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v6/model.ckpt-114000',
     'CKPT PATH'
 )
 flags.DEFINE_string(
     'output_graph',
-    'MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1.pb',
+    'MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v6.pb',
     'PB PATH'
 )
 flags.DEFINE_string(
@@ -140,7 +140,7 @@ def main(_):
                        depth_multiplier=FLAGS.layer_depth_multiplier)
 
     inputs = tf.placeholder(tf.float32,
-                            shape=(None, 320, 256, 3),
+                            shape=(None, 360, 640, 3),
                             name=FLAGS.input_node)
     end_points = model.build(inputs)
 

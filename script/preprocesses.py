@@ -1,13 +1,9 @@
-from time import time
-
 import cv2
 import numpy as np
 import scipy
 import tensorflow as tf
 import math
 import time
-import numba as nb
-from numba import jit
 
 class Preprocess():
     def __init__(self, kernel_size=4):
@@ -29,12 +25,12 @@ class Preprocess():
             parsed_features['image/human/keypoints/x'], parsed_features['image/human/keypoints/y'], \
             parsed_features['image/human/keypoints/v'], parsed_features['image/human/num_keypoints']
 
-    def pyfn_interface_output(self, img, source, paf_intensities, paf_fields_reg3, keypoint_sets, n_kps):
+    def pyfn_interface_output(self, img, source, heat_map, paf, keypoint_sets, n_kps):
         parsed_features = {
             'image/decoded': img, 
             'image/filename': source,
-            'image/paf/intensities': paf_intensities,
-            'image/paf/fields_reg3': paf_fields_reg3, 
+            'heatmap': heat_map,
+            'PAF': paf, 
             'image/keypoint_sets': keypoint_sets,
             'image/kps_shape': n_kps
         }
@@ -43,7 +39,7 @@ class Preprocess():
     def head_encoder(self, img, source, height, width, bbx1, bbx2, bby1, bby2, kx, ky, kv, nkp):
         w = 640
         h = 360
-        scaling_ratio = 16
+        scaling_ratio = 4
         width_ratio = width / w 
         height_ratio = height / h
         padding = 10
@@ -80,7 +76,7 @@ class Preprocess():
             (15, 15), (17, 17), (12, 12), (14, 14), (16, 16), (3, 3), (2, 2), (5, 5), (4, 4),
         ]
         num_img_ppl = len(kx)//17
-        # print('kps shape',np.array(keypoint_sets).shape)
+
         prev_kp = keypoint_sets[0]
         new_kp = []
         for each_ppl in range(0, num_img_ppl): 
@@ -91,39 +87,30 @@ class Preprocess():
                 _y = int((j1[1] + j2[1]) / 2)
                 new_kp.append((_x, _y))
         new_keypoint_sets.append(new_kp)
-        # print('kps_tr time cost: ==>', time.time()-kp_tr_st)
+
         heatmap = np.zeros((paf_n_fields-1, field_h, field_w), dtype=np.float32)
-        paf_fields_reg3 = np.zeros((paf_n_fields * 2, field_h, field_w), dtype=np.float32)
+        paf = np.zeros((paf_n_fields * 2, field_h, field_w), dtype=np.float32)
 
         self.get_heatmap(heatmap, new_keypoint_sets)
-        self.get_vectormap(heatmap, paf_fields_reg3, new_keypoint_sets, num_img_ppl)
+        self.get_vectormap(heatmap, paf, new_keypoint_sets, num_img_ppl)
         
         heatmap = np.array(heatmap)
         heatmap = heatmap.astype(np.float32)
-        paf_fields_reg3 = np.array(paf_fields_reg3)
-        paf_fields_reg3 = paf_fields_reg3.astype(np.float32)
-        # print(paf_fields_reg3.shape)
+        paf = np.array(paf)
+        paf = paf.astype(np.float32)
         new_keypoint_sets = np.array(new_keypoint_sets)
         new_keypoint_sets = new_keypoint_sets.astype(np.float32)
         
         k_shape = len(new_keypoint_sets[0])
         keypoint_sets = np.array(keypoint_sets)
         keypoint_sets = keypoint_sets.astype(np.float32)
-        return img, source, heatmap, paf_fields_reg3, new_keypoint_sets, k_shape
+        return img, source, heatmap, paf, new_keypoint_sets, k_shape
            
     def get_heatmap(self, heatmap, new_keypoint_sets):
-        # hm_st = time.time()
+
         keypoint = new_keypoint_sets[0]
-        # for keypoints in new_keypoint_sets:
-        #     for idx, point in keypoints:
-        #         if point[1] <= 0:
-        #             continue
-        #         n_idx = idx % 18
-                
-        #         self.put_heatmap(heatmap, n_idx, point, self.sigma)
         idx = 0
         for point_x, point_y in keypoint:
-            # print('idx', idx)
             if point_x <= 0:
                 continue
             n_idx = idx % 18
@@ -131,12 +118,9 @@ class Preprocess():
             self.put_heatmap(heatmap, n_idx, point, self.sigma)
             idx+=1
         
-        # print('get_heatmap: ', time.time() - hm_st)
-        
         return heatmap.astype(np.float32)
 
     def put_heatmap(self, heatmap, plane_idx, center, sigma):
-        # print('heatmap:',heatmap.shape)
         center_x, center_y = center
         _, height, width = heatmap.shape[:3]
 
@@ -150,7 +134,6 @@ class Preprocess():
 
         exp_factor = 1 / 2.0 / sigma / sigma
 
-        #fater version_1
         arr_heatmap = heatmap[plane_idx, y0:y1 , x0:x1 ]
         y_vec = (np.arange(y0, y1) - center_y) ** 2  # y1 included
         x_vec = (np.arange(x0, x1) - center_x) ** 2
@@ -159,48 +142,10 @@ class Preprocess():
         arr_exp = np.exp(-arr_sum)
         arr_exp[arr_sum > th] = 0
         heatmap[plane_idx, y0:y1, x0:x1] = np.maximum(arr_heatmap, arr_exp)
-        # print(heatmap)
-        #faster version_2
-        # kp_heat_proj = np.zeros_like(heatmap[plane_idx])
-        # kp_width = x1 - x0
-        # kp_height = y1 - y0
-        # kp_heat = np.zeros((kp_height, kp_width))
-        # print(kp_heat.shape)
-        # th = 4.6052
-        # # kp_height, kp_width = kp_heat.shape
-
-        # x0 = int(np.clip(center_x - kp_width / 2, 0, width))
-        # y0 = int(np.clip(center_y - kp_height / 2, 0, height))
-
-        # x1 = int(np.clip(center_x + kp_width / 2, 0, width))
-        # y1 = int(np.clip(center_y + kp_height / 2, 0, height))
-
-        # #print([y0,y1,x0,x1])
-        # #print([y0-center_y+kp_height//2,y1-center_y+kp_height//2,x0-center_x+kp_height//2,x1-center_x+kp_height//2])
-
-        # kp_heat_proj[y0:y1,x0:x1] = kp_heat[y0-center_y+kp_height//2:y1-center_y+kp_height//2,x0-center_x+kp_height//2:x1-center_x+kp_height//2]
-
-        # kp_heat_proj[y0:y1,x0:x1] = np.max(np.dstack([kp_heat_proj[y0:y1,x0:x1],heatmap[plane_idx][y0:y1,x0:x1]]),axis=-1)
-        # kp_heat_proj[kp_heat_proj>1.0] = 1.0
-
-
-        # heatmap[plane_idx][y0:y1, x0:x1] = kp_heat_proj[y0:y1,x0:x1]
-
-        #original version
-        # for y in range(y0, y1):
-        #     for x in range(x0, x1):
-        #         d = (x - center_x) **2 + (y - center_y) **2
-        #         exp = d / 2.0 / sigma / sigma
-        #         if exp > th:
-        #             continue
-        #         heatmap[plane_idx][y][x] = max(heatmap[plane_idx][y][x], math.exp(-exp))
-        #         heatmap[plane_idx][y][x] = min(heatmap[plane_idx][y][x], 1.0)
-
-    def get_vectormap(self, heatmap, paf_fields_reg3, new_keypoint_sets, num_img_ppl):
-        #new_kp_sets: 1, 19, 2
-        # vm_st = time.time()
+        
+    def get_vectormap(self, heatmap, paf, new_keypoint_sets, num_img_ppl):
+        
         keypoint = new_keypoint_sets[0]
-        # for keypoint in new_keypoint_sets:
         for plane_idx, (j_idx1, j_idx2) in enumerate(self.skeleton):
             for each_ppl in range(0, num_img_ppl):
                 center_from = keypoint[j_idx1 + 18*each_ppl-1]
@@ -209,23 +154,19 @@ class Preprocess():
                     continue
                 
                 nidx = (plane_idx + 18 * each_ppl) % 18
-                self.put_vectormap(nidx, center_from, center_to, heatmap, paf_fields_reg3)
+                self.put_vectormap(nidx, center_from, center_to, heatmap, paf)
     
                 
         nonzero = np.nonzero(heatmap)
-        # heatmap = np.array(heatmap)
-        #19, 61, 96
         for p, y, x in zip(nonzero[0], nonzero[1], nonzero[2]):
             if heatmap[p][y][x] <= 0:
                 continue
-            paf_fields_reg3[p*2+0][y][x] /= heatmap[p][y][x] #
-            paf_fields_reg3[p*2+1][y][x] /= heatmap[p][y][x]
-        paf_fields_reg3 = paf_fields_reg3.transpose((1, 2, 0))
-        # print('get_vectmap:===>', time.time() - vm_st)
-        # print(paf_fields_reg3)
+            paf[p*2+0][y][x] /= heatmap[p][y][x] #
+            paf[p*2+1][y][x] /= heatmap[p][y][x]
+        paf = paf.transpose((1, 2, 0))
 
-    def put_vectormap(self, plane_idx, center_from, center_to, heatmap, paf_fields_reg3, threshold=8):
-        _, height, width = paf_fields_reg3.shape[:3]
+    def put_vectormap(self, plane_idx, center_from, center_to, heatmap, paf, threshold=8):
+        _, height, width = paf.shape[:3]
         vec_x = center_to[0] - center_from[0] #lenth of vector x
         vec_y = center_to[1] - center_from[1] # lenth of vector y
 
@@ -235,7 +176,6 @@ class Preprocess():
         max_x = min(width, int(max(center_from[0], center_to[0]) + threshold))
         max_y = min(height, int(max(center_from[1], center_to[1]) + threshold))
 
-        #kp1 to kp2距離
         norm = math.sqrt(vec_x ** 2 + vec_y **2)
         if norm == 0:
             return
@@ -250,40 +190,9 @@ class Preprocess():
         bec_x = x - center_from[0] #px[]減去x1
         bec_y = y - center_from[1] #py[]減去y1
 
-        # print(len(x))
-        # print(len(y))
-        # print('bec_x: ', bec_x, bec_x.shape)
-        # print('bec_y: ', bec_y, bec_y.shape)
-        # print('bec_x: ',bec_x.shape)
-        # print(vec_y)
-        # print('bec_y: ',bec_y.shape)
-        # # print(vec_x.shape)
         dist = np.abs(bec_x * vec_y - bec_y[:,np.newaxis] * vec_x) 
 
-        # print(dist)
-        # print(dist.shape)
+        paf[plane_idx*2+0][min_y:max_y,min_x:max_x][dist<=threshold] = vec_x
+        paf[plane_idx*2+1][min_y:max_y,min_x:max_x][dist<=threshold] = vec_y
         
-        # print(threshold)
-
-        # if np.any(dist) <= threshold:
-        paf_fields_reg3[plane_idx*2+0][min_y:max_y,min_x:max_x][dist<=threshold] = vec_x
-        paf_fields_reg3[plane_idx*2+1][min_y:max_y,min_x:max_x][dist<=threshold] = vec_y
-        # print('paf_in: ', paf_fields_reg3.shape)
-        # print('paf_fields_reg3: ', paf_fields_reg3.shape)
-        # print(a)
-        #original version
-        # for y in range(min_y, max_y):
-        #     for x in range(min_x, max_x):
-        #         bec_x = x - center_from[0] #vector
-        #         bec_y = y - center_from[1]
-        #         dist = abs(bec_x * vec_y - bec_y * vec_x)
-
-        #         if dist > threshold:
-        #             continue
-        #         # print('brf_heatmap[plane_idx][y][x]: ', heatmap[plane_idx][y][x])
-        #         # print('shape: ', heatmap.shape)
-        #         # heatmap[plane_idx][y][x] += 1
-        #         # print('aft_heatmap[plane_idx][y][x]: ', heatmap[plane_idx][y][x])
-        #         paf_fields_reg3[plane_idx*2+0][y][x] = vec_x
-        #         paf_fields_reg3[plane_idx*2+1][y][x] = vec_y
 
