@@ -25,7 +25,7 @@ flags.DEFINE_string(
 ########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v13',
+    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v2',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
@@ -414,11 +414,11 @@ def main(_):
 
         session_config = tf.ConfigProto()
         session_config.gpu_options.allow_growth = True
-        strategy = tf.distribute.MirroredStrategy()
+        # strategy = tf.distribute.MirroredStrategy()
         config = (
             tf.estimator
-            # .RunConfig()
-            .RunConfig(train_distribute=strategy)
+            .RunConfig()
+            # .RunConfig(train_distribute=strategy)
             .replace(
                 session_config=session_config,
                 save_summary_steps=1000,
@@ -465,10 +465,10 @@ def main(_):
 if __name__ == '__main__':
     if not os.path.exists('../logs'):
         os.makedir('../logs')
-    root = logging.getLogger()
-    if root.handlers:
-        for handler in root.handlers:
-            root.removeHandler(handler)
+    # root = logging.getLogger()
+    # if root.handlers:
+    #     for handler in root.handlers:
+    #         root.removeHandler(handler)
     logging.basicConfig(
         filename='../logs/' + FLAGS.output_model_path.split('/')[-1] + '.log',
         level=logging.INFO

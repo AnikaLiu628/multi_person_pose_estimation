@@ -67,14 +67,14 @@ class Pipeline():
         parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
         
         
-        # return image, \
-        #        parsed_features['image/human/resized_and_subtract_mean'], \
-        #        parsed_features['heatmap'], \
-        #        parsed_features['PAF'], \
-        #        parsed_features['image/filename']
-        return parsed_features['image/human/resized_and_subtract_mean'], \
-               {0:parsed_features['heatmap'], 
-               1:parsed_features['PAF']}
+        return image, \
+               parsed_features['image/human/resized_and_subtract_mean'], \
+               parsed_features['heatmap'], \
+               parsed_features['PAF'], \
+               parsed_features['image/filename']
+        # return parsed_features['image/human/resized_and_subtract_mean'], \
+        #        {0:parsed_features['heatmap'], 
+        #        1:parsed_features['PAF']}
 
     def data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
         preprocess = Preprocess()
@@ -114,10 +114,10 @@ class Pipeline():
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
-        # iterator = dataset.make_one_shot_iterator()
-        # img, data, paf_cla, paf_reg3, name = iterator.get_next()
-        # return data, [paf_cla, paf_reg3]
-        return dataset
+        iterator = dataset.make_one_shot_iterator()
+        img, data, paf_cla, paf_reg3, name = iterator.get_next()
+        return data, [paf_cla, paf_reg3]
+        # return dataset
 
 
 
@@ -151,7 +151,7 @@ class Pipeline():
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
-        # iterator = dataset.make_one_shot_iterator()
-        # img, data, paf_cla, paf_reg3, name = iterator.get_next()
-        # return data, [paf_cla, paf_reg3]
-        return dataset
+        iterator = dataset.make_one_shot_iterator()
+        img, data, paf_cla, paf_reg3, name = iterator.get_next()
+        return data, [paf_cla, paf_reg3]
+        # return dataset
