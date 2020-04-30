@@ -25,7 +25,7 @@ flags.DEFINE_string(
 ########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v12',
+    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v13',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
@@ -40,8 +40,8 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'shufflenet_v2',
-    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2]'
+    'mobilenet_thin',
+    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin]'
 )
 flags.DEFINE_string(
     'loss_fn',
@@ -55,7 +55,7 @@ flags.DEFINE_float(
 )
 flags.DEFINE_integer(
     'number_keypoints',
-    18,
+    19,
     'Number of keypoints in [17, 12]'
 )
 flags.DEFINE_integer(

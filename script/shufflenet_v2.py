@@ -111,7 +111,6 @@ class ShuffleNetV2():
         end_points = {}
         with tf.variable_scope('shufflenet_v2', reuse=tf.AUTO_REUSE):
             with tf.variable_scope('conv1', reuse=tf.AUTO_REUSE):
-                # print('x:=============', x)
                 net = tf.pad(x, [[0, 0], [1, 1], [1, 1], [0, 0]])
                 net = tf.layers.conv2d(net, self.stage_out_channels[0], [3, 3],
                                        strides=2,

@@ -159,8 +159,8 @@ def _preprocess_function(parsed_features, params={}):
     #        parsed_features['PAF'], \
     #        parsed_features['image/filename']
     return parsed_features['image/human/resized_and_subtract_mean'], \
-            {0:parsed_features['heatmap'], 
-            1:parsed_features['PAF']}
+            parsed_features['heatmap'], \
+            parsed_features['PAF']
 
 
 def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
@@ -200,7 +200,7 @@ def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8
     dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
     iterator = dataset.make_one_shot_iterator()
     data, paf_cla, paf_reg3 = iterator.get_next()
-    return data, [paf_cla, paf_reg3]
+    return data, paf_cla, paf_reg3
     # return dataset
 
 
@@ -208,15 +208,11 @@ def main(_):
     np.set_printoptions(threshold=np.inf)
     task_graph = tf.Graph()
     with task_graph.as_default():
-<<<<<<< HEAD
-        data, hm_kps, hm_limbs, kps_shape, n_kps = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
-=======
         data, paf_cla, paf_reg3 = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': False, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
->>>>>>> shufflenetv2_d2s_mulgpu
         sess = tf.Session()
         while True:
             try:
-                dataset = sess.run([data, paf_cla, paf_reg3])
+                out_data, out_paf_cla, out_paf_reg3 = sess.run([data, paf_cla, paf_reg3])
             except tf.errors.OutOfRangeError:
                 break
 
@@ -233,7 +229,7 @@ def main(_):
             #     cv2.imshow('kp', (prid_kp_np[i]* 255).astype("uint8"))
             #     if cv2.waitKey(0) & 0xFF == ord('q'):
             #         break
-            print(dataset)
+            print(out_paf_cla.shape)
         #     print(new_kps)
         #     con_hm = np.zeros_like(prid_kp_np[0])
         #     for i in range(18):

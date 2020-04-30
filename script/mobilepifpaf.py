@@ -4,6 +4,7 @@ import numpy as np
 from mobilenet_v1 import mobilenet_v1
 from mobilenet_v2 import mobilenet, training_scope
 from shufflenet_v2 import ShuffleNetV2
+from network_mobilenet_thin import MobilenetNetworkThin
 
 
 class MobilePifPaf():
@@ -49,7 +50,7 @@ class MobilePifPaf():
         paf_nfields = 19
         paf_nvectors = 2
         paf_nscales = 0
-
+        # end_points=[]
         if self.backbone == 'mobilenet_v1':
             logits, end_points = mobilenet_v1(features, num_classes=False, is_training=self.is_training, depth_multiplier=self.depth_multiplier)
             backbone_end = end_points['Conv2d_13_pointwise']
@@ -64,32 +65,45 @@ class MobilePifPaf():
             end_points = basenet.build(features)
             backbone_end = end_points['base_net/out']
 
-        nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
+        elif self.backbone == 'mobilenet_thin':
+            out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
+            # end_points = basenet.build(features)
+            end_points = out.get_layer()
+            # end_points['Openpose/concat_stage7'] = backbone_end
+            # print(end_points[-1])
+            # backbone_end = end_points['Openpose/concat_stage7']
+            # print(end_points)
+            hm = end_points['MConv_Stage6_L2_5']
+            hm = tf.transpose(hm, [0, 3, 1, 2], name='hm_out')
+            paf = end_points['MConv_Stage6_L1_5']
+            paf = tf.transpose(paf, [0, 3, 1, 2], name='paf_out')
+            # print(hm, paf)
 
+        # nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
         end_points['heat_map'] = hm
         end_points['PAF'] = paf
-        end_points['outputs'] = [nets]
+        # end_points['outputs'] = [nets]
 
         return end_points
 
 
 def main(_):
     print('Rebuild graph...')
-    model = MobilePifPaf(backbone='shufflenet_v2', is_training=False)
+    model = MobilePifPaf(backbone='mobilenet_thin', is_training=False)
 
     inputs = tf.placeholder(tf.float32,
-                            shape=(1, 360, 640, 3),
+                            shape=(1, 368, 432, 3),
                             name='image')
     end_points = model.build(inputs)
-    print(end_points['PAF']) #([class, paf1, paf2], class, paf)
+    # print(end_points) #([class, paf1, paf2], class, paf)
 
-    # print(end_points['PAF'][0][0])
+    print(end_points['PAF'])
     # print(end_points['PAF'][0][1])
 
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
-    PAF = sess.run(end_points['PAF'], feed_dict={inputs: np.zeros((1, 360, 640, 3))})
-    print(PAF.shape)
+    end_points = sess.run(end_points, feed_dict={inputs: np.zeros((1, 368, 432, 3))})
+    print(end_points['heat_map'].shape)
     # print(PAF[0][0])
     # print(PAF[1])
 

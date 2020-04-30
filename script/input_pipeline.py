@@ -52,8 +52,8 @@ class Pipeline():
 
     def _preprocess_function(self, parsed_features, params={}):
         
-        w = 640
-        h = 360
+        w = 432
+        h = 368
         if not params['do_data_augmentation']:
             parsed_features['image/human'] = parsed_features['image/decoded']
         else:

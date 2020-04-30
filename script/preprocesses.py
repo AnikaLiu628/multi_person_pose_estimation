@@ -16,6 +16,7 @@ class Preprocess():
         self.kernel_size = kernel_size
         self.min_size = 3
         self.sigma = 8.0
+        self.scaling_ratio = 8
 
     def pyfn_interface_input(self, parsed_features):
         return parsed_features['image/decoded'], parsed_features['image/filename'], \
@@ -37,34 +38,31 @@ class Preprocess():
         return parsed_features
 
     def head_encoder(self, img, source, height, width, bbx1, bbx2, bby1, bby2, kx, ky, kv, nkp):
-        w = 640
-        h = 360
-        scaling_ratio = 4
+        w = 432
+        h = 368
         width_ratio = width / w 
         height_ratio = height / h
-        padding = 10
-        sigma = 8
-        field_h = int(h / scaling_ratio) #
-        field_w = int(w / scaling_ratio)
+        field_h = int(h / self.scaling_ratio) #
+        field_w = int(w / self.scaling_ratio)
         num_keypoints = 17
         paf_n_fields = 19
         keypoint_sets=[]
         num_ppl = len(kx) // 17
-        kx = (kx.astype(np.float64) / (width_ratio * scaling_ratio)).astype(np.uint16)
-        ky = (ky.astype(np.float64) / (height_ratio * scaling_ratio)).astype(np.uint16)
+        kx = (kx.astype(np.float64) / (width_ratio * self.scaling_ratio)).astype(np.uint16)
+        ky = (ky.astype(np.float64) / (height_ratio * self.scaling_ratio)).astype(np.uint16)
         keypoint_sets.append([(x, y) if v >=1 else (-1000, -1000) for x, y, v in zip(kx, ky, kv)])
         
         bx1 = np.reshape(bbx1, [-1, 1])
-        bx1 = bx1.astype(np.float64) / (width_ratio * scaling_ratio)
+        bx1 = bx1.astype(np.float64) / (width_ratio * self.scaling_ratio)
         bx2 = np.reshape(bbx2, [-1, 1])
-        bx2 = bx2.astype(np.float64) / (width_ratio * scaling_ratio)
+        bx2 = bx2.astype(np.float64) / (width_ratio * self.scaling_ratio)
         by1 = np.reshape(bby1, [-1, 1])
-        by1 = by1.astype(np.float64) / (width_ratio * scaling_ratio)
+        by1 = by1.astype(np.float64) / (width_ratio * self.scaling_ratio)
         by2 = np.reshape(bby2, [-1, 1])
-        by2 = by2.astype(np.float64) / (width_ratio * scaling_ratio)
+        by2 = by2.astype(np.float64) / (width_ratio * self.scaling_ratio)
         bbox = np.concatenate([bx1, bx2, by1, by2], axis=1).astype(np.int32)#
 
-        bg = np.ones((1, h, w), dtype=np.float32)
+        bg = np.ones((1, field_h, field_w), dtype=np.float32)
         for xxyy in bbox:
             bg[:, xxyy[2]:xxyy[3], xxyy[0]:xxyy[1]] = 0
         bg = scipy.ndimage.binary_erosion(bg, iterations=2, border_value=1)
@@ -94,6 +92,8 @@ class Preprocess():
         self.get_heatmap(heatmap, new_keypoint_sets)
         self.get_vectormap(heatmap, paf, new_keypoint_sets, num_img_ppl)
         
+        # print(bg.shape)
+        heatmap = np.concatenate([heatmap, bg], axis=0)
         heatmap = np.array(heatmap)
         heatmap = heatmap.astype(np.float32)
         paf = np.array(paf)
@@ -134,7 +134,7 @@ class Preprocess():
 
         exp_factor = 1 / 2.0 / sigma / sigma
 
-        arr_heatmap = heatmap[plane_idx, y0:y1 , x0:x1 ]
+        arr_heatmap = heatmap[plane_idx, y0:y1 , x0:x1]
         y_vec = (np.arange(y0, y1) - center_y) ** 2  # y1 included
         x_vec = (np.arange(x0, x1) - center_x) ** 2
         xv, yv = np.meshgrid(x_vec, y_vec)
@@ -156,7 +156,6 @@ class Preprocess():
                 nidx = (plane_idx + 18 * each_ppl) % 18
                 self.put_vectormap(nidx, center_from, center_to, heatmap, paf)
     
-                
         nonzero = np.nonzero(heatmap)
         for p, y, x in zip(nonzero[0], nonzero[1], nonzero[2]):
             if heatmap[p][y][x] <= 0:
@@ -169,27 +168,28 @@ class Preprocess():
         _, height, width = paf.shape[:3]
         vec_x = center_to[0] - center_from[0] #lenth of vector x
         vec_y = center_to[1] - center_from[1] # lenth of vector y
-
+        #------------
+        #pair region
         min_x = max(0, int(min(center_from[0], center_to[0]) - threshold))
         min_y = max(0, int(min(center_from[1], center_to[1]) - threshold))
 
         max_x = min(width, int(max(center_from[0], center_to[0]) + threshold))
         max_y = min(height, int(max(center_from[1], center_to[1]) + threshold))
-
+        #------------
+        #單位向量
         norm = math.sqrt(vec_x ** 2 + vec_y **2)
         if norm == 0:
             return
-
-        vec_x /= norm #x向量
-        vec_y /= norm #y向量
-
-        #faster version
+        vec_x /= norm #x單位向量
+        vec_y /= norm #y單位向量
+        #------------
+        #遍歷pair region的每個點
         x = np.arange(min_x, max_x) #p點所有x值
         y = np.arange(min_y, max_y) #p點所有y值
-
+        #遍歷pair region的每個點與目標的距離
         bec_x = x - center_from[0] #px[]減去x1
         bec_y = y - center_from[1] #py[]減去y1
-
+        #遍歷pair region的每個點垂直距離 (*vecx, *vecy 是乘垂直向量 為得到垂直距離)
         dist = np.abs(bec_x * vec_y - bec_y[:,np.newaxis] * vec_x) 
 
         paf[plane_idx*2+0][min_y:max_y,min_x:max_x][dist<=threshold] = vec_x

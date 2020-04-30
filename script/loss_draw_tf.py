@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 
 #MPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_vsp_1.log
 def main():
-    model_name = 'MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v6'
+    model_name = 'MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v4'
     path_root = '../logs/{}.log'.format(model_name)
     print('Model: ', model_name)
     training_data = []
