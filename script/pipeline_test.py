@@ -38,7 +38,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_float(
     'layer_depth_multiplier',
-    0.5,
+    1.0,
     'Depth multiplier of mobilenetv1 architecture'
 )
 flags.DEFINE_integer(
@@ -137,9 +137,8 @@ def _parse_function(example_proto):
 
 
 def _preprocess_function(parsed_features, params={}):
-    
-    w = 640
-    h = 360
+    w = 432
+    h = 368
     if not params['do_data_augmentation']:
         parsed_features['image/human'] = parsed_features['image/decoded']
     else:
@@ -152,7 +151,6 @@ def _preprocess_function(parsed_features, params={}):
     bgr_avg = tf.constant(127.5)
     parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
     
-    
     # return image, \
     #        parsed_features['image/human/resized_and_subtract_mean'], \
     #        parsed_features['heatmap'], \
@@ -161,6 +159,7 @@ def _preprocess_function(parsed_features, params={}):
     return parsed_features['image/human/resized_and_subtract_mean'], \
             parsed_features['heatmap'], \
             parsed_features['PAF']
+            # parsed_features['image/height']
 
 
 def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
@@ -208,7 +207,7 @@ def main(_):
     np.set_printoptions(threshold=np.inf)
     task_graph = tf.Graph()
     with task_graph.as_default():
-        data, paf_cla, paf_reg3 = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': False, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
+        data, paf_cla, paf_reg3 = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
         sess = tf.Session()
         while True:
             try:
@@ -216,8 +215,10 @@ def main(_):
             except tf.errors.OutOfRangeError:
                 break
 
-            # image = cv2.cvtColor(r_image[0], cv2.COLOR_RGB2BGR)
-            # cv2.imshow('image', image)
+            image = cv2.cvtColor(out_data[0], cv2.COLOR_RGB2BGR)
+            # print(image.shape)
+            cv2.imshow('imsage', image)
+            # print('height_', o_img_height)
             # print(prid_kp_np.shape)
             # print(x)
             # prid_kp_np = prid_kp_np[0]
@@ -229,23 +230,23 @@ def main(_):
             #     cv2.imshow('kp', (prid_kp_np[i]* 255).astype("uint8"))
             #     if cv2.waitKey(0) & 0xFF == ord('q'):
             #         break
-            print(out_paf_cla.shape)
+            # print(out_paf_reg3.shape)
         #     print(new_kps)
-        #     con_hm = np.zeros_like(prid_kp_np[0])
-        #     for i in range(18):
-        #         con_hm += prid_kp_np[i]
-        #         mask = con_hm > 1
-        #         con_hm[mask] = 1
-
-        #     con_hm = (con_hm * 255).astype("uint8")
+            con_hm = np.zeros_like(out_paf_reg3[0][0])
+            for i in range(2, 3):
+                con_hm += out_paf_reg3[0][i]
+                con_hm_val = con_hm
+                mask = con_hm > 0
+                con_hm[mask] = 1
+            con_hm = (con_hm*255).astype("uint8")
             
         #     print(kps_shape_np)
-
+            # print(con_hm_val)
         #     cv2.imshow('con_hm', con_hm)
             
-        #     if cv2.waitKey(0) & 0xFF == ord('q'):
-        #         break
-        # cv2.destroyAllWindows()
+            if cv2.waitKey(0) & 0xFF == ord('q'):
+                break
+        cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':

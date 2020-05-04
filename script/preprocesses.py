@@ -19,7 +19,7 @@ class Preprocess():
         self.scaling_ratio = 8
 
     def pyfn_interface_input(self, parsed_features):
-        return parsed_features['image/decoded'], parsed_features['image/filename'], \
+        return parsed_features['image/human'], parsed_features['image/filename'], \
             parsed_features['image/height'], parsed_features['image/width'], \
             parsed_features['image/human/bbox/xmin'], parsed_features['image/human/bbox/xmax'], \
             parsed_features['image/human/bbox/ymin'], parsed_features['image/human/bbox/ymax'], \
@@ -28,7 +28,7 @@ class Preprocess():
 
     def pyfn_interface_output(self, img, source, heat_map, paf, keypoint_sets, n_kps):
         parsed_features = {
-            'image/decoded': img, 
+            'image/human': img, 
             'image/filename': source,
             'heatmap': heat_map,
             'PAF': paf, 
@@ -186,13 +186,105 @@ class Preprocess():
         #遍歷pair region的每個點
         x = np.arange(min_x, max_x) #p點所有x值
         y = np.arange(min_y, max_y) #p點所有y值
-        #遍歷pair region的每個點與目標的距離
+        #遍歷pair region的每個點 與目標的距離
         bec_x = x - center_from[0] #px[]減去x1
         bec_y = y - center_from[1] #py[]減去y1
-        #遍歷pair region的每個點垂直距離 (*vecx, *vecy 是乘垂直向量 為得到垂直距離)
+        #遍歷pair region的每個點 垂直距離 (*vecx, *vecy 是乘垂直向量 為得到垂直距離)
         dist = np.abs(bec_x * vec_y - bec_y[:,np.newaxis] * vec_x) 
 
         paf[plane_idx*2+0][min_y:max_y,min_x:max_x][dist<=threshold] = vec_x
         paf[plane_idx*2+1][min_y:max_y,min_x:max_x][dist<=threshold] = vec_y
         
+    def _random_scale_image(self, parsed_features):
+        w = parsed_features['image/width']
+        h = parsed_features['image/height']
+        kx = tf.cast(parsed_features['image/human/keypoints/x'], tf.float32)
+        ky = tf.cast(parsed_features['image/human/keypoints/y'], tf.float32)
+        bx1 = tf.cast(parsed_features['image/human/bbox/xmin'], tf.float32)
+        bx2 = tf.cast(parsed_features['image/human/bbox/xmax'], tf.float32)
+        by1 = tf.cast(parsed_features['image/human/bbox/ymin'], tf.float32)
+        by2 = tf.cast(parsed_features['image/human/bbox/ymax'], tf.float32)
+        kv = parsed_features['image/human/keypoints/v']
+                                              
+        scaleh = tf.random.uniform([], 0.8, 1.2) # float32
+        scalew = tf.random.uniform([], 0.8, 1.2) # float32
 
+        parsed_features['image/height'] = tf.cast(parsed_features['image/height'], tf.float32)
+        parsed_features['image/width'] = tf.cast(parsed_features['image/width'], tf.float32)
+        parsed_features['image/height'] = tf.cast(parsed_features['image/height'] * scaleh, tf.int64)
+        parsed_features['image/width'] = tf.cast(parsed_features['image/width'] * scalew, tf.int64)
+        mod_h = parsed_features['image/height']
+        mod_w = parsed_features['image/width']
+
+        ky = tf.cast(ky * scaleh, tf.int64)
+        kx = tf.cast(kx * scalew, tf.int64)
+        bx1 = tf.cast(bx1 * scalew, tf.int64)
+        bx2 = tf.cast(bx2 * scalew, tf.int64)
+        by1 = tf.cast(by1 * scaleh, tf.int64)
+        by2 = tf.cast(by2 * scaleh, tf.int64)
+
+        parsed_features['image/human/keypoints/x'] = kx
+        parsed_features['image/human/keypoints/y'] = ky
+        parsed_features['image/human/bbox/xmin'] = bx1
+        parsed_features['image/human/bbox/xmax'] = bx2
+        parsed_features['image/human/bbox/ymin'] = by1
+        parsed_features['image/human/bbox/ymax'] = by2
+
+        parsed_features['image/human'].set_shape([None, None, 3])
+        parsed_features['image/human'] = tf.image.resize_images(parsed_features['image/human'], [mod_h, mod_w], method=tf.image.ResizeMethod.AREA)
+        parsed_features['image/human'] = tf.cast(parsed_features['image/human'], tf.uint8)
+
+    def _random_flip_image(self, parsed_features):
+        def _flip_index(keypoints):
+            new_kp = []
+            new_kp.append()
+
+    def _random_rotate_image(self, parsed_features):
+        w = parsed_features['image/width']
+        h = parsed_features['image/height']
+        kx = tf.cast(parsed_features['image/human/keypoints/x'], tf.float32)
+        ky = tf.cast(parsed_features['image/human/keypoints/y'], tf.float32)
+        kv = parsed_features['image/human/keypoints/v']
+
+        center = tf.cast([w/2, h/2], tf.float32)
+        degree_angle = tf.random.uniform([], -15, 15) #float32
+        radian = degree_angle * math.pi / 180 #float32
+        kx = kx - center[0]
+        ky = (ky - center[1]) * -1
+        kx = tf.cast(center[0] + (tf.cos(radian)*kx - tf.sin(radian)*ky) + 0.5, tf.float32)
+        ky = tf.cast(center[1] - (tf.sin(radian)*kx + tf.cos(radian)*ky) + 0.5, tf.float32)
+
+        parsed_features['image/human'] = tf.cast(parsed_features['image/human'], tf.float32)
+
+        parsed_features['image/human'] = tf.contrib.image.rotate(parsed_features['image/human'], radian, interpolation='BILINEAR')
+
+        x_valid = (kx > 0) & (kx < w)
+        y_valid = (ky > 0) & (ky < h)
+        k_valid = tf.cast((x_valid&y_valid), tf.int64)
+        kx = tf.multiply(kx, k_valid)
+        ky = tf.multiply(ky, k_valid)
+        kv = tf.multiply(kv, k_valid)
+
+        parsed_features['image/human/keypoints/x'] = kx 
+        parsed_features['image/human/keypoints/y'] = ky
+        parsed_features['image/human/keypoints/v'] = kv
+        parsed_features['image/human/bbox/xmin'] = min(kx)
+        parsed_features['image/human/bbox/xmax'] = max(kx)
+        parsed_features['image/human/bbox/ymin'] = min(ky)
+        parsed_features['image/human/bbox/ymax'] = max(ky)
+
+
+# return parsed_features['image/decoded'], parsed_features['image/filename'], \
+#             parsed_features['image/height'], parsed_features['image/width'], \
+#             parsed_features['image/human/bbox/xmin'], parsed_features['image/human/bbox/xmax'], \
+#             parsed_features['image/human/bbox/ymin'], parsed_features['image/human/bbox/ymax'], \
+#             parsed_features['image/human/keypoints/x'], parsed_features['image/human/keypoints/y'], \
+#             parsed_features['image/human/keypoints/v'], parsed_features['image/human/num_keypoints']
+
+    def data_augmentation(self, parsed_features):
+        self._random_scale_image(parsed_features)
+        # self._random_rotate_image(parsed_features)
+        # self._random_flip_image(parsed_features)
+        # self._random_resize_shortestedge(parsed_features)
+        # self._random_crop(parsed_features)
+        return parsed_features
