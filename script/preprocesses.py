@@ -19,7 +19,7 @@ class Preprocess():
         self.scaling_ratio = 8
 
     def pyfn_interface_input(self, parsed_features):
-        return parsed_features['image/human'], parsed_features['image/filename'], \
+        return parsed_features['image/decoded'], parsed_features['image/filename'], \
             parsed_features['image/height'], parsed_features['image/width'], \
             parsed_features['image/human/bbox/xmin'], parsed_features['image/human/bbox/xmax'], \
             parsed_features['image/human/bbox/ymin'], parsed_features['image/human/bbox/ymax'], \
@@ -28,7 +28,7 @@ class Preprocess():
 
     def pyfn_interface_output(self, img, source, heat_map, paf, keypoint_sets, n_kps):
         parsed_features = {
-            'image/human': img, 
+            'image/decoded': img, 
             'image/filename': source,
             'heatmap': heat_map,
             'PAF': paf, 
@@ -92,7 +92,6 @@ class Preprocess():
         self.get_heatmap(heatmap, new_keypoint_sets)
         self.get_vectormap(heatmap, paf, new_keypoint_sets, num_img_ppl)
         
-        # print(bg.shape)
         heatmap = np.concatenate([heatmap, bg], axis=0)
         heatmap = np.array(heatmap)
         heatmap = heatmap.astype(np.float32)
@@ -205,6 +204,7 @@ class Preprocess():
         by1 = tf.cast(parsed_features['image/human/bbox/ymin'], tf.float32)
         by2 = tf.cast(parsed_features['image/human/bbox/ymax'], tf.float32)
         kv = parsed_features['image/human/keypoints/v']
+        # print(kx.shape)
                                               
         scaleh = tf.random.uniform([], 0.8, 1.2) # float32
         scalew = tf.random.uniform([], 0.8, 1.2) # float32
@@ -237,7 +237,137 @@ class Preprocess():
     def _random_flip_image(self, parsed_features):
         def _flip_index(keypoints):
             new_kp = []
-            new_kp.append()
+            new_kp.append(keypoints[0])
+            new_kp.append(keypoints[2])
+            new_kp.append(keypoints[1])
+            new_kp.append(keypoints[4])
+            new_kp.append(keypoints[3])
+            new_kp.append(keypoints[6])
+            new_kp.append(keypoints[5])
+            new_kp.append(keypoints[8])
+            new_kp.append(keypoints[7])
+            new_kp.append(keypoints[10])
+            new_kp.append(keypoints[9])
+            new_kp.append(keypoints[12])
+            new_kp.append(keypoints[11])
+            new_kp.append(keypoints[14])
+            new_kp.append(keypoints[13])
+            new_kp.append(keypoints[16])
+            new_kp.append(keypoints[15])
+            return tf.stack(new_kp)
+
+        def _reflect_box(features):
+            w = features['image/width']
+            kx = features['image/human/keypoints/x']
+            ky = features['image/human/keypoints/y']
+            kv = features['image/human/keypoints/v']
+            x1 = features['image/human/bbox/xmin']
+            x2 = features['image/human/bbox/xmax']
+            num_kps_ = features['image/human/num_keypoints']
+            # each_kps = tf.constant(17)
+            num_ppl = num_kps_.shape[0].value
+            # print(num_ppl)
+            if num_ppl == None:
+                num_ppl = 0
+                split_part = 1
+            else:
+                split_part = num_ppl
+            # num_ppl = num_kps_.get_shape.as_list[0]
+            # print(num_ppl)
+            #num of kps, box in an image
+            # num_kps = kx.get_shape()
+            # num_box = x1.get_shape()
+            # print(num_kps_.shape.value)
+            temp_x1 = tf.subtract(w, x2)
+            temp_x2 = tf.subtract(w, x1)
+
+            split_temp_x1 = tf.split(temp_x1, split_part)
+            split_temp_x2 = tf.split(temp_x2, split_part)
+
+            if split_part == 1:
+                new_x1 = tf.cond(
+                    tf.greater(temp_x1, -1),
+                    lambda: temp_x1,
+                    lambda: tf.constant(0, dtype=tf.int64)
+                )
+                new_x2 = tf.cond(
+                    tf.less(temp_x2, w),
+                    lambda: temp_x2,
+                    lambda: tf.cast(w-1, tf.int64)
+                )
+            else:
+                for j in range(0, split_part):
+                    if j == 0:
+                        new_x1 = tf.cond(
+                            tf.greater(split_temp_x1[j], -1),
+                            lambda: split_temp_x1[j],
+                            lambda: tf.constant(0, dtype=tf.int64)
+                        )
+                        new_x2 = tf.cond(
+                            tf.less(split_temp_x2[j], w),
+                            lambda: split_temp_x2[j],
+                            lambda: tf.cast(w-1, tf.int64)
+                        )
+                    else:
+                        tmp_x1 = tf.cond(
+                            tf.greater(split_temp_x1[j], -1),
+                            lambda: split_temp_x1[j],
+                            lambda: tf.constant(0, dtype=tf.int64)
+                        )
+                        tmp_x2 = tf.cond(
+                            tf.less(split_temp_x2[j], w),
+                            lambda: split_temp_x2[j],
+                            lambda: tf.cast(w-1, tf.int64)
+                        )
+                        tf.concat(0, [new_x1, tmp_x1])
+                        tf.concat(0, [new_x2, tmp_x2])
+
+            temp_kx = tf.subtract(w, kx)
+            #length of kps
+            temp_kx = tf.split(temp_kx, split_part)
+            temp_ky = tf.split(ky, split_part)
+            temp_kv = tf.split(kv, split_part)
+            for i in range(0, split_part):
+                if i == 0:
+                    new_kx = _flip_index(temp_kx[i])
+                    new_ky = _flip_index(temp_ky[i])
+                    new_kv = _flip_index(temp_kv[i])
+                else:
+                    tmp_x = _flip_index(temp_kx[i])
+                    tmp_y = _flip_index(temp_ky[i])
+                    tmp_v = _flip_index(temp_kv[i])
+                    tf.concat(0, [new_kx, tmp_x]) 
+                    tf.concat(0, [new_ky, tmp_y]) 
+                    tf.concat(0, [new_kv, tmp_v]) 
+            # new_kx = _flip_index(temp_kx)
+            # new_ky = _flip_index(ky)
+            # new_kv = _flip_index(kv)
+
+            return new_x1, new_x2, new_kx, new_ky, new_kv
+
+        def _flip(features):
+            x1, x2 ,kx , ky, kv = _reflect_box(features)
+            horizonal_flip = tf.image.flip_left_right(features['image/human'])
+            return horizonal_flip, x1, x2, kx, ky, kv
+
+        do_a_flip_random = tf.random_uniform([])
+        do_a_flip_random = tf.greater(do_a_flip_random, 0.5)
+        parsed_features['image/human'], \
+        parsed_features['image/human/bbox/xmin'], \
+        parsed_features['image/human/bbox/xmax'], \
+        parsed_features['image/human/keypoints/x'], \
+        parsed_features['image/human/keypoints/y'], \
+        parsed_features['image/human/keypoints/v'] = tf.cond(
+            do_a_flip_random,
+            lambda: _flip(parsed_features),
+            lambda: (parsed_features['image/human'],
+                parsed_features['image/human/bbox/xmin'],
+                parsed_features['image/human/bbox/xmax'],
+                parsed_features['image/human/keypoints/x'],
+                parsed_features['image/human/keypoints/y'],
+                parsed_features['image/human/keypoints/v']
+            )
+        )
 
     def _random_rotate_image(self, parsed_features):
         w = parsed_features['image/width']
@@ -284,7 +414,7 @@ class Preprocess():
     def data_augmentation(self, parsed_features):
         self._random_scale_image(parsed_features)
         # self._random_rotate_image(parsed_features)
-        # self._random_flip_image(parsed_features)
+        self._random_flip_image(parsed_features)
         # self._random_resize_shortestedge(parsed_features)
         # self._random_crop(parsed_features)
         return parsed_features

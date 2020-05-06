@@ -53,7 +53,7 @@ flags.DEFINE_boolean(
 )
 flags.DEFINE_boolean(
     'data_augmentation',
-    True,
+    False,
     'Add data augmentation to preprocess'
 )
 flags.DEFINE_string(
@@ -232,17 +232,17 @@ def main(_):
             #         break
             # print(out_paf_reg3.shape)
         #     print(new_kps)
-            con_hm = np.zeros_like(out_paf_reg3[0][0])
-            for i in range(2, 3):
-                con_hm += out_paf_reg3[0][i]
+            con_hm = np.zeros_like(out_paf_cla[0][0])
+            for i in range(0, 18):
+                con_hm += out_paf_cla[0][i]
                 con_hm_val = con_hm
-                mask = con_hm > 0
+                mask = con_hm > 1
                 con_hm[mask] = 1
             con_hm = (con_hm*255).astype("uint8")
             
         #     print(kps_shape_np)
             # print(con_hm_val)
-        #     cv2.imshow('con_hm', con_hm)
+            cv2.imshow('con_hm', con_hm)
             
             if cv2.waitKey(0) & 0xFF == ord('q'):
                 break

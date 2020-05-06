@@ -1,291 +1,166 @@
+
+import pickle
 import tensorflow as tf
+import cv2, os
 import numpy as np
-import sys
-np.set_printoptions(threshold=sys.maxsize)
-from numpy import unravel_index
-import cv2
-import random
-import math
+import time
+import logging
+import argparse
+import json, re
+from tensorflow.python.client import timeline
+from tqdm import tqdm
+from common import  CocoPairsRender, read_imgfile, CocoColors
+from estimator import PoseEstimator , TfPoseEstimator
+from networks import get_network
+from tf_tensorrt_convert import * 
+from pose_dataset import CocoPose
+from pycocotools.coco import COCO
+from pycocotools.cocoeval import COCOeval
+from estimator import write_coco_json
 
-from input_pipeline import Pipeline
-import matplotlib.pyplot as plt
-# from sklearn.preprocessing import normalize
-'''
-"keypoints": [
-            184,82,2,
-            189,69,2,
-            169,75,2,
-            0,0,0,
-            147,78,2,
-            212,121,2,
-            136,142,2,
-            246,183,2,
-            130,241,2,
-            264,209,2,
-            203,234,2,
-            250,253,2,
-            183,272,2,
-            347,223,2,
-            287,244,2,
-            290,331,2,
-            261,354,2
-            ]
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 
-COCO_train2014_000000113521
-keypoints = [
-            332, 94, 1, 
-            337, 76, 2, 
-            325, 75, 1, 
-            386, 78, 2,
-            0, 0, 0,
-            442, 154, 2,
-            327, 145, 2,
-            437, 273, 2, 
-            291, 251, 2,
-            350, 295, 2,
-            227, 293, 2, 
-            411, 335, 2, 
-            328, 325, 2, 
-            378, 471, 1, 
-            216, 439, 2, 
-            0, 0, 0,
-            0, 0, 0]
-'''
-top_ = 1
-
-class Preprocess():
-    def __init__(self,):
-        self.sigma = 2.0
-    def head_encoder(self, img, height, width):
-        keypoints = [
-                    184,82,2,
-                    189,69,2,
-                    169,75,2,
-                    0,0,0,
-                    147,78,2,
-                    212,121,2,
-                    136,142,2,
-                    246,183,2,
-                    130,241,2,
-                    264,209,2,
-                    203,234,2,
-                    250,253,2,
-                    183,272,2,
-                    347,223,2,
-                    287,244,2,
-                    290,331,2,
-                    261,354,2]
-
-        # store [x, y, v ...] into kx, ky, kv
-        kx, ky, kv = [], [], []
-        for i in range(len(keypoints)):
-            if i % 3 == 0:
-                kx.append(keypoints[i])
-            elif i % 3 == 1:
-                ky.append(keypoints[i])
-            elif i % 3 == 2:
-                kv.append(keypoints[i])
-        
-        w = 640 #320 640
-        h = 360 #256 360
-        scaling_ratio = 8
-        field_w = int(w / scaling_ratio) #16
-        field_h = int(h / scaling_ratio) #20
-        orig_keypoints_set = []
-        kx = np.asarray(kx).astype(np.float64)
-        ky = np.asarray(ky).astype(np.float64)
-        kv = np.asarray(kv).astype(np.float64)
-        kx = (kx * (field_w / width)).astype(np.uint16)
-        ky = (ky * (field_h / height)).astype(np.uint16)
-        orig_keypoints_set.append([(x, y) if v >=1 else (-1000, -1000) for x, y, v in zip(kx, ky, kv)])
-        orig_keypoints_set = np.squeeze(orig_keypoints_set)
-        num_img_ppl = len(kx)//17
-
-        new_keypoint_sets = []
-        transform = [
-                (1, 1), (6, 7), (7, 7), (9, 9), (11, 11), (6, 6), (8, 8), (10, 10), (13, 13),
-                (15, 15), (17, 17), (12, 12), (14, 14), (16, 16), (3, 3), (2, 2), (5, 5), (4, 4),
-            ]
-        new_kp = []
-        for each_ppl in range(0, num_img_ppl): 
-            for idx1, idx2 in transform:
-                j1 = orig_keypoints_set[idx1 + 17*each_ppl-1]
-                j2 = orig_keypoints_set[idx2 + 17*each_ppl-1]
-                _x = int((j1[0] + j2[0]) / 2)
-                _y = int((j1[1] + j2[1]) / 2)
-                new_kp.append((_x, _y))
-        new_keypoint_sets.append(new_kp)
-        heatmap = np.zeros((18, field_h, field_w), dtype=np.float32)
-        self.get_heatmap(heatmap, new_keypoint_sets)
-        heatmap = np.array(heatmap)
-        heatmap = heatmap.astype(np.float32)
-        return heatmap
-
-    def get_heatmap(self, heatmap, new_keypoint_sets):
-        keypoint = new_keypoint_sets[0]
-        idx = 0
-        for point_x, point_y in keypoint:
-            if point_x <= 0:
-                continue
-            n_idx = idx % 18
-            point = (point_x, point_y)
-            self.put_heatmap(heatmap, n_idx, point, self.sigma)
-            idx+=1
-        
-        return heatmap.astype(np.float32)
-
-    def put_heatmap(self, heatmap, plane_idx, center, sigma):
-        center_x, center_y = center
-        _, height, width = heatmap.shape[:3]
-
-        th = 4.6052
-        delta = math.sqrt(th * 2)
-
-        x0 = int(max(0, center_x - delta * sigma))
-        y0 = int(max(0, center_y - delta * sigma))
-        x1 = int(min(width, center_x + delta * sigma))
-        y1 = int(min(height, center_y + delta * sigma))
-
-        exp_factor = 1 / 2.0 / sigma / sigma
-
-        #fater version_1
-        arr_heatmap = heatmap[plane_idx, y0:y1 , x0:x1 ]
-        y_vec = (np.arange(y0, y1) - center_y) ** 2  # y1 included
-        x_vec = (np.arange(x0, x1) - center_x) ** 2
-        xv, yv = np.meshgrid(x_vec, y_vec)
-        arr_sum = exp_factor * (xv + yv)
-        arr_exp = np.exp(-arr_sum)
-        arr_exp[arr_sum > th] = 0
-        heatmap[plane_idx, y0:y1, x0:x1] = np.maximum(arr_heatmap, arr_exp)
+config = tf.ConfigProto()
+config.gpu_options.allocator_type = 'BFC'
+config.gpu_options.per_process_gpu_memory_fraction = 0.95
+config.gpu_options.allow_growth = True
 
 
-def init_models(model_name):
-    graph = tf.Graph()
-    POSE = '../models/' + model_name + '/output_model_49000/' + model_name + '.pb'
-    with graph.as_default():
-        graph_def = tf.GraphDef()
-        with tf.gfile.GFile(POSE, 'rb') as fid:
-            serialized_graph = fid.read()
-            graph_def.ParseFromString(serialized_graph)
-            tf.import_graph_def(graph_def, name='')
 
-    return graph
+def compute_oks(keypoints, anns):
+    sigmas = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62, .62, 1.07, 1.07, .87, .87, .89, .89]) / 10.0
+    vars = (sigmas * 2) ** 2
+    max_score = 0
+    max_visible = []
+    for ann in anns:
+        score = 0
+        gt = ann['keypoints']
+        visible = gt[2::3]
+        if np.sum(visible) == 0:
+            continue
+        else:
+            gt_point = np.array([(x, y) for x , y in zip(gt[0::3], gt[1::3])])
+            pred = np.array([(x, y) for x , y in zip(keypoints[0::3], keypoints[1::3])])
+            # import pdb; pdb.set_trace()
+            dist = (gt_point - pred) ** 2
+            dist = np.sum(dist, axis=1)
+            sp = (ann['area'] + np.spacing(1))
 
-def main(_):
-    model_name = 'MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v6'
-    graph = init_models(model_name)
-    config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
-    with graph.as_default():
-        with tf.Session(graph=graph, config=config) as sess:
-            input_tensor = graph.get_tensor_by_name('image:0')
-            # 'MobilenetV1/MobilenetV1/Conv2d_13_pointwise/Relu:0' MobilenetV2/Conv_1/Relu6:0 shufflenet_v2/conv5/Relu:0
-            output_tensor = graph.get_tensor_by_name('shufflenet_v2/conv5/Relu:0')
-            class_tensor = graph.get_tensor_by_name('paf/class_out:0')
+        dist[visible == 0] = 0.0
+        # dist[visible_pred == 0] = 0.0
+        score = np.exp(-dist / vars / 2.0 / sp)
 
-            width = 640 #256 #640 
-            hight = 360 #320 #360
+        score = np.mean(score)
+        if max_score < score:
+            max_score = score
+            max_visible = visible
+    return max_score, max_visible
 
-            image = cv2.imread('../data/COCO_train2014_000000000113.jpg')
-            height_img = image.shape[0]
-            width_img = image.shape[1]
-            pp = Preprocess()
-            heatmap_gt = pp.head_encoder(image, height_img, width_img)
 
-            # i = 9
-            # heatmap_gt = heatmap_gt[i]
-            # print(heatmap_gt)
-            # hm = np.amax(heatmap_gt)
-            
-            # hm_loc = np.where(heatmap_gt == hm)
-            # listCordinates = list(zip(hm_loc[0], hm_loc[1]))
-            # for cord in listCordinates:
-            #     print(cord)
-            # print('Value ', hm)
-            # print('GroundTruth Heatmap')
-
-            image_np = image.copy()
-            image_resized = cv2.resize(image,dsize=(width,hight))
-            image = cv2.cvtColor(image_resized, cv2.COLOR_BGR2RGB)
-            image= (image - 127.5) * 0.0078125
-            image_np_expanded = np.expand_dims(image, axis = 0)
-
-            suff_feature = sess.run(output_tensor, feed_dict = {input_tensor: image_np_expanded})
-            class_feature = sess.run(class_tensor, feed_dict = {output_tensor: suff_feature})
-            heatmap = class_feature[0] #18, 20, 16
-            kps_num = len(heatmap) #18
-
-            # heatmap = heatmap[i]
-            # print(heatmap)
-            # hm_l_loc = np.where(heatmap == np.amax(heatmap))
-            # l_listCordinates = list(zip(hm_l_loc[0], hm_l_loc[1]))
-            # for l_cord in l_listCordinates:
-            #     print(l_cord)
-            # print('Value ', np.amax(heatmap))
-            # print('Output Heatmap')
-
-            heatmap_add_gt = np.zeros_like(heatmap_gt[0])
-            print(heatmap.shape)
-            print(heatmap_gt.shape)
-            heatmap_add = np.zeros_like(heatmap_gt[0])
-            '''adjust kps num'''
-            # for i in range(18):
-            i = 2
-            if i == 0:
-                part_name = 'nose'
-            if i == 1:
-                part_name = 'neck'
-            if i == 2:
-                part_name = 'Left shoulder'
-            if i == 3:
-                part_name = 'Left elbow'
-            if i == 4:
-                part_name = 'Left wrist' #手腕
-            if i == 5:
-                part_name = 'Right shoulder'
-            if i == 6:
-                part_name = 'Right elbow'
-            if i == 7:
-                part_name = 'Right wrist'
-            if i == 8:
-                part_name = 'Left hip'
-            if i == 9:
-                part_name = 'Left knee'
-            if i == 10:
-                part_name = 'Left ankle' 
-            if i == 12:
-                part_name = 'Right knee'
-            if i == 13:
-                part_name = 'Right ankle'
-            if i == 11:
-                part_name = 'Right hip'
-            heatmap_add += heatmap[i][:-1]
-            # print(heatmap_add)
-            # heatmap_add += heatmap[i]
-            heatmap_add_gt += heatmap_gt[i]
-
-            # norm = np.linalg.norm(an_array)
-            # normal_array = an_array/norm
-
-            ## heatmap_add = (heatmap_add * 255).astype("uint8")
-            # heatmap_add_resized = cv2.resize(heatmap_add, dsize=(width,hight))
-            # heatmap_add_gt_resized = cv2.resize(heatmap_add_gt, dsize=(width,hight))
-
-            # heatmap_add_resized_color = cv2.applyColorMap(heatmap_add_resized, cv2.COLORMAP_JET)
-            # heatmap_add_resized_color = cv2.cvtColor(heatmap_add_resized, cv2.COLOR_GRAY2BGR)
-            # heatmap_add_resized_color = cv2.cvtColor(heatmap_add_resized_color, cv2.COLOR_BGR2RGB)
-
-            # heatmap_add_resized_color_weg = cv2.addWeighted(heatmap_add_resized_color, 0.7, image_resized, 0.3, 0)
-            P = plt.figure(1)
-            plt.imshow(heatmap_add_gt, cmap='viridis')
-            plt.title('{} \nGround Truth {} feature'.format(model_name, part_name))
-            PP = plt.figure(2)
-            plt.imshow(heatmap_add, cmap='viridis')
-            plt.title('{} \nPredict {} feature'.format(model_name, part_name))
-            plt.show()
-            # cv2.imshow('Predhm', heatmap_add_resized_color_weg)
-            # cv2.waitKey(0) & 0xFF == ord('q')
+def compute_ap(score, threshold =0.5):
+    b =  [ 1 if x > threshold else 0 for x in score]
+    return np.sum(b)/1.0/len(score)
 
 if __name__ == '__main__':
-    tf.app.run()
+    parser = argparse.ArgumentParser(description='Tensorflow Openpose Inference')
+    parser.add_argument('--imgpath', type=str, default='./images/p2.jpg')
+    parser.add_argument('--input-width', type=int, default=368)
+    parser.add_argument('--input-height', type=int, default=368)
+    parser.add_argument('--stage-level', type=int, default=6)
+    parser.add_argument('--use_tensorrt', type=bool, default=False)
+    parser.add_argument('--model', type=str, default='mobilenet_thin', help='mobilenet_original / mobilenet_thin')
+    parser.add_argument('--engine',  type=str, default="mobilepose_thin_656x368.engine")
+    parser.add_argument('--half16', type=bool, default=False)
+    parser.add_argument('--graph', type=str, default="graph_opt.pb")
+    parser.add_argument('--image_dir', type=str, default='/home/zaikun/hdd/data/coco_2014/val2014/')
+    parser.add_argument('--coco_json_file', type = str, default = '/home/zaikun/hdd/data/coco_2014/annotations/person_keypoints_minival2014.json')
+    parser.add_argument('--display', type=bool, default=False)
+    args = parser.parse_args()
+    write_json = 'json/%s_%d_%d.json' %(args.model, args.input_width, args.input_height)
 
+    annType = ['segm', 'bbox', 'keypoints']
+    annType = annType[2]
+    cocoGt = COCO(args.coco_json_file)
+    keys = list(cocoGt.imgs.keys())
+    catIds = cocoGt.getCatIds(catNms = ['person'])
+    imgIds = cocoGt.getImgIds(catIds = catIds)
+    keys = list(cocoGt.imgs.keys())
+
+    if not os.path.exists(write_json):
+        input_node = tf.placeholder(tf.float32, shape=(1, args.input_height, args.input_width, 3), name='image')
+        fp = open(write_json, 'w')
+        result = []
+        
+        with tf.Session(config=config) as sess:
+            if not args.use_tensorrt:
+                net, _, last_layer = get_network(args.model, input_node, sess)
+                context = None
+            else:
+                net, last_layer = None, None
+                engine = create_engine(args.engine,  args.graph, args.input_height, args.input_width,  'image', 'Openpose/concat_stage7', args.half16)
+                context = engine.create_execution_context()
+
+            for i, image_id in enumerate(tqdm(keys)):
+                #image_id = int(getLastName(img))
+                img_meta = cocoGt.imgs[image_id]
+                img_idx = img_meta['id']
+                ann_idx = cocoGt.getAnnIds(imgIds=image_id)
+                anns = cocoGt.loadAnns(ann_idx)
+
+                item = {
+                    'image_id':1,
+                    'category_id':1,
+                    'keypoints':[],
+                    'score': 0.0
+                }
+                img_name = args.image_dir +  '%012d.jpg' % image_id
+                image = read_imgfile(img_name, args.input_width, args.input_height)
+                if not args.use_tensorrt:
+                    run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+                    run_metadata = tf.RunMetadata()
+                    pafMat, heatMat = sess.run(
+                        [
+                            net.get_output(name=last_layer.format(stage=args.stage_level, aux=1)),
+                            net.get_output(name=last_layer.format(stage=args.stage_level, aux=2))
+                        ], feed_dict={'image:0': [image]}, options=run_options, run_metadata=run_metadata
+                    )
+                    heatMat, pafMat = heatMat[0], pafMat[0]
+                else:
+                    image_input = image.transpose((2,0,1)).astype(np.float32).copy()
+                    output = tensorrt_inference(image_input, 57, args.input_height, args.input_width, context)
+                    output = output.reshape(57, int(args.input_height/8), int(args.input_width/8)).transpose((1,2,0))
+                    heatMat, pafMat = output[:,:,:19], output[:,:,19:]
+
+                humans = PoseEstimator.estimate(heatMat, pafMat)
+   
+                for human in humans :
+                    # import pdb; pdb.set_trace();
+                    res = write_coco_json(human, img_meta['width'], img_meta['height'])
+                    item['keypoints'] = res
+                    item['image_id'] = image_id
+                    item['score'] , visible = compute_oks(res, cocoGt.loadAnns(ann_idx))
+                    if len(visible) != 0:
+                        for vis in range(17):
+                            item['keypoints'][3* vis + 2] = visible[vis]
+                        result.append(item)
+
+        json.dump(result,fp)
+        fp.close()
+
+    cocoDt = cocoGt.loadRes(write_json)
+    cocoEval = COCOeval(cocoGt, cocoDt, annType)
+    cocoEval.params.imgIds = keys
+    cocoEval.params.catIds = [1]
+    cocoEval.evaluate()
+    cocoEval.accumulate()
+    cocoEval.summarize()
+
+    pred = json.load(open(write_json, 'r'))
+    scores = [ x['score'] for x in pred]
+    ap50 = compute_ap(scores, 0.5)
+    print('ap50 is %f' % ap50)
+    ap = 0
+    for i in np.arange(0.5,1, 0.05).tolist():
+        ap = ap + compute_ap(scores, i)
+    ap = ap / len(np.arange(0.5, 1 , 0.05).tolist())
+    print('ap is %f' % ap)

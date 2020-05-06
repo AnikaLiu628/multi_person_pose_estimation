@@ -8,3 +8,6 @@ figures/*
 !figures/.gitkeep 
 script/GTimage_test.py
 script/eval.py
+script/test.py
+script/eval_plot_copy.py
+script/eval.py
