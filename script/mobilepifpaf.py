@@ -8,7 +8,7 @@ from network_mobilenet_thin import MobilenetNetworkThin
 
 
 class MobilePifPaf():
-    def __init__(self, backbone, is_training, depth_multiplier=1.0, number_keypoints=18):
+    def __init__(self, backbone, is_training, depth_multiplier=0.5, number_keypoints=19):
         self.backbone = backbone
         self.is_training = is_training
         self.depth_multiplier = depth_multiplier
@@ -45,8 +45,38 @@ class MobilePifPaf():
                 
         return nets, classes_x, regs_x
 
+    def PixelShuffle(self, I, r, scope='PixelShuffle'):
+        with tf.variable_scope(scope, reuse=tf.AUTO_REUSE):
+            N, H, W, C = I.shape
+            # ps = tf.layers.conv2d_transpose(I, filters=int(C.value / r**2),
+            #                                 kernel_size=(3, 3),
+            #                                 strides=(2, 2),
+            #                                 padding='same',
+            #                                 use_bias=False,
+            #                                 name='deconv')
+            ps = tf.depth_to_space(I, block_size=int(r),
+                                          data_format='NHWC',
+                                          name='depth_to_space')
+        return ps
+
+    def DUC(self, x, filters, upscale_factor, is_training, scope='DUC'):
+        with tf.variable_scope(scope, reuse=tf.AUTO_REUSE):
+            x_pad = tf.pad(x,
+                           [[0, 0], [1, 1], [1, 1], [0, 0]],
+                           name='x_padding')
+            net = tf.layers.separable_conv2d(x_pad, filters,
+                                             kernel_size=[3, 3],
+                                             use_bias=False,
+                                             name='sep_conv')
+            net = tf.layers.batch_normalization(net,
+                                                name='bn',
+                                                training=is_training)
+            net = tf.nn.relu(net)
+            net = self.PixelShuffle(net, upscale_factor)
+        return net
+
     def build(self, features):
-        n_heatmaps = 18
+        n_heatmaps = 19
         paf_nfields = 19
         paf_nvectors = 2
         paf_nscales = 0
@@ -67,32 +97,76 @@ class MobilePifPaf():
 
         elif self.backbone == 'mobilenet_thin':
             out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
-            # end_points = basenet.build(features)
             end_points = out.get_layer()
-            # end_points['Openpose/concat_stage7'] = backbone_end
-            # print(end_points[-1])
-            # backbone_end = end_points['Openpose/concat_stage7']
-            # print(end_points)
             hm = end_points['MConv_Stage6_L2_5']
             hm = tf.transpose(hm, [0, 3, 1, 2], name='hm_out')
             paf = end_points['MConv_Stage6_L1_5']
             paf = tf.transpose(paf, [0, 3, 1, 2], name='paf_out')
-            # print(hm, paf)
 
-        # nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
-        end_points['heat_map'] = hm
-        end_points['PAF'] = paf
-        # end_points['outputs'] = [nets]
+        if self.backbone == 'mobilenet_thin':
+            # nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
+            end_points['heat_map'] = hm
+            end_points['PAF'] = paf
+            # end_points['outputs'] = [nets]
+        else:
+            # nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
+            ps1 = self.PixelShuffle(backbone_end, 2, 
+                        scope='PixelShuffle1')
+
+            paf_duc1 = self.DUC(ps1,
+                        filters=512,
+                        upscale_factor=2,
+                        is_training=self.is_training,
+                        scope='PAF_DUC1')
+
+            paf_duc2 = self.DUC(paf_duc1,
+                        filters=256,
+                        upscale_factor=2,
+                        is_training=self.is_training,
+                        scope='PAF_DUC2')
+            paf_duc2_pad = tf.pad(paf_duc2,
+                            [[0, 0], [1, 1], [1, 1], [0, 0]],
+                            name='duc2_padding')
+            paf_conv_out = tf.layers.conv2d(paf_duc2_pad, 38,
+                                        kernel_size=[3, 3],
+                                        name='PAF_output')
+            paf_conv_feature = tf.space_to_depth(paf_conv_out,
+                                                block_size=int(4),
+                                                data_format='NHWC',
+                                                name='space_to_depth')
+            concat_feat = tf.concat(values=[ps1, paf_conv_feature], axis=3, name='concat_feat')
+
+            duc1 = self.DUC(concat_feat,
+                        filters=512,
+                        upscale_factor=2,
+                        is_training=self.is_training,
+                        scope='DUC1')
+            duc2 = self.DUC(duc1,
+                            filters=256,
+                            upscale_factor=2,
+                            is_training=self.is_training,
+                            scope='DUC2')
+            duc2_pad = tf.pad(duc2,
+                            [[0, 0], [1, 1], [1, 1], [0, 0]],
+                            name='duc2_padding')
+
+            conv_out = tf.layers.conv2d(duc2_pad, self.number_keypoints,
+                                        kernel_size=[3, 3],
+                                        name='output')
+            conv_out = tf.transpose(conv_out, [0, 3, 1, 2], name='hm_out')
+            paf_conv_out = tf.transpose(paf_conv_out, [0, 3, 1, 2], name='paf_out')
+            end_points['heat_map'] = conv_out
+            end_points['PAF'] = paf_conv_out
 
         return end_points
 
 
 def main(_):
     print('Rebuild graph...')
-    model = MobilePifPaf(backbone='mobilenet_thin', is_training=False)
+    model = MobilePifPaf(backbone='mobilenet_v1', is_training=False)
 
     inputs = tf.placeholder(tf.float32,
-                            shape=(1, 368, 432, 3),
+                            shape=(1, 384, 512, 3),
                             name='image')
     end_points = model.build(inputs)
     # print(end_points) #([class, paf1, paf2], class, paf)
@@ -102,7 +176,7 @@ def main(_):
 
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
-    end_points = sess.run(end_points, feed_dict={inputs: np.zeros((1, 368, 432, 3))})
+    end_points = sess.run(end_points, feed_dict={inputs: np.zeros((1, 384, 512, 3))})
     print(end_points['heat_map'].shape)
     # print(PAF[0][0])
     # print(PAF[1])

@@ -15,11 +15,11 @@ class Preprocess():
 
         self.kernel_size = kernel_size
         self.min_size = 3
-        self.sigma = 8.0
+        self.sigma = 2.0
         self.scaling_ratio = 8
 
     def pyfn_interface_input(self, parsed_features):
-        return parsed_features['image/decoded'], parsed_features['image/filename'], \
+        return parsed_features['image/human'], parsed_features['image/filename'], \
             parsed_features['image/height'], parsed_features['image/width'], \
             parsed_features['image/human/bbox/xmin'], parsed_features['image/human/bbox/xmax'], \
             parsed_features['image/human/bbox/ymin'], parsed_features['image/human/bbox/ymax'], \
@@ -28,7 +28,7 @@ class Preprocess():
 
     def pyfn_interface_output(self, img, source, heat_map, paf, keypoint_sets, n_kps):
         parsed_features = {
-            'image/decoded': img, 
+            'image/human': img, 
             'image/filename': source,
             'heatmap': heat_map,
             'PAF': paf, 
@@ -414,7 +414,7 @@ class Preprocess():
     def data_augmentation(self, parsed_features):
         self._random_scale_image(parsed_features)
         # self._random_rotate_image(parsed_features)
-        self._random_flip_image(parsed_features)
+        # self._random_flip_image(parsed_features)
         # self._random_resize_shortestedge(parsed_features)
         # self._random_crop(parsed_features)
         return parsed_features

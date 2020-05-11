@@ -25,7 +25,7 @@ flags.DEFINE_string(
 ########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v2',
+    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v3',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
@@ -70,7 +70,7 @@ flags.DEFINE_boolean(
 )
 flags.DEFINE_boolean(
     'data_augmentation',
-    False,
+    True,
     'Add data augmentation to preprocess'
 )
 flags.DEFINE_string(
@@ -142,9 +142,9 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         # hm_x = hm_x[:, :, :-2, :]
         # paf_x = paf_x[:, :, :-2, :]
         
-        with tf.device('/cpu:0'):
-            hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
-            paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
+        # with tf.device('/cpu:0'):
+        hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
+        paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
 
         loss = hm_loss + paf_loss
 
