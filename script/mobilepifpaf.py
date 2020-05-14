@@ -76,8 +76,8 @@ class MobilePifPaf():
         return net
 
     def build(self, features):
-        n_heatmaps = 19
-        paf_nfields = 19
+        n_heatmaps = 17
+        paf_nfields = 10
         paf_nvectors = 2
         paf_nscales = 0
         # end_points=[]
@@ -163,10 +163,10 @@ class MobilePifPaf():
 
 def main(_):
     print('Rebuild graph...')
-    model = MobilePifPaf(backbone='mobilenet_v1', is_training=False)
+    model = MobilePifPaf(backbone='mobilenet_thin', is_training=False)
 
     inputs = tf.placeholder(tf.float32,
-                            shape=(1, 384, 512, 3),
+                            shape=(1, 368, 432, 3),
                             name='image')
     end_points = model.build(inputs)
     # print(end_points) #([class, paf1, paf2], class, paf)
@@ -176,7 +176,7 @@ def main(_):
 
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
-    end_points = sess.run(end_points, feed_dict={inputs: np.zeros((1, 384, 512, 3))})
+    end_points = sess.run(end_points, feed_dict={inputs: np.zeros((1, 368, 432, 3))})
     print(end_points['heat_map'].shape)
     # print(PAF[0][0])
     # print(PAF[1])

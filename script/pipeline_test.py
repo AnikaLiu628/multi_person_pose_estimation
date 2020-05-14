@@ -14,7 +14,7 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'dataset_path',
-    '/Users/anika/Documents/tfrecord_builder/run/val_tmp/coco_mp_keypoints_feature_train.record-00000-of-00001',
+    '/Users/anika/Documents/tfrecord_builder/run/test_tmp/coco_mp_keypoints_feature_train.record-00000-of-00001',
     'Training data'
 )
 flags.DEFINE_string(
@@ -113,14 +113,16 @@ def _parse_function(example_proto):
                 'image/human/keypoints/v': tf.VarLenFeature(tf.int64),
                 'image/human/keypoints/feature':tf.VarLenFeature(tf.int64),
                 'image/human/heatmap':tf.VarLenFeature(tf.float32),
-                'image/human/PAF':tf.VarLenFeature(tf.float32)
+                'image/human/PAF':tf.VarLenFeature(tf.float32), 
+                'image/human/keypoints/feature/shape':tf.FixedLenFeature((3, ), tf.int64),
+                'image/human/heatmap/shape':tf.FixedLenFeature((3, ), tf.int64),
+                'image/human/PAF/shape':tf.FixedLenFeature((3, ), tf.int64)
                 }
     parsed_features = tf.parse_single_example(example_proto, features)
     parsed_features['image/decoded'] = tf.image.decode_image(
         parsed_features['image/encoded'],
         channels=3
     )
-
     parsed_features['image/human'] = parsed_features['image/decoded']
     bx1 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/xmin'], default_value=0)
     parsed_features['image/human/bbox/xmin'] = bx1
@@ -138,18 +140,26 @@ def _parse_function(example_proto):
     vs = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/v'], default_value=0)
     parsed_features['image/human/keypoints/v'] = vs
     nkp = tf.sparse_tensor_to_dense(parsed_features['image/human/num_keypoints'], default_value=0)
-    parsed_features['image/human/num_keypoints'] = nkp
+    parsed_features['image/human/num_keypoints'] = nkp 
 
     kps_feat = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/feature'], default_value=0)
     parsed_features['image/human/keypoints/feature'] = kps_feat
-    hm = tf.sparse_tensor_to_dense(parsed_features['image/human/heatmap'], default_value=0)
+    hm = tf.sparse_tensor_to_dense(parsed_features['image/human/heatmap'], default_value=0.0)
     parsed_features['image/human/heatmap'] = hm
-    paf = tf.sparse_tensor_to_dense(parsed_features['image/human/PAF'], default_value=0)
+    paf = tf.sparse_tensor_to_dense(parsed_features['image/human/PAF'], default_value=0.0)
     parsed_features['image/human/PAF'] = paf
-
-
+    
+    parsed_features['image/human/keypoints/feature'] = tf.reshape(
+        parsed_features['image/human/keypoints/feature'], 
+        parsed_features['image/human/keypoints/feature/shape'])
+    parsed_features['image/human/heatmap'] = tf.reshape(
+        parsed_features['image/human/heatmap'], 
+        parsed_features['image/human/heatmap/shape'])
+    parsed_features['image/human/PAF'] = tf.reshape(
+        parsed_features['image/human/PAF'], 
+        parsed_features['image/human/PAF/shape'])
+    
     return parsed_features
-
 
 def _preprocess_function(parsed_features, params={}):
     w = 432
@@ -166,13 +176,12 @@ def _preprocess_function(parsed_features, params={}):
     bgr_avg = tf.constant(127.5)
     parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
     
-    f_w = 54
-    f_h = 46
-    parsed_features['image/human/keypoints/feature'].set_shape([f_h, f_w, 17])
-    parsed_features['image/human/heatmap'].set_shape([f_h, f_w, 17])
-    parsed_features['image/human/PAF'].set_shape([f_h, f_w, 20])
+    parsed_features['image/human/keypoints/feature'] = tf.transpose(parsed_features['image/human/keypoints/feature'], [2, 0, 1])
+    parsed_features['image/human/heatmap'] = tf.transpose(parsed_features['image/human/heatmap'], [2, 0, 1])
+    parsed_features['image/human/PAF'] = tf.transpose(parsed_features['image/human/PAF'], [2, 0, 1])
 
     return parsed_features['image/human/resized_and_subtract_mean'], \
+            parsed_features['image/human/keypoints/feature'], \
             parsed_features['image/human/heatmap'], \
             parsed_features['image/human/PAF'], \
             parsed_features['image/human']
@@ -213,8 +222,8 @@ def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8
     )
     dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
     iterator = dataset.make_one_shot_iterator()
-    data, hm, paf, hum = iterator.get_next()
-    return data, hm, paf, hum
+    data, kps_f, hm, paf, hum = iterator.get_next()
+    return data, kps_f, hm, paf, hum
     # return dataset
 
 
@@ -222,11 +231,11 @@ def main(_):
     np.set_printoptions(threshold=np.inf)
     task_graph = tf.Graph()
     with task_graph.as_default():
-        data, hm, paf, hum = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
+        data, kps_f, hm, paf, hum = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
         sess = tf.Session()
         while True:
             try:
-                out_data, out_hm, out_paf, ohum = sess.run([data, hm, paf, hum])
+                out_data, o_kps_f, out_hm, out_paf, ohum = sess.run([data, kps_f, hm, paf, hum])
             except tf.errors.OutOfRangeError:
                 break
 
@@ -247,17 +256,39 @@ def main(_):
             #         break
             # print(out_paf_reg3.shape)
         #     print(new_kps)
-            print(ohum.shape)
+            # print(ohum.shape)
+            print(kps_f.shape)
             print(out_hm.shape)
-            # con_hm = np.zeros_like(out_hm[0][0])
-            # for i in range(0, 18):
-            #     con_hm += out_hm[0][i]
-            #     con_hm_val = con_hm
-            #     mask = con_hm > 1
-            #     con_hm[mask] = 1
-            # con_hm = (con_hm*255).astype("uint8")
+            print(out_paf.shape)
+            con_hm = np.zeros_like(out_hm[0][0])
+            for i in range(0, 17):
+                con_hm += out_hm[0][i]
+                con_hm_val = con_hm
+                mask = con_hm > 1
+                con_hm[mask] = 1
+            con_hm = (con_hm*255).astype("uint8")
             
-            # cv2.imshow('con_hm', con_hm)
+            cv2.imshow('con_hm', con_hm)
+
+            con_paf = np.zeros_like(out_paf[0][0])
+            # for i in range(0, 17):
+            con_paf += out_paf[0][1]
+            con_paf_val = con_paf
+            # mask = con_paf > 1
+            # con_paf[mask] = 1
+            con_paf = (con_paf*255).astype("uint8")
+            
+            cv2.imshow('con_paf', con_paf)
+
+            con_kpf = np.zeros_like(o_kps_f[0][0])
+            for i in range(0, 17):
+                con_kpf += o_kps_f[0][i]
+                con_kpf_val = con_kpf
+                mask = con_kpf > 8
+                con_kpf[mask] = 1
+            con_kpf = (con_kpf*255).astype("uint8")
+            
+            cv2.imshow('con_kpf', con_kpf)
             
             if cv2.waitKey(0) & 0xFF == ord('q'):
                 break
