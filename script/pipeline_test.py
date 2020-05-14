@@ -5,6 +5,7 @@ import math
 import cv2
 import numpy as np
 import tensorflow as tf
+# import tensorflow.contrib import slim
 
 from preprocesses import Preprocess
 
@@ -13,7 +14,7 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'dataset_path',
-    '../data/coco_mp_keypoints_train_100.record-00000-of-00001',
+    '/Users/anika/Documents/tfrecord_builder/run/val_tmp/coco_mp_keypoints_feature_train.record-00000-of-00001',
     'Training data'
 )
 flags.DEFINE_string(
@@ -109,12 +110,17 @@ def _parse_function(example_proto):
                 'image/human/num_keypoints': tf.VarLenFeature(tf.int64),
                 'image/human/keypoints/x': tf.VarLenFeature(tf.int64),
                 'image/human/keypoints/y': tf.VarLenFeature(tf.int64),
-                'image/human/keypoints/v': tf.VarLenFeature(tf.int64)}
+                'image/human/keypoints/v': tf.VarLenFeature(tf.int64),
+                'image/human/keypoints/feature':tf.VarLenFeature(tf.int64),
+                'image/human/heatmap':tf.VarLenFeature(tf.float32),
+                'image/human/PAF':tf.VarLenFeature(tf.float32)
+                }
     parsed_features = tf.parse_single_example(example_proto, features)
     parsed_features['image/decoded'] = tf.image.decode_image(
         parsed_features['image/encoded'],
         channels=3
     )
+
     parsed_features['image/human'] = parsed_features['image/decoded']
     bx1 = tf.sparse_tensor_to_dense(parsed_features['image/human/bbox/xmin'], default_value=0)
     parsed_features['image/human/bbox/xmin'] = bx1
@@ -133,6 +139,15 @@ def _parse_function(example_proto):
     parsed_features['image/human/keypoints/v'] = vs
     nkp = tf.sparse_tensor_to_dense(parsed_features['image/human/num_keypoints'], default_value=0)
     parsed_features['image/human/num_keypoints'] = nkp
+
+    kps_feat = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/feature'], default_value=0)
+    parsed_features['image/human/keypoints/feature'] = kps_feat
+    hm = tf.sparse_tensor_to_dense(parsed_features['image/human/heatmap'], default_value=0)
+    parsed_features['image/human/heatmap'] = hm
+    paf = tf.sparse_tensor_to_dense(parsed_features['image/human/PAF'], default_value=0)
+    parsed_features['image/human/PAF'] = paf
+
+
     return parsed_features
 
 
@@ -151,16 +166,16 @@ def _preprocess_function(parsed_features, params={}):
     bgr_avg = tf.constant(127.5)
     parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
     
-    # return image, \
-    #        parsed_features['image/human/resized_and_subtract_mean'], \
-    #        parsed_features['heatmap'], \
-    #        parsed_features['PAF'], \
-    #        parsed_features['image/filename']
-    return parsed_features['image/human/resized_and_subtract_mean'], \
-            parsed_features['heatmap'], \
-            parsed_features['PAF']
-            # parsed_features['image/height']
+    f_w = 54
+    f_h = 46
+    parsed_features['image/human/keypoints/feature'].set_shape([f_h, f_w, 17])
+    parsed_features['image/human/heatmap'].set_shape([f_h, f_w, 17])
+    parsed_features['image/human/PAF'].set_shape([f_h, f_w, 20])
 
+    return parsed_features['image/human/resized_and_subtract_mean'], \
+            parsed_features['image/human/heatmap'], \
+            parsed_features['image/human/PAF'], \
+            parsed_features['image/human']
 
 def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
     #preprocess.py -preprocess()
@@ -175,31 +190,31 @@ def data_pipeline(tf_record_path, params={}, batch_size=64, num_parallel_calls=8
         dataset = dataset.map(
             preprocess.data_augmentation,
             num_parallel_calls=num_parallel_calls
-    )
-    dataset = dataset.map(
-        preprocess.pyfn_interface_input,
-        num_parallel_calls=num_parallel_calls
-    )
-    dataset = dataset.map(
-        lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
-            preprocess.head_encoder,
-            [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
-            [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
-        ),
-        num_parallel_calls=num_parallel_calls
-    )
-    dataset = dataset.map(
-        preprocess.pyfn_interface_output,
-        num_parallel_calls=num_parallel_calls
-    )
+        )
+    # dataset = dataset.map(
+    #     preprocess.pyfn_interface_input,
+    #     num_parallel_calls=num_parallel_calls
+    # )
+    # dataset = dataset.map(
+    #     lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
+    #         preprocess.head_encoder,
+    #         [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
+    #         [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
+    #     ),
+    #     num_parallel_calls=num_parallel_calls
+    # )
+    # dataset = dataset.map(
+    #     preprocess.pyfn_interface_output,
+    #     num_parallel_calls=num_parallel_calls
+    # )
     dataset = dataset.map(
         partial(_preprocess_function, params=params),
         num_parallel_calls=num_parallel_calls
     )
     dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
     iterator = dataset.make_one_shot_iterator()
-    data, paf_cla, paf_reg3 = iterator.get_next()
-    return data, paf_cla, paf_reg3
+    data, hm, paf, hum = iterator.get_next()
+    return data, hm, paf, hum
     # return dataset
 
 
@@ -207,11 +222,11 @@ def main(_):
     np.set_printoptions(threshold=np.inf)
     task_graph = tf.Graph()
     with task_graph.as_default():
-        data, paf_cla, paf_reg3 = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
+        data, hm, paf, hum = data_pipeline([FLAGS.dataset_path],params={'do_data_augmentation': True, 'dataset_split_num':1},batch_size=FLAGS.batch_size)
         sess = tf.Session()
         while True:
             try:
-                out_data, out_paf_cla, out_paf_reg3 = sess.run([data, paf_cla, paf_reg3])
+                out_data, out_hm, out_paf, ohum = sess.run([data, hm, paf, hum])
             except tf.errors.OutOfRangeError:
                 break
 
@@ -232,17 +247,17 @@ def main(_):
             #         break
             # print(out_paf_reg3.shape)
         #     print(new_kps)
-            con_hm = np.zeros_like(out_paf_cla[0][0])
-            for i in range(0, 18):
-                con_hm += out_paf_cla[0][i]
-                con_hm_val = con_hm
-                mask = con_hm > 1
-                con_hm[mask] = 1
-            con_hm = (con_hm*255).astype("uint8")
+            print(ohum.shape)
+            print(out_hm.shape)
+            # con_hm = np.zeros_like(out_hm[0][0])
+            # for i in range(0, 18):
+            #     con_hm += out_hm[0][i]
+            #     con_hm_val = con_hm
+            #     mask = con_hm > 1
+            #     con_hm[mask] = 1
+            # con_hm = (con_hm*255).astype("uint8")
             
-        #     print(kps_shape_np)
-            # print(con_hm_val)
-            cv2.imshow('con_hm', con_hm)
+            # cv2.imshow('con_hm', con_hm)
             
             if cv2.waitKey(0) & 0xFF == ord('q'):
                 break
