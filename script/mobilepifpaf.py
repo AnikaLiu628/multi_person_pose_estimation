@@ -8,7 +8,7 @@ from network_mobilenet_thin import MobilenetNetworkThin
 
 
 class MobilePifPaf():
-    def __init__(self, backbone, is_training, depth_multiplier=0.5, number_keypoints=19):
+    def __init__(self, backbone, is_training, depth_multiplier=0.5, number_keypoints=17):
         self.backbone = backbone
         self.is_training = is_training
         self.depth_multiplier = depth_multiplier

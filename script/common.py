@@ -15,38 +15,47 @@ from scipy.ndimage.filters import maximum_filter
 
 class CocoPart(Enum):
     Nose = 0
-    Neck = 1
-    RShoulder = 2
-    RElbow = 3
-    RWrist = 4
+    # Neck = 1
+    RShoulder = 6
+    RElbow = 8
+    RWrist = 10
     LShoulder = 5
-    LElbow = 6
-    LWrist = 7
-    RHip = 8
-    RKnee = 9
-    RAnkle = 10
+    LElbow = 7
+    LWrist = 9
+    RHip = 12
+    RKnee = 14
+    RAnkle = 16
     LHip = 11
-    LKnee = 12
-    LAnkle = 13
-    REye = 14
-    LEye = 15
-    REar = 16
-    LEar = 17
+    LKnee = 13
+    LAnkle = 15
+    REye = 2
+    LEye = 1
+    REar = 4
+    LEar = 3
     # Background = 18
 
+
+# CocoPairs = [
+#     (1, 2), (1, 5), (2, 3), (3, 4), (5, 6), (6, 7), (1, 8), (8, 9), (9, 10), (1, 11),
+#     (11, 12), (12, 13), (1, 0), (0, 14), (14, 16), (0, 15), (15, 17), (2, 16), (5, 17)
+# ]
+
 CocoPairs = [
-    (1, 2), (1, 5), (2, 3), (3, 4), (5, 6), (6, 7), (1, 8), (8, 9), (9, 10), (1, 11),
-    (11, 12), (12, 13), (1, 0), (0, 14), (14, 16), (0, 15), (15, 17), (2, 16), (5, 17)
-]   # = 19
+    (5, 7), (7, 9), (6, 8), (8, 10), (11, 13), (13, 15), (12, 14), (14, 16), (5, 6), (11, 12)
+]
 CocoPairsRender = CocoPairs[:-2]
 CocoPairsNetwork = [
-    (12, 13), (20, 21), (14, 15), (16, 17), (22, 23), (24, 25), (0, 1), (2, 3), (4, 5),
-    (6, 7), (8, 9), (10, 11), (28, 29), (30, 31), (34, 35), (32, 33), (36, 37), (18, 19), (26, 27)
- ]  # = 19
+    (16, 17), (4, 5), (6, 7), (0, 1), (2, 3), (12, 13), (14, 15), (8, 9), (10, 11), (18, 19)
+]
+# CocoPairsNetwork = [
+#     (12, 13), (20, 21), (14, 15), (16, 17), (22, 23), (24, 25), (0, 1), (2, 3), (4, 5),
+#     (6, 7), (8, 9), (10, 11), (28, 29), (30, 31), (34, 35), (32, 33), (36, 37), (18, 19), (26, 27)
+#  ]  # = 19
 
 CocoColors = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255, 0], [85, 255, 0], [0, 255, 0],
               [0, 255, 85], [0, 255, 170], [0, 255, 255], [0, 170, 255], [0, 85, 255], [0, 0, 255], [85, 0, 255],
-              [170, 0, 255], [255, 0, 255], [255, 0, 170], [255, 0, 85]]
+              [170, 0, 255], [255, 0, 255], [255, 0, 170]]
+            #   , [255, 0, 85]]
 
 
 NMS_Threshold = 0.1
@@ -80,16 +89,16 @@ def non_max_suppression(heatmap, window_size=3, threshold=NMS_Threshold):
 
 
 def estimate_pose(heatMat, pafMat):
-    if heatMat.shape[2] == 18:
+    if heatMat.shape[2] == 17:
         # transform from [height, width, n_parts] to [n_parts, height, width]
         heatMat = np.rollaxis(heatMat, 2, 0)
-    if pafMat.shape[2] == 38:
+    if pafMat.shape[2] == 20:
         # transform from [height, width, 2*n_pairs] to [2*n_pairs, height, width]
         pafMat = np.rollaxis(pafMat, 2, 0)
 
     # reliability issue.
-    heatMat = heatMat - heatMat.min(axis=1).min(axis=1).reshape(18, 1, 1)
-    heatMat = heatMat - heatMat.min(axis=2).reshape(18, heatMat.shape[1], 1)
+    heatMat = heatMat - heatMat.min(axis=1).min(axis=1).reshape(17, 1, 1)
+    heatMat = heatMat - heatMat.min(axis=2).reshape(17, heatMat.shape[1], 1)
 
     _NMS_Threshold = max(np.average(heatMat) * 4.0, NMS_Threshold)
     _NMS_Threshold = min(_NMS_Threshold, 0.3)
@@ -235,7 +244,7 @@ def draw_humans(img, human_list):
         part_idxs = human.keys()
 
         # draw point
-        for i in range(18):
+        for i in range(17):
             if i not in part_idxs:
                 continue
             part_coord = human[i][1]

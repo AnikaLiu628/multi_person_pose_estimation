@@ -9,7 +9,6 @@ import tensorflow as tf
 
 from preprocesses import Preprocess
 
-
 slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
@@ -271,12 +270,14 @@ def main(_):
             cv2.imshow('con_hm', con_hm)
 
             con_paf = np.zeros_like(out_paf[0][0])
-            # for i in range(0, 17):
-            con_paf += out_paf[0][1]
-            con_paf_val = con_paf
+            # for i in range(0, 20):
+            i=5
+            # con_paf += out_paf[0][i]
+            con_paf_val = abs(out_paf[0][i])
             # mask = con_paf > 1
             # con_paf[mask] = 1
-            con_paf = (con_paf*255).astype("uint8")
+            print(con_paf_val)
+            con_paf = (con_paf_val*255).astype("uint8")
             
             cv2.imshow('con_paf', con_paf)
 

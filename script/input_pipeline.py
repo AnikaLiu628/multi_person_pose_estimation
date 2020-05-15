@@ -24,7 +24,14 @@ class Pipeline():
                     'image/human/num_keypoints': tf.VarLenFeature(tf.int64),
                     'image/human/keypoints/x': tf.VarLenFeature(tf.int64),
                     'image/human/keypoints/y': tf.VarLenFeature(tf.int64),
-                    'image/human/keypoints/v': tf.VarLenFeature(tf.int64)}
+                    'image/human/keypoints/v': tf.VarLenFeature(tf.int64),
+                    'image/human/keypoints/feature':tf.VarLenFeature(tf.int64),
+                    'image/human/heatmap':tf.VarLenFeature(tf.float32),
+                    'image/human/PAF':tf.VarLenFeature(tf.float32), 
+                    'image/human/keypoints/feature/shape':tf.FixedLenFeature((3, ), tf.int64),
+                    'image/human/heatmap/shape':tf.FixedLenFeature((3, ), tf.int64),
+                    'image/human/PAF/shape':tf.FixedLenFeature((3, ), tf.int64)
+                    }
         parsed_features = tf.parse_single_example(example_proto, features)
         parsed_features['image/decoded'] = tf.image.decode_image(
             parsed_features['image/encoded'],
@@ -47,11 +54,28 @@ class Pipeline():
         vs = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/v'], default_value=0)
         parsed_features['image/human/keypoints/v'] = vs
         nkp = tf.sparse_tensor_to_dense(parsed_features['image/human/num_keypoints'], default_value=0)
-        parsed_features['image/human/num_keypoints'] = nkp
+        parsed_features['image/human/num_keypoints'] = nkp 
+
+        kps_feat = tf.sparse_tensor_to_dense(parsed_features['image/human/keypoints/feature'], default_value=0)
+        parsed_features['image/human/keypoints/feature'] = kps_feat
+        hm = tf.sparse_tensor_to_dense(parsed_features['image/human/heatmap'], default_value=0.0)
+        parsed_features['image/human/heatmap'] = hm
+        paf = tf.sparse_tensor_to_dense(parsed_features['image/human/PAF'], default_value=0.0)
+        parsed_features['image/human/PAF'] = paf
+        
+        parsed_features['image/human/keypoints/feature'] = tf.reshape(
+            parsed_features['image/human/keypoints/feature'], 
+            parsed_features['image/human/keypoints/feature/shape'])
+        parsed_features['image/human/heatmap'] = tf.reshape(
+            parsed_features['image/human/heatmap'], 
+            parsed_features['image/human/heatmap/shape'])
+        parsed_features['image/human/PAF'] = tf.reshape(
+            parsed_features['image/human/PAF'], 
+            parsed_features['image/human/PAF/shape'])
+        
         return parsed_features
 
     def _preprocess_function(self, parsed_features, params={}):
-        
         w = 432
         h = 368
         if not params['do_data_augmentation']:
@@ -66,12 +90,14 @@ class Pipeline():
         bgr_avg = tf.constant(127.5)
         parsed_features['image/human/resized_and_subtract_mean'] = (parsed_features['image/human/resized'] - bgr_avg) * tf.constant(0.0078125)
         
-        
-        return image, \
-               parsed_features['image/human/resized_and_subtract_mean'], \
-               parsed_features['heatmap'], \
-               parsed_features['PAF'], \
-               parsed_features['image/filename']
+        parsed_features['image/human/keypoints/feature'] = tf.transpose(parsed_features['image/human/keypoints/feature'], [2, 0, 1])
+        parsed_features['image/human/heatmap'] = tf.transpose(parsed_features['image/human/heatmap'], [2, 0, 1])
+        parsed_features['image/human/PAF'] = tf.transpose(parsed_features['image/human/PAF'], [2, 0, 1])
+
+        return parsed_features['image/human/resized_and_subtract_mean'], \
+                parsed_features['image/human/keypoints/feature'], \
+                parsed_features['image/human/heatmap'], \
+                parsed_features['image/human/PAF']
         # return parsed_features['image/human/resized_and_subtract_mean'], \
         #        {0:parsed_features['heatmap'], 
         #        1:parsed_features['PAF']}
@@ -93,30 +119,30 @@ class Pipeline():
                 preprocess.data_augmentation,
                 num_parallel_calls=num_parallel_calls
             )
-        dataset = dataset.map(
-            preprocess.pyfn_interface_input,
-            num_parallel_calls=num_parallel_calls
-        )
-        dataset = dataset.map(
-            lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
-                preprocess.head_encoder,
-                [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
-                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
-            ),
-            num_parallel_calls=num_parallel_calls
-        )
-        dataset = dataset.map(
-            preprocess.pyfn_interface_output,
-            num_parallel_calls=num_parallel_calls
-        )
+        # dataset = dataset.map(
+        #     preprocess.pyfn_interface_input,
+        #     num_parallel_calls=num_parallel_calls
+        # )
+        # dataset = dataset.map(
+        #     lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
+        #         preprocess.head_encoder,
+        #         [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
+        #         [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
+        #     ),
+        #     num_parallel_calls=num_parallel_calls
+        # )
+        # dataset = dataset.map(
+        #     preprocess.pyfn_interface_output,
+        #     num_parallel_calls=num_parallel_calls
+        # )
         dataset = dataset.map(
             partial(self._preprocess_function, params=params),
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
         iterator = dataset.make_one_shot_iterator()
-        img, data, paf_cla, paf_reg3, name = iterator.get_next()
-        return data, [paf_cla, paf_reg3]
+        img, kps_f, hm, paf = iterator.get_next()
+        return img, [hm, paf]
         # return dataset
 
 
@@ -130,28 +156,28 @@ class Pipeline():
             num_parallel_calls=num_parallel_calls
         )
 
-        dataset = dataset.map(
-            preprocess.pyfn_interface_input,
-            num_parallel_calls=num_parallel_calls
-        )
-        dataset = dataset.map(
-            lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
-                preprocess.head_encoder,
-                [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
-                [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
-            ),
-            num_parallel_calls=num_parallel_calls
-        )
-        dataset = dataset.map(
-            preprocess.pyfn_interface_output,
-            num_parallel_calls=num_parallel_calls
-        )
+        # dataset = dataset.map(
+        #     preprocess.pyfn_interface_input,
+        #     num_parallel_calls=num_parallel_calls
+        # )
+        # dataset = dataset.map(
+        #     lambda img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp: tuple(tf.py_func(
+        #         preprocess.head_encoder,
+        #         [img, source, h, w, bx1, bx2, by1, by2, kx, ky, kv, nkp],
+        #         [tf.uint8, tf.string, tf.float32, tf.float32, tf.float32, tf.int64])
+        #     ),
+        #     num_parallel_calls=num_parallel_calls
+        # )
+        # dataset = dataset.map(
+        #     preprocess.pyfn_interface_output,
+        #     num_parallel_calls=num_parallel_calls
+        # )
         dataset = dataset.map(
             partial(self._preprocess_function, params=params),
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
         iterator = dataset.make_one_shot_iterator()
-        img, data, paf_cla, paf_reg3, name = iterator.get_next()
-        return data, [paf_cla, paf_reg3]
+        img, kps_f, hm, paf = iterator.get_next()
+        return img, [hm, paf]
         # return dataset
