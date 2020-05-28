@@ -14,9 +14,9 @@ import time
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tensorflow Openpose Inference')
-    parser.add_argument('--imgpath', type=str, default='../data/p2.jpg')
-    parser.add_argument('--input-width', type=int, default=640)
-    parser.add_argument('--input-height', type=int, default=360)
+    parser.add_argument('--imgpath', type=str, default='../data/apink3.jpg')
+    parser.add_argument('--input-width', type=int, default=432)
+    parser.add_argument('--input-height', type=int, default=368)
     args = parser.parse_args()
 
     t0 = time.time()
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     from tensorflow.core.framework import graph_pb2
     graph_def = graph_pb2.GraphDef()
     # Download model from https://www.dropbox.com/s/2dw1oz9l9hi9avg/optimized_openpose.pb
-    with open('../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v2/output_model_92000/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v2.pb', 'rb') as f:
+    with open('../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/output_model_11000/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8.pb', 'rb') as f:
         graph_def.ParseFromString(f.read())
     tf.import_graph_def(graph_def, name='')
 
@@ -34,26 +34,29 @@ if __name__ == '__main__':
     print(t1 - t0)
 
     inputs = tf.get_default_graph().get_tensor_by_name('image:0')
-    outputs = tf.get_default_graph().get_tensor_by_name('shufflenet_v2/conv5/Relu:0')
-    heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('paf/class_out:0')
-    pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf/regression_out:0')
+    # outputs = tf.get_default_graph().get_tensor_by_name('shufflenet_v2/conv5/Relu:0')
+    outputs = tf.get_default_graph().get_tensor_by_name('feat_concat:0')
+    # heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('paf/class_out:0')
+    heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('hm_out:0')
+    # pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf/regression_out:0')
+    pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf_out:0')
 
     t2 = time.time()
-    print(t2 - t1)
+    print('rea model time cost:   ', t2 - t1)
 
     image = read_imgfile(args.imgpath, args.input_width, args.input_height)
 
     t3 = time.time()
-    print(t3 - t2)
+    print('read image time cost:    ', t3 - t2)
 
     with tf.Session() as sess:
-        suff_feature = sess.run(outputs, feed_dict = {inputs: image})
+        backbone_feature = sess.run(outputs, feed_dict = {inputs: image})
         heatMat, pafMat = sess.run([heatmaps_tensor, pafs_tensor], feed_dict={
-            outputs: suff_feature
+            outputs: backbone_feature
         })
 
         t4 = time.time()
-        print(t4 - t3)
+        print('feature out time cost:   ', t4 - t3)
 
         heatMat, pafMat = heatMat[0], pafMat[0]
 
@@ -71,5 +74,5 @@ if __name__ == '__main__':
 
         cv2.imshow('result', image)
         t5 = time.time()
-        print(t5 - t4)
+        print('estimate human pose: ', t5 - t4)
         cv2.waitKey(0)

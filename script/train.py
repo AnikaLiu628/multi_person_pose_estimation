@@ -12,20 +12,17 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'dataset_path',
-    '/datasets/coco/intermediate/coco_mp_keypoints_train.record-00000-of-00001',
+    '/datasets/coco/intermediate/coco_mp_keypoints_feature_gk3th3_train.record-00000-of-00001',
     'Training data (separated by comma)'
 )
 flags.DEFINE_string(
     'validationset_path',
-    '/datasets/coco/intermediate/coco_mp_keypoints_val.record-00000-of-00001',
+    '/datasets/coco/intermediate/coco_mp_keypoints_feature_gk3th3_val.record-00000-of-00001',
     'Validation data'
 )
-########################
-#######confirm, plz#####
-########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v3',
+    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
@@ -55,7 +52,7 @@ flags.DEFINE_float(
 )
 flags.DEFINE_integer(
     'number_keypoints',
-    19,
+    17,
     'Number of keypoints in [17, 12]'
 )
 flags.DEFINE_integer(
@@ -70,7 +67,7 @@ flags.DEFINE_boolean(
 )
 flags.DEFINE_boolean(
     'data_augmentation',
-    True,
+    False,
     'Add data augmentation to preprocess'
 )
 flags.DEFINE_string(

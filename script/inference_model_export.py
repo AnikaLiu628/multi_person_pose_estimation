@@ -9,12 +9,12 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'model',
-    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v6/model.ckpt-114000',
+    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-11000',
     'CKPT PATH'
 )
 flags.DEFINE_string(
     'output_graph',
-    'MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v6.pb',
+    'MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8.pb',
     'PB PATH'
 )
 flags.DEFINE_string(
@@ -24,7 +24,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_v1',
+    'mobilenet_thin',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2]'
 )
 flags.DEFINE_string(
@@ -35,7 +35,7 @@ flags.DEFINE_string(
 flags.DEFINE_string(
     'output_nodes',
     # 'pif/transpose,pif/transpose_1,pif/transpose_2,pif/transpose_3,paf/transpose,paf/transpose_1,paf/transpose_2,paf/transpose_3,paf/transpose_4',
-    'paf/class_out,paf/regression_out',
+    'hm_out,paf_out',
     'Nodes of output, seperated by comma'
 )
 flags.DEFINE_float(
@@ -140,7 +140,7 @@ def main(_):
                        depth_multiplier=FLAGS.layer_depth_multiplier)
 
     inputs = tf.placeholder(tf.float32,
-                            shape=(None, 360, 640, 3),
+                            shape=(None, 368, 432, 3),
                             name=FLAGS.input_node)
     end_points = model.build(inputs)
 

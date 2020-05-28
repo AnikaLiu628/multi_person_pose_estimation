@@ -1,25 +1,11 @@
 # Changelog #
 
-## (2020-05-18) ##
-### [`MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v5`](setting/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v5.md) ###
-[Training loss diagram](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v5.png) | [Log file](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v5.log)
+## (2020-05-22) ##
+### [`MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7`](setting/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7.md) ###
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7.png) | [Log file](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7.log)
 
 **Implemented enhancements:**
 
-* Pre-build TFrecord for data preprocessing
-	* Input size: (368, 432)
-	* Build heatmaps and PAFs
-* MultiGPU train
-* Model: Mobilenet_thin
-
-
-## (2020-05-18) ##
-### [`MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v10`](setting/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v10.md) ###
-[Training loss diagram](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v10.png) | [Log file](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v10.log)
-
-**Implemented enhancements:**
-
-* **In oerder to reduce training time**
 * Pre-build TFrecord for data preprocessing
 	* Input size: (368, 432)
 	* Build heatmaps and PAFs
