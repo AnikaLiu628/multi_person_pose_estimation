@@ -8091,3 +8091,1641 @@ INFO:tensorflow:Global Steps = 131000, Learning Rate = 1e-06, Train_hm_Loss = 0.
 INFO:tensorflow:Global Steps = 131100, Learning Rate = 1e-06, Train_hm_Loss = 0.0008324566, Train_paf_Loss = 0.0029341923, Training Loss = 0.003766649 (57.958 sec)
 INFO:tensorflow:Global Steps = 131200, Learning Rate = 1e-06, Train_hm_Loss = 0.0016904952, Train_paf_Loss = 0.0070194015, Training Loss = 0.008709896 (59.872 sec)
 INFO:tensorflow:Global Steps = 131300, Learning Rate = 1e-06, Train_hm_Loss = 0.0016085136, Train_paf_Loss = 0.005988329, Training Loss = 0.007596843 (60.500 sec)
+INFO:tensorflow:Global Steps = 131400, Learning Rate = 1e-06, Train_hm_Loss = 0.0016869535, Train_paf_Loss = 0.006563614, Training Loss = 0.008250568 (60.230 sec)
+INFO:tensorflow:Global Steps = 131500, Learning Rate = 1e-06, Train_hm_Loss = 0.0015558028, Train_paf_Loss = 0.0057875235, Training Loss = 0.007343326 (60.092 sec)
+INFO:tensorflow:Global Steps = 131600, Learning Rate = 1e-06, Train_hm_Loss = 0.0011836112, Train_paf_Loss = 0.0047845896, Training Loss = 0.005968201 (59.840 sec)
+INFO:tensorflow:Global Steps = 131700, Learning Rate = 1e-06, Train_hm_Loss = 0.0015738185, Train_paf_Loss = 0.0066369465, Training Loss = 0.008210765 (59.905 sec)
+INFO:tensorflow:Global Steps = 131800, Learning Rate = 1e-06, Train_hm_Loss = 0.0018246786, Train_paf_Loss = 0.006324962, Training Loss = 0.008149641 (59.843 sec)
+INFO:tensorflow:Global Steps = 131900, Learning Rate = 1e-06, Train_hm_Loss = 0.0026839, Train_paf_Loss = 0.008385001, Training Loss = 0.011068901 (59.880 sec)
+INFO:tensorflow:Saving checkpoints for 132000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T01:31:22Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-132000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026498907, Eval_paf_loss = 0.010078277, Evaluation Loss = 0.012728168, Global Steps = 132000, Learning Rate = 1e-06
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034837143, Eval_paf_loss = 0.011627625, Evaluation Loss = 0.013919754, Global Steps = 132000, Learning Rate = 1e-06 (2.528 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033457205, Eval_paf_loss = 0.010898206, Evaluation Loss = 0.014027812, Global Steps = 132000, Learning Rate = 1e-06 (2.452 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002812358, Eval_paf_loss = 0.009380094, Evaluation Loss = 0.013568971, Global Steps = 132000, Learning Rate = 1e-06 (2.425 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030230265, Eval_paf_loss = 0.010430864, Evaluation Loss = 0.0135459555, Global Steps = 132000, Learning Rate = 1e-06 (2.380 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002328007, Eval_paf_loss = 0.009603453, Evaluation Loss = 0.013276872, Global Steps = 132000, Learning Rate = 1e-06 (2.560 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004066102, Eval_paf_loss = 0.012962046, Evaluation Loss = 0.01381277, Global Steps = 132000, Learning Rate = 1e-06 (2.428 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023585602, Eval_paf_loss = 0.0095114345, Evaluation Loss = 0.013569923, Global Steps = 132000, Learning Rate = 1e-06 (2.502 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035976914, Eval_paf_loss = 0.012717083, Evaluation Loss = 0.013874907, Global Steps = 132000, Learning Rate = 1e-06 (2.375 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002585921, Eval_paf_loss = 0.009922832, Evaluation Loss = 0.013738291, Global Steps = 132000, Learning Rate = 1e-06 (2.484 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.001971961, Eval_paf_loss = 0.007790124, Evaluation Loss = 0.013376817, Global Steps = 132000, Learning Rate = 1e-06 (2.442 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002931234, Eval_paf_loss = 0.010849781, Evaluation Loss = 0.0134105, Global Steps = 132000, Learning Rate = 1e-06 (2.578 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024107448, Eval_paf_loss = 0.009190477, Evaluation Loss = 0.013271325, Global Steps = 132000, Learning Rate = 1e-06 (2.419 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020276187, Eval_paf_loss = 0.008329348, Evaluation Loss = 0.013063156, Global Steps = 132000, Learning Rate = 1e-06 (2.505 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004007015, Eval_paf_loss = 0.013704125, Evaluation Loss = 0.013373021, Global Steps = 132000, Learning Rate = 1e-06 (2.400 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026347716, Eval_paf_loss = 0.010370823, Evaluation Loss = 0.013350057, Global Steps = 132000, Learning Rate = 1e-06 (2.380 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045410492, Eval_paf_loss = 0.014841244, Evaluation Loss = 0.013704895, Global Steps = 132000, Learning Rate = 1e-06 (2.331 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027850964, Eval_paf_loss = 0.010756922, Evaluation Loss = 0.013695846, Global Steps = 132000, Learning Rate = 1e-06 (2.428 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039526564, Eval_paf_loss = 0.013252023, Evaluation Loss = 0.013880521, Global Steps = 132000, Learning Rate = 1e-06 (0.923 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-01:32:12
+INFO:tensorflow:Saving dict for global step 132000: global_step = 132000, loss = 0.013880521
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 132000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-132000
+INFO:tensorflow:global_step/sec: 1.49854
+INFO:tensorflow:loss = 0.0064281747, step = 132000 (667.315 sec)
+INFO:tensorflow:Global Steps = 132000, Learning Rate = 1e-06, Train_hm_Loss = 0.0012955893, Train_paf_Loss = 0.0051325853, Training Loss = 0.0064281747 (129.195 sec)
+INFO:tensorflow:Global Steps = 132100, Learning Rate = 1e-06, Train_hm_Loss = 0.0014070944, Train_paf_Loss = 0.005445917, Training Loss = 0.0068530114 (57.871 sec)
+INFO:tensorflow:Global Steps = 132200, Learning Rate = 1e-06, Train_hm_Loss = 0.0013944096, Train_paf_Loss = 0.0054802205, Training Loss = 0.00687463 (59.757 sec)
+INFO:tensorflow:Global Steps = 132300, Learning Rate = 1e-06, Train_hm_Loss = 0.0017085434, Train_paf_Loss = 0.0057407888, Training Loss = 0.007449332 (60.441 sec)
+INFO:tensorflow:Global Steps = 132400, Learning Rate = 1e-06, Train_hm_Loss = 0.0013085355, Train_paf_Loss = 0.0043621194, Training Loss = 0.0056706546 (60.209 sec)
+INFO:tensorflow:Global Steps = 132500, Learning Rate = 1e-06, Train_hm_Loss = 0.0015684422, Train_paf_Loss = 0.0065468154, Training Loss = 0.008115258 (60.161 sec)
+INFO:tensorflow:Global Steps = 132600, Learning Rate = 1e-06, Train_hm_Loss = 0.0023582499, Train_paf_Loss = 0.009014304, Training Loss = 0.011372553 (60.074 sec)
+INFO:tensorflow:Global Steps = 132700, Learning Rate = 1e-06, Train_hm_Loss = 0.0014484571, Train_paf_Loss = 0.006023875, Training Loss = 0.007472332 (59.846 sec)
+INFO:tensorflow:Global Steps = 132800, Learning Rate = 1e-06, Train_hm_Loss = 0.0011279865, Train_paf_Loss = 0.0040025627, Training Loss = 0.005130549 (59.807 sec)
+INFO:tensorflow:Global Steps = 132900, Learning Rate = 1e-06, Train_hm_Loss = 0.0012468545, Train_paf_Loss = 0.0048269005, Training Loss = 0.006073755 (59.901 sec)
+INFO:tensorflow:Saving checkpoints for 133000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T01:42:29Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-133000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026484071, Eval_paf_loss = 0.010070092, Evaluation Loss = 0.012718499, Global Steps = 133000, Learning Rate = 1e-06
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034802118, Eval_paf_loss = 0.011624123, Evaluation Loss = 0.013911417, Global Steps = 133000, Learning Rate = 1e-06 (2.219 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033474043, Eval_paf_loss = 0.010896227, Evaluation Loss = 0.014022156, Global Steps = 133000, Learning Rate = 1e-06 (2.333 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028144896, Eval_paf_loss = 0.009377933, Evaluation Loss = 0.013564723, Global Steps = 133000, Learning Rate = 1e-06 (2.207 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030253965, Eval_paf_loss = 0.010430939, Evaluation Loss = 0.013543045, Global Steps = 133000, Learning Rate = 1e-06 (2.238 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023287416, Eval_paf_loss = 0.009608386, Evaluation Loss = 0.013275392, Global Steps = 133000, Learning Rate = 1e-06 (2.190 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004067136, Eval_paf_loss = 0.012963744, Evaluation Loss = 0.013811891, Global Steps = 133000, Learning Rate = 1e-06 (2.229 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023519464, Eval_paf_loss = 0.009493382, Evaluation Loss = 0.01356607, Global Steps = 133000, Learning Rate = 1e-06 (2.344 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036004852, Eval_paf_loss = 0.012719578, Evaluation Loss = 0.013872069, Global Steps = 133000, Learning Rate = 1e-06 (2.172 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025846409, Eval_paf_loss = 0.009928005, Evaluation Loss = 0.013736127, Global Steps = 133000, Learning Rate = 1e-06 (2.176 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019739277, Eval_paf_loss = 0.007796752, Evaluation Loss = 0.0133756315, Global Steps = 133000, Learning Rate = 1e-06 (2.278 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029296775, Eval_paf_loss = 0.010837614, Evaluation Loss = 0.01340827, Global Steps = 133000, Learning Rate = 1e-06 (2.285 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002408424, Eval_paf_loss = 0.009183694, Evaluation Loss = 0.013268566, Global Steps = 133000, Learning Rate = 1e-06 (2.153 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020281698, Eval_paf_loss = 0.008329078, Evaluation Loss = 0.0130606145, Global Steps = 133000, Learning Rate = 1e-06 (2.267 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040111383, Eval_paf_loss = 0.0137076825, Evaluation Loss = 0.013371161, Global Steps = 133000, Learning Rate = 1e-06 (2.211 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002637779, Eval_paf_loss = 0.01037889, Evaluation Loss = 0.013349006, Global Steps = 133000, Learning Rate = 1e-06 (2.252 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045413747, Eval_paf_loss = 0.014835543, Evaluation Loss = 0.013703589, Global Steps = 133000, Learning Rate = 1e-06 (2.304 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027873255, Eval_paf_loss = 0.0107583115, Evaluation Loss = 0.0136948135, Global Steps = 133000, Learning Rate = 1e-06 (2.338 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039531514, Eval_paf_loss = 0.013274361, Evaluation Loss = 0.0138807455, Global Steps = 133000, Learning Rate = 1e-06 (0.788 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-01:43:16
+INFO:tensorflow:Saving dict for global step 133000: global_step = 133000, loss = 0.0138807455
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 133000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-133000
+INFO:tensorflow:global_step/sec: 1.50714
+INFO:tensorflow:loss = 0.0059739957, step = 133000 (663.509 sec)
+INFO:tensorflow:Global Steps = 133000, Learning Rate = 1e-06, Train_hm_Loss = 0.0012166888, Train_paf_Loss = 0.004757307, Training Loss = 0.0059739957 (125.442 sec)
+INFO:tensorflow:Global Steps = 133100, Learning Rate = 1e-06, Train_hm_Loss = 0.0018465957, Train_paf_Loss = 0.0071187504, Training Loss = 0.008965346 (57.931 sec)
+INFO:tensorflow:Global Steps = 133200, Learning Rate = 1e-06, Train_hm_Loss = 0.0017397952, Train_paf_Loss = 0.0061150678, Training Loss = 0.007854863 (60.080 sec)
+INFO:tensorflow:Global Steps = 133300, Learning Rate = 1e-06, Train_hm_Loss = 0.0008474337, Train_paf_Loss = 0.0029189985, Training Loss = 0.0037664322 (60.380 sec)
+INFO:tensorflow:Global Steps = 133400, Learning Rate = 1e-06, Train_hm_Loss = 0.0015172316, Train_paf_Loss = 0.006332727, Training Loss = 0.007849959 (60.290 sec)
+INFO:tensorflow:Global Steps = 133500, Learning Rate = 1e-06, Train_hm_Loss = 0.0013902007, Train_paf_Loss = 0.005951658, Training Loss = 0.0073418585 (59.979 sec)
+INFO:tensorflow:Global Steps = 133600, Learning Rate = 1e-06, Train_hm_Loss = 0.0011366623, Train_paf_Loss = 0.0042940103, Training Loss = 0.005430673 (59.899 sec)
+INFO:tensorflow:Global Steps = 133700, Learning Rate = 1e-06, Train_hm_Loss = 0.0016251943, Train_paf_Loss = 0.0056815916, Training Loss = 0.007306786 (59.691 sec)
+INFO:tensorflow:Global Steps = 133800, Learning Rate = 1e-06, Train_hm_Loss = 0.0017868686, Train_paf_Loss = 0.006683664, Training Loss = 0.0084705325 (59.463 sec)
+INFO:tensorflow:Global Steps = 133900, Learning Rate = 1e-06, Train_hm_Loss = 0.0020943647, Train_paf_Loss = 0.006034314, Training Loss = 0.008128678 (59.551 sec)
+INFO:tensorflow:Saving checkpoints for 134000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T01:53:31Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-134000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026490926, Eval_paf_loss = 0.010079892, Evaluation Loss = 0.012728985, Global Steps = 134000, Learning Rate = 1e-06
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003484497, Eval_paf_loss = 0.011633964, Evaluation Loss = 0.013923723, Global Steps = 134000, Learning Rate = 1e-06 (2.248 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003348536, Eval_paf_loss = 0.010898239, Evaluation Loss = 0.014031407, Global Steps = 134000, Learning Rate = 1e-06 (2.329 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028177437, Eval_paf_loss = 0.009379248, Evaluation Loss = 0.013572804, Global Steps = 134000, Learning Rate = 1e-06 (2.333 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030291458, Eval_paf_loss = 0.010443904, Evaluation Loss = 0.013552854, Global Steps = 134000, Learning Rate = 1e-06 (2.406 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002331504, Eval_paf_loss = 0.009617208, Evaluation Loss = 0.013285496, Global Steps = 134000, Learning Rate = 1e-06 (2.294 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004077665, Eval_paf_loss = 0.01297849, Evaluation Loss = 0.013824163, Global Steps = 134000, Learning Rate = 1e-06 (2.311 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023548268, Eval_paf_loss = 0.009504853, Evaluation Loss = 0.013578602, Global Steps = 134000, Learning Rate = 1e-06 (2.330 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035975554, Eval_paf_loss = 0.012716941, Evaluation Loss = 0.01388259, Global Steps = 134000, Learning Rate = 1e-06 (2.282 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025831482, Eval_paf_loss = 0.009917508, Evaluation Loss = 0.013744397, Global Steps = 134000, Learning Rate = 1e-06 (2.327 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019754926, Eval_paf_loss = 0.0078091985, Evaluation Loss = 0.013384423, Global Steps = 134000, Learning Rate = 1e-06 (2.375 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029278845, Eval_paf_loss = 0.010840035, Evaluation Loss = 0.013416381, Global Steps = 134000, Learning Rate = 1e-06 (2.319 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024117336, Eval_paf_loss = 0.009183315, Evaluation Loss = 0.013276279, Global Steps = 134000, Learning Rate = 1e-06 (2.365 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020282862, Eval_paf_loss = 0.008334478, Evaluation Loss = 0.01306817, Global Steps = 134000, Learning Rate = 1e-06 (2.332 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004007789, Eval_paf_loss = 0.013714489, Evaluation Loss = 0.013378444, Global Steps = 134000, Learning Rate = 1e-06 (2.263 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026370732, Eval_paf_loss = 0.010379322, Evaluation Loss = 0.013355816, Global Steps = 134000, Learning Rate = 1e-06 (2.300 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004541471, Eval_paf_loss = 0.014843535, Evaluation Loss = 0.013710475, Global Steps = 134000, Learning Rate = 1e-06 (2.368 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027890715, Eval_paf_loss = 0.010772767, Evaluation Loss = 0.0137022175, Global Steps = 134000, Learning Rate = 1e-06 (2.393 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.00395472, Eval_paf_loss = 0.013276198, Evaluation Loss = 0.013887939, Global Steps = 134000, Learning Rate = 1e-06 (0.837 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-01:54:19
+INFO:tensorflow:Saving dict for global step 134000: global_step = 134000, loss = 0.013887939
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 134000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-134000
+INFO:tensorflow:global_step/sec: 1.50785
+INFO:tensorflow:loss = 0.012373698, step = 134000 (663.196 sec)
+INFO:tensorflow:Global Steps = 134000, Learning Rate = 1e-06, Train_hm_Loss = 0.0027988944, Train_paf_Loss = 0.0095748035, Training Loss = 0.012373698 (125.932 sec)
+INFO:tensorflow:Global Steps = 134100, Learning Rate = 1e-06, Train_hm_Loss = 0.0035711643, Train_paf_Loss = 0.010826851, Training Loss = 0.014398016 (57.781 sec)
+INFO:tensorflow:Global Steps = 134200, Learning Rate = 1e-06, Train_hm_Loss = 0.0028421036, Train_paf_Loss = 0.010704184, Training Loss = 0.013546288 (59.929 sec)
+INFO:tensorflow:Global Steps = 134300, Learning Rate = 1e-06, Train_hm_Loss = 0.0008692567, Train_paf_Loss = 0.002559571, Training Loss = 0.0034288277 (60.532 sec)
+INFO:tensorflow:Global Steps = 134400, Learning Rate = 1e-06, Train_hm_Loss = 0.00075859984, Train_paf_Loss = 0.002646486, Training Loss = 0.0034050858 (60.147 sec)
+INFO:tensorflow:Global Steps = 134500, Learning Rate = 1e-06, Train_hm_Loss = 0.0015968531, Train_paf_Loss = 0.005171898, Training Loss = 0.006768751 (59.898 sec)
+INFO:tensorflow:Global Steps = 134600, Learning Rate = 1e-06, Train_hm_Loss = 0.0013617044, Train_paf_Loss = 0.0043776003, Training Loss = 0.0057393047 (59.687 sec)
+INFO:root:--dataset_path=/datasets/coco/intermediate/coco_mp_keypoints_feature_gk3th3_train.record-00000-of-00001 \
+--validationset_path=/datasets/coco/intermediate/coco_mp_keypoints_feature_gk3th3_val.record-00000-of-00001 \
+--output_model_path=../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8 \
+--pretrained_model_path=../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7/model.ckpt-302000 \
+--model_type=MobilePifPaf \
+--backbone=mobilenet_thin \
+--loss_fn=MSE \
+--layer_depth_multiplier=1.0 \
+--number_keypoints=17 \
+--batch_size=16 \
+--pretrained_model=True \
+--data_augmentation=False \
+--optimizer=Adam \
+--learning_rate=1e-07 \
+--decay_steps=1000000000 \
+--decay_factor=0.1 \
+--training_steps=300000 \
+--validation_interval=1000 \
+--validation_batch_size=128 \
+--ohem_top_k=8 
+
+WARNING:tensorflow:From train.py:523: tf_record_iterator (from tensorflow.python.lib.io.tf_record) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use eager execution and: 
+`tf.data.TFRecordDataset(path)`
+INFO:root:
+ validation data number: 2346 
+
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+INFO:tensorflow:Using config: {'_model_dir': '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8', '_tf_random_seed': None, '_save_summary_steps': 1000, '_save_checkpoints_steps': 1000, '_save_checkpoints_secs': None, '_session_config': gpu_options {
+  allow_growth: true
+}
+, '_keep_checkpoint_max': 1000, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 1000, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x7ff1e709c0f0>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO:tensorflow:Calling model_fn.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/losses/losses_impl.py:667: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Create CheckpointSaverHook.
+INFO:tensorflow:Graph was finalized.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file APIs to check for files with this prefix.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-134000
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/training/saver.py:1070: get_checkpoint_mtimes (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file utilities to get mtimes.
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Saving checkpoints for 134000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T02:01:50Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-134000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026490926, Eval_paf_loss = 0.010079892, Evaluation Loss = 0.012728985, Global Steps = 134000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003484497, Eval_paf_loss = 0.011633964, Evaluation Loss = 0.013923723, Global Steps = 134000, Learning Rate = 1e-07 (0.472 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003348536, Eval_paf_loss = 0.010898239, Evaluation Loss = 0.014031407, Global Steps = 134000, Learning Rate = 1e-07 (0.844 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028177437, Eval_paf_loss = 0.009379248, Evaluation Loss = 0.013572804, Global Steps = 134000, Learning Rate = 1e-07 (2.397 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030291458, Eval_paf_loss = 0.010443904, Evaluation Loss = 0.013552854, Global Steps = 134000, Learning Rate = 1e-07 (2.548 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002331504, Eval_paf_loss = 0.009617208, Evaluation Loss = 0.013285496, Global Steps = 134000, Learning Rate = 1e-07 (2.648 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004077665, Eval_paf_loss = 0.01297849, Evaluation Loss = 0.013824163, Global Steps = 134000, Learning Rate = 1e-07 (2.508 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023548268, Eval_paf_loss = 0.009504853, Evaluation Loss = 0.013578602, Global Steps = 134000, Learning Rate = 1e-07 (2.724 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035975554, Eval_paf_loss = 0.012716941, Evaluation Loss = 0.01388259, Global Steps = 134000, Learning Rate = 1e-07 (2.417 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025831482, Eval_paf_loss = 0.009917508, Evaluation Loss = 0.013744397, Global Steps = 134000, Learning Rate = 1e-07 (2.414 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019754926, Eval_paf_loss = 0.0078091985, Evaluation Loss = 0.013384423, Global Steps = 134000, Learning Rate = 1e-07 (2.455 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029278845, Eval_paf_loss = 0.010840035, Evaluation Loss = 0.013416381, Global Steps = 134000, Learning Rate = 1e-07 (2.431 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024117336, Eval_paf_loss = 0.009183315, Evaluation Loss = 0.013276279, Global Steps = 134000, Learning Rate = 1e-07 (2.362 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020282862, Eval_paf_loss = 0.008334478, Evaluation Loss = 0.01306817, Global Steps = 134000, Learning Rate = 1e-07 (2.376 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004007789, Eval_paf_loss = 0.013714489, Evaluation Loss = 0.013378444, Global Steps = 134000, Learning Rate = 1e-07 (2.545 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026370732, Eval_paf_loss = 0.010379322, Evaluation Loss = 0.013355816, Global Steps = 134000, Learning Rate = 1e-07 (2.414 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004541471, Eval_paf_loss = 0.014843535, Evaluation Loss = 0.013710475, Global Steps = 134000, Learning Rate = 1e-07 (2.281 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027890715, Eval_paf_loss = 0.010772767, Evaluation Loss = 0.0137022175, Global Steps = 134000, Learning Rate = 1e-07 (2.291 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.00395472, Eval_paf_loss = 0.013276198, Evaluation Loss = 0.013887939, Global Steps = 134000, Learning Rate = 1e-07 (1.430 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-02:02:47
+INFO:tensorflow:Saving dict for global step 134000: global_step = 134000, loss = 0.013887939
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 134000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-134000
+INFO:tensorflow:loss = 0.0071734553, step = 134000
+INFO:tensorflow:Global Steps = 134000, Learning Rate = 1e-07, Train_hm_Loss = 0.0014694228, Train_paf_Loss = 0.0057040327, Training Loss = 0.0071734553
+INFO:tensorflow:Global Steps = 134100, Learning Rate = 1e-07, Train_hm_Loss = 0.001858793, Train_paf_Loss = 0.0059642484, Training Loss = 0.007823042 (66.924 sec)
+INFO:tensorflow:Global Steps = 134200, Learning Rate = 1e-07, Train_hm_Loss = 0.0009086041, Train_paf_Loss = 0.0032449511, Training Loss = 0.0041535553 (56.642 sec)
+INFO:tensorflow:Global Steps = 134300, Learning Rate = 1e-07, Train_hm_Loss = 0.0012188938, Train_paf_Loss = 0.0040007983, Training Loss = 0.0052196924 (58.080 sec)
+INFO:tensorflow:Global Steps = 134400, Learning Rate = 1e-07, Train_hm_Loss = 0.0012978767, Train_paf_Loss = 0.0047464804, Training Loss = 0.006044357 (58.238 sec)
+INFO:tensorflow:Global Steps = 134500, Learning Rate = 1e-07, Train_hm_Loss = 0.0012260192, Train_paf_Loss = 0.004475727, Training Loss = 0.0057017463 (58.031 sec)
+INFO:tensorflow:Global Steps = 134600, Learning Rate = 1e-07, Train_hm_Loss = 0.0010768941, Train_paf_Loss = 0.004903026, Training Loss = 0.00597992 (57.782 sec)
+INFO:tensorflow:Global Steps = 134700, Learning Rate = 1e-07, Train_hm_Loss = 0.0017796, Train_paf_Loss = 0.0068088993, Training Loss = 0.008588499 (57.566 sec)
+INFO:tensorflow:Global Steps = 134800, Learning Rate = 1e-07, Train_hm_Loss = 0.0019641984, Train_paf_Loss = 0.007143061, Training Loss = 0.00910726 (57.390 sec)
+INFO:tensorflow:Global Steps = 134900, Learning Rate = 1e-07, Train_hm_Loss = 0.0022691968, Train_paf_Loss = 0.008603101, Training Loss = 0.010872297 (57.222 sec)
+INFO:tensorflow:Saving checkpoints for 135000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T02:12:56Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-135000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026510186, Eval_paf_loss = 0.01008797, Evaluation Loss = 0.012738988, Global Steps = 135000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034905986, Eval_paf_loss = 0.011643102, Evaluation Loss = 0.0139363445, Global Steps = 135000, Learning Rate = 1e-07 (11.520 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033483142, Eval_paf_loss = 0.01090739, Evaluation Loss = 0.0140427975, Global Steps = 135000, Learning Rate = 1e-07 (2.411 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028175965, Eval_paf_loss = 0.009383475, Evaluation Loss = 0.013582366, Global Steps = 135000, Learning Rate = 1e-07 (2.420 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030293968, Eval_paf_loss = 0.010451823, Evaluation Loss = 0.013562137, Global Steps = 135000, Learning Rate = 1e-07 (2.550 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023321295, Eval_paf_loss = 0.009623666, Evaluation Loss = 0.013294414, Global Steps = 135000, Learning Rate = 1e-07 (2.509 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004078688, Eval_paf_loss = 0.012984496, Evaluation Loss = 0.013832809, Global Steps = 135000, Learning Rate = 1e-07 (2.506 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023589092, Eval_paf_loss = 0.009516175, Evaluation Loss = 0.013588094, Global Steps = 135000, Learning Rate = 1e-07 (2.433 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035970972, Eval_paf_loss = 0.012718238, Evaluation Loss = 0.01389112, Global Steps = 135000, Learning Rate = 1e-07 (2.417 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025852348, Eval_paf_loss = 0.009923801, Evaluation Loss = 0.013752912, Global Steps = 135000, Learning Rate = 1e-07 (2.371 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019748684, Eval_paf_loss = 0.0078107235, Evaluation Loss = 0.013392246, Global Steps = 135000, Learning Rate = 1e-07 (2.414 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029301192, Eval_paf_loss = 0.010850432, Evaluation Loss = 0.013424605, Global Steps = 135000, Learning Rate = 1e-07 (2.530 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002413455, Eval_paf_loss = 0.009193787, Evaluation Loss = 0.013284808, Global Steps = 135000, Learning Rate = 1e-07 (2.503 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020278096, Eval_paf_loss = 0.008333779, Evaluation Loss = 0.013076006, Global Steps = 135000, Learning Rate = 1e-07 (2.557 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004011166, Eval_paf_loss = 0.013721969, Evaluation Loss = 0.013386482, Global Steps = 135000, Learning Rate = 1e-07 (2.407 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026375116, Eval_paf_loss = 0.010390747, Evaluation Loss = 0.013364093, Global Steps = 135000, Learning Rate = 1e-07 (2.389 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045451876, Eval_paf_loss = 0.014855029, Evaluation Loss = 0.013719159, Global Steps = 135000, Learning Rate = 1e-07 (2.390 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027891265, Eval_paf_loss = 0.0107791, Evaluation Loss = 0.013710774, Global Steps = 135000, Learning Rate = 1e-07 (2.643 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039564422, Eval_paf_loss = 0.013276452, Evaluation Loss = 0.013896149, Global Steps = 135000, Learning Rate = 1e-07 (0.946 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-02:13:56
+INFO:tensorflow:Saving dict for global step 135000: global_step = 135000, loss = 0.013896149
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 135000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-135000
+INFO:tensorflow:global_step/sec: 1.5089
+INFO:tensorflow:loss = 0.0076049753, step = 135000 (662.731 sec)
+INFO:tensorflow:Global Steps = 135000, Learning Rate = 1e-07, Train_hm_Loss = 0.0020075543, Train_paf_Loss = 0.005597421, Training Loss = 0.0076049753 (134.855 sec)
+INFO:tensorflow:Global Steps = 135100, Learning Rate = 1e-07, Train_hm_Loss = 0.0012777707, Train_paf_Loss = 0.004073437, Training Loss = 0.0053512077 (55.776 sec)
+INFO:tensorflow:Global Steps = 135200, Learning Rate = 1e-07, Train_hm_Loss = 0.0016342263, Train_paf_Loss = 0.006019018, Training Loss = 0.0076532443 (57.639 sec)
+INFO:tensorflow:Global Steps = 135300, Learning Rate = 1e-07, Train_hm_Loss = 0.0014105616, Train_paf_Loss = 0.0044748713, Training Loss = 0.005885433 (58.370 sec)
+INFO:tensorflow:Global Steps = 135400, Learning Rate = 1e-07, Train_hm_Loss = 0.0012878886, Train_paf_Loss = 0.0052838596, Training Loss = 0.0065717483 (57.878 sec)
+INFO:tensorflow:Global Steps = 135500, Learning Rate = 1e-07, Train_hm_Loss = 0.0015441551, Train_paf_Loss = 0.004954566, Training Loss = 0.006498721 (57.904 sec)
+INFO:tensorflow:Global Steps = 135600, Learning Rate = 1e-07, Train_hm_Loss = 0.00097427954, Train_paf_Loss = 0.0040537994, Training Loss = 0.005028079 (57.434 sec)
+INFO:tensorflow:Global Steps = 135700, Learning Rate = 1e-07, Train_hm_Loss = 0.0011928418, Train_paf_Loss = 0.004500406, Training Loss = 0.0056932475 (57.490 sec)
+INFO:tensorflow:Global Steps = 135800, Learning Rate = 1e-07, Train_hm_Loss = 0.0013258723, Train_paf_Loss = 0.004976836, Training Loss = 0.0063027083 (57.301 sec)
+INFO:tensorflow:Global Steps = 135900, Learning Rate = 1e-07, Train_hm_Loss = 0.0013188999, Train_paf_Loss = 0.005038473, Training Loss = 0.0063573727 (57.308 sec)
+INFO:tensorflow:Saving checkpoints for 136000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T02:23:49Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-136000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026484826, Eval_paf_loss = 0.0100814095, Evaluation Loss = 0.0127298925, Global Steps = 136000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034823203, Eval_paf_loss = 0.011636447, Evaluation Loss = 0.0139243305, Global Steps = 136000, Learning Rate = 1e-07 (2.537 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033519345, Eval_paf_loss = 0.010910738, Evaluation Loss = 0.014037111, Global Steps = 136000, Learning Rate = 1e-07 (2.486 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028151309, Eval_paf_loss = 0.009389735, Evaluation Loss = 0.01357905, Global Steps = 136000, Learning Rate = 1e-07 (2.539 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030317116, Eval_paf_loss = 0.010450871, Evaluation Loss = 0.013559756, Global Steps = 136000, Learning Rate = 1e-07 (2.640 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023310594, Eval_paf_loss = 0.009621988, Evaluation Loss = 0.013291971, Global Steps = 136000, Learning Rate = 1e-07 (2.637 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040764865, Eval_paf_loss = 0.012991751, Evaluation Loss = 0.013831438, Global Steps = 136000, Learning Rate = 1e-07 (2.448 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002354236, Eval_paf_loss = 0.0095045, Evaluation Loss = 0.01358485, Global Steps = 136000, Learning Rate = 1e-07 (2.437 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036057956, Eval_paf_loss = 0.012738006, Evaluation Loss = 0.013891401, Global Steps = 136000, Learning Rate = 1e-07 (2.531 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025842756, Eval_paf_loss = 0.009937063, Evaluation Loss = 0.013754395, Global Steps = 136000, Learning Rate = 1e-07 (2.479 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019763997, Eval_paf_loss = 0.007810679, Evaluation Loss = 0.01339373, Global Steps = 136000, Learning Rate = 1e-07 (2.497 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029287986, Eval_paf_loss = 0.010845362, Evaluation Loss = 0.013425432, Global Steps = 136000, Learning Rate = 1e-07 (2.472 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024087667, Eval_paf_loss = 0.009183789, Evaluation Loss = 0.013284441, Global Steps = 136000, Learning Rate = 1e-07 (2.444 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020269752, Eval_paf_loss = 0.008336052, Evaluation Loss = 0.013075769, Global Steps = 136000, Learning Rate = 1e-07 (2.533 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004014104, Eval_paf_loss = 0.013725858, Evaluation Loss = 0.013386715, Global Steps = 136000, Learning Rate = 1e-07 (2.499 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026400192, Eval_paf_loss = 0.010385669, Evaluation Loss = 0.013364151, Global Steps = 136000, Learning Rate = 1e-07 (2.439 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004546406, Eval_paf_loss = 0.014853873, Evaluation Loss = 0.013719218, Global Steps = 136000, Learning Rate = 1e-07 (2.414 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002790702, Eval_paf_loss = 0.010775066, Evaluation Loss = 0.0137106925, Global Steps = 136000, Learning Rate = 1e-07 (2.556 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039524394, Eval_paf_loss = 0.013280168, Evaluation Loss = 0.0138960555, Global Steps = 136000, Learning Rate = 1e-07 (0.902 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-02:24:41
+INFO:tensorflow:Saving dict for global step 136000: global_step = 136000, loss = 0.0138960555
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 136000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-136000
+INFO:tensorflow:global_step/sec: 1.55056
+INFO:tensorflow:loss = 0.006259924, step = 136000 (644.927 sec)
+INFO:tensorflow:Global Steps = 136000, Learning Rate = 1e-07, Train_hm_Loss = 0.0012224328, Train_paf_Loss = 0.005037491, Training Loss = 0.006259924 (127.826 sec)
+INFO:tensorflow:Global Steps = 136100, Learning Rate = 1e-07, Train_hm_Loss = 0.0014353459, Train_paf_Loss = 0.0053970264, Training Loss = 0.0068323724 (55.699 sec)
+INFO:tensorflow:Global Steps = 136200, Learning Rate = 1e-07, Train_hm_Loss = 0.0016782243, Train_paf_Loss = 0.006291693, Training Loss = 0.007969918 (57.547 sec)
+INFO:tensorflow:Global Steps = 136300, Learning Rate = 1e-07, Train_hm_Loss = 0.0015216656, Train_paf_Loss = 0.004939915, Training Loss = 0.0064615807 (58.221 sec)
+INFO:tensorflow:Global Steps = 136400, Learning Rate = 1e-07, Train_hm_Loss = 0.0018523148, Train_paf_Loss = 0.0069802105, Training Loss = 0.008832525 (57.957 sec)
+INFO:tensorflow:Global Steps = 136500, Learning Rate = 1e-07, Train_hm_Loss = 0.0020566941, Train_paf_Loss = 0.007830376, Training Loss = 0.009887069 (57.741 sec)
+INFO:tensorflow:Global Steps = 136600, Learning Rate = 1e-07, Train_hm_Loss = 0.0013643628, Train_paf_Loss = 0.004945663, Training Loss = 0.0063100257 (57.529 sec)
+INFO:tensorflow:Global Steps = 136700, Learning Rate = 1e-07, Train_hm_Loss = 0.0011856884, Train_paf_Loss = 0.0049371594, Training Loss = 0.006122848 (57.666 sec)
+INFO:tensorflow:Global Steps = 136800, Learning Rate = 1e-07, Train_hm_Loss = 0.001564993, Train_paf_Loss = 0.005944919, Training Loss = 0.007509912 (57.334 sec)
+INFO:tensorflow:Global Steps = 136900, Learning Rate = 1e-07, Train_hm_Loss = 0.0016998892, Train_paf_Loss = 0.0064795697, Training Loss = 0.008179459 (57.472 sec)
+INFO:tensorflow:Saving checkpoints for 137000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T02:34:33Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-137000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002648505, Eval_paf_loss = 0.010079224, Evaluation Loss = 0.012727728, Global Steps = 137000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034856172, Eval_paf_loss = 0.011638429, Evaluation Loss = 0.013925888, Global Steps = 137000, Learning Rate = 1e-07 (2.438 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033476206, Eval_paf_loss = 0.010896804, Evaluation Loss = 0.014032066, Global Steps = 137000, Learning Rate = 1e-07 (2.124 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028202527, Eval_paf_loss = 0.009383332, Evaluation Loss = 0.013574946, Global Steps = 137000, Learning Rate = 1e-07 (2.277 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030281108, Eval_paf_loss = 0.010444877, Evaluation Loss = 0.0135545535, Global Steps = 137000, Learning Rate = 1e-07 (2.193 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023339854, Eval_paf_loss = 0.009626862, Evaluation Loss = 0.013288937, Global Steps = 137000, Learning Rate = 1e-07 (2.273 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040783305, Eval_paf_loss = 0.012983863, Evaluation Loss = 0.013827973, Global Steps = 137000, Learning Rate = 1e-07 (2.128 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023548277, Eval_paf_loss = 0.00950766, Evaluation Loss = 0.013582287, Global Steps = 137000, Learning Rate = 1e-07 (2.239 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035964889, Eval_paf_loss = 0.012718746, Evaluation Loss = 0.013885949, Global Steps = 137000, Learning Rate = 1e-07 (2.208 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025801428, Eval_paf_loss = 0.009910256, Evaluation Loss = 0.013746393, Global Steps = 137000, Learning Rate = 1e-07 (2.267 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019753168, Eval_paf_loss = 0.007815246, Evaluation Loss = 0.013386772, Global Steps = 137000, Learning Rate = 1e-07 (2.328 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029287888, Eval_paf_loss = 0.010845627, Evaluation Loss = 0.013419076, Global Steps = 137000, Learning Rate = 1e-07 (2.246 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024129278, Eval_paf_loss = 0.009183015, Evaluation Loss = 0.013278835, Global Steps = 137000, Learning Rate = 1e-07 (2.288 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002027462, Eval_paf_loss = 0.008332732, Evaluation Loss = 0.013070361, Global Steps = 137000, Learning Rate = 1e-07 (2.243 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.00400692, Eval_paf_loss = 0.01372142, Evaluation Loss = 0.0133808935, Global Steps = 137000, Learning Rate = 1e-07 (2.277 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026373651, Eval_paf_loss = 0.010386099, Evaluation Loss = 0.013358554, Global Steps = 137000, Learning Rate = 1e-07 (2.260 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004541281, Eval_paf_loss = 0.014845555, Evaluation Loss = 0.013713159, Global Steps = 137000, Learning Rate = 1e-07 (2.155 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002788477, Eval_paf_loss = 0.010776197, Evaluation Loss = 0.013704909, Global Steps = 137000, Learning Rate = 1e-07 (2.255 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003955962, Eval_paf_loss = 0.013289589, Evaluation Loss = 0.013891259, Global Steps = 137000, Learning Rate = 1e-07 (0.810 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-02:35:19
+INFO:tensorflow:Saving dict for global step 137000: global_step = 137000, loss = 0.013891259
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 137000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-137000
+INFO:tensorflow:global_step/sec: 1.56573
+INFO:tensorflow:loss = 0.007117858, step = 137000 (638.678 sec)
+INFO:tensorflow:Global Steps = 137000, Learning Rate = 1e-07, Train_hm_Loss = 0.0016133655, Train_paf_Loss = 0.0055044927, Training Loss = 0.007117858 (121.513 sec)
+INFO:tensorflow:Global Steps = 137100, Learning Rate = 1e-07, Train_hm_Loss = 0.0028863053, Train_paf_Loss = 0.008747529, Training Loss = 0.011633835 (55.637 sec)
+INFO:tensorflow:Global Steps = 137200, Learning Rate = 1e-07, Train_hm_Loss = 0.0036058414, Train_paf_Loss = 0.0124134915, Training Loss = 0.016019333 (57.368 sec)
+INFO:tensorflow:Global Steps = 137300, Learning Rate = 1e-07, Train_hm_Loss = 0.003760599, Train_paf_Loss = 0.012485453, Training Loss = 0.016246052 (58.005 sec)
+INFO:tensorflow:Global Steps = 137400, Learning Rate = 1e-07, Train_hm_Loss = 0.0018691854, Train_paf_Loss = 0.0059395647, Training Loss = 0.00780875 (57.871 sec)
+INFO:tensorflow:Global Steps = 137500, Learning Rate = 1e-07, Train_hm_Loss = 0.0009770269, Train_paf_Loss = 0.0033202881, Training Loss = 0.004297315 (57.664 sec)
+INFO:tensorflow:Global Steps = 137600, Learning Rate = 1e-07, Train_hm_Loss = 0.0021048668, Train_paf_Loss = 0.007013995, Training Loss = 0.009118862 (57.642 sec)
+INFO:tensorflow:Global Steps = 137700, Learning Rate = 1e-07, Train_hm_Loss = 0.0019651596, Train_paf_Loss = 0.00550307, Training Loss = 0.0074682296 (57.475 sec)
+INFO:tensorflow:Global Steps = 137800, Learning Rate = 1e-07, Train_hm_Loss = 0.0018508441, Train_paf_Loss = 0.0067080655, Training Loss = 0.008558909 (57.553 sec)
+INFO:tensorflow:Global Steps = 137900, Learning Rate = 1e-07, Train_hm_Loss = 0.0024813453, Train_paf_Loss = 0.007929026, Training Loss = 0.010410371 (57.266 sec)
+INFO:tensorflow:Saving checkpoints for 138000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T02:45:11Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-138000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026499343, Eval_paf_loss = 0.010098216, Evaluation Loss = 0.01274815, Global Steps = 138000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034815231, Eval_paf_loss = 0.01162981, Evaluation Loss = 0.013929741, Global Steps = 138000, Learning Rate = 1e-07 (2.454 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003363924, Eval_paf_loss = 0.010941857, Evaluation Loss = 0.014055088, Global Steps = 138000, Learning Rate = 1e-07 (2.404 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.00281266, Eval_paf_loss = 0.009382897, Evaluation Loss = 0.013590205, Global Steps = 138000, Learning Rate = 1e-07 (2.379 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030393559, Eval_paf_loss = 0.010467402, Evaluation Loss = 0.013573515, Global Steps = 138000, Learning Rate = 1e-07 (2.315 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023275553, Eval_paf_loss = 0.009607008, Evaluation Loss = 0.013300356, Global Steps = 138000, Learning Rate = 1e-07 (2.211 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040739747, Eval_paf_loss = 0.012989633, Evaluation Loss = 0.013837963, Global Steps = 138000, Learning Rate = 1e-07 (2.464 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023554377, Eval_paf_loss = 0.009507148, Evaluation Loss = 0.013591041, Global Steps = 138000, Learning Rate = 1e-07 (2.339 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036063166, Eval_paf_loss = 0.012729892, Evaluation Loss = 0.013896059, Global Steps = 138000, Learning Rate = 1e-07 (2.338 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025879655, Eval_paf_loss = 0.009951316, Evaluation Loss = 0.013760382, Global Steps = 138000, Learning Rate = 1e-07 (2.349 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019778265, Eval_paf_loss = 0.007814506, Evaluation Loss = 0.013399649, Global Steps = 138000, Learning Rate = 1e-07 (2.279 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029261908, Eval_paf_loss = 0.010831603, Evaluation Loss = 0.0134294955, Global Steps = 138000, Learning Rate = 1e-07 (2.302 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024060535, Eval_paf_loss = 0.009186985, Evaluation Loss = 0.01328823, Global Steps = 138000, Learning Rate = 1e-07 (2.319 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020314865, Eval_paf_loss = 0.008344555, Evaluation Loss = 0.013080216, Global Steps = 138000, Learning Rate = 1e-07 (2.279 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004019433, Eval_paf_loss = 0.013716607, Evaluation Loss = 0.013390604, Global Steps = 138000, Learning Rate = 1e-07 (2.353 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026375402, Eval_paf_loss = 0.010364117, Evaluation Loss = 0.013366295, Global Steps = 138000, Learning Rate = 1e-07 (2.290 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.00454626, Eval_paf_loss = 0.014863154, Evaluation Loss = 0.0137217725, Global Steps = 138000, Learning Rate = 1e-07 (2.293 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002788672, Eval_paf_loss = 0.010769103, Evaluation Loss = 0.013712662, Global Steps = 138000, Learning Rate = 1e-07 (2.328 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039530215, Eval_paf_loss = 0.013252538, Evaluation Loss = 0.013896498, Global Steps = 138000, Learning Rate = 1e-07 (0.931 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-02:46:00
+INFO:tensorflow:Saving dict for global step 138000: global_step = 138000, loss = 0.013896498
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 138000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-138000
+INFO:tensorflow:global_step/sec: 1.56159
+INFO:tensorflow:loss = 0.006101478, step = 138000 (640.372 sec)
+INFO:tensorflow:Global Steps = 138000, Learning Rate = 1e-07, Train_hm_Loss = 0.0013047843, Train_paf_Loss = 0.0047966936, Training Loss = 0.006101478 (123.890 sec)
+INFO:tensorflow:Global Steps = 138100, Learning Rate = 1e-07, Train_hm_Loss = 0.0015987543, Train_paf_Loss = 0.006040361, Training Loss = 0.007639115 (55.720 sec)
+INFO:tensorflow:Global Steps = 138200, Learning Rate = 1e-07, Train_hm_Loss = 0.0018248243, Train_paf_Loss = 0.006793041, Training Loss = 0.008617865 (57.447 sec)
+INFO:tensorflow:Global Steps = 138300, Learning Rate = 1e-07, Train_hm_Loss = 0.0015117947, Train_paf_Loss = 0.0053194514, Training Loss = 0.0068312464 (58.119 sec)
+INFO:tensorflow:Global Steps = 138400, Learning Rate = 1e-07, Train_hm_Loss = 0.0016272125, Train_paf_Loss = 0.0056800055, Training Loss = 0.007307218 (57.948 sec)
+INFO:tensorflow:Global Steps = 138500, Learning Rate = 1e-07, Train_hm_Loss = 0.0024945955, Train_paf_Loss = 0.007781199, Training Loss = 0.010275794 (57.719 sec)
+INFO:tensorflow:Global Steps = 138600, Learning Rate = 1e-07, Train_hm_Loss = 0.0016283989, Train_paf_Loss = 0.006203577, Training Loss = 0.007831976 (57.692 sec)
+INFO:tensorflow:Global Steps = 138700, Learning Rate = 1e-07, Train_hm_Loss = 0.002004656, Train_paf_Loss = 0.0074200924, Training Loss = 0.009424748 (57.465 sec)
+INFO:tensorflow:Global Steps = 138800, Learning Rate = 1e-07, Train_hm_Loss = 0.0017652034, Train_paf_Loss = 0.0060920934, Training Loss = 0.007857297 (57.708 sec)
+INFO:tensorflow:Global Steps = 138900, Learning Rate = 1e-07, Train_hm_Loss = 0.0015554781, Train_paf_Loss = 0.005560558, Training Loss = 0.007116036 (57.598 sec)
+INFO:tensorflow:Saving checkpoints for 139000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T02:56:50Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-139000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026496681, Eval_paf_loss = 0.010088547, Evaluation Loss = 0.012738215, Global Steps = 139000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034801615, Eval_paf_loss = 0.011632493, Evaluation Loss = 0.013925435, Global Steps = 139000, Learning Rate = 1e-07 (2.478 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033549466, Eval_paf_loss = 0.010921593, Evaluation Loss = 0.01404247, Global Steps = 139000, Learning Rate = 1e-07 (2.444 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002812774, Eval_paf_loss = 0.009393765, Evaluation Loss = 0.013583487, Global Steps = 139000, Learning Rate = 1e-07 (2.439 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003033299, Eval_paf_loss = 0.010453531, Evaluation Loss = 0.013564156, Global Steps = 139000, Learning Rate = 1e-07 (2.441 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023290678, Eval_paf_loss = 0.009612403, Evaluation Loss = 0.013293709, Global Steps = 139000, Learning Rate = 1e-07 (2.525 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004072879, Eval_paf_loss = 0.012987389, Evaluation Loss = 0.013831788, Global Steps = 139000, Learning Rate = 1e-07 (2.584 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023561083, Eval_paf_loss = 0.009505508, Evaluation Loss = 0.013585516, Global Steps = 139000, Learning Rate = 1e-07 (2.382 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036103637, Eval_paf_loss = 0.012748422, Evaluation Loss = 0.013893657, Global Steps = 139000, Learning Rate = 1e-07 (2.396 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025880898, Eval_paf_loss = 0.009950747, Evaluation Loss = 0.013758175, Global Steps = 139000, Learning Rate = 1e-07 (2.504 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019762637, Eval_paf_loss = 0.0078033498, Evaluation Loss = 0.013396488, Global Steps = 139000, Learning Rate = 1e-07 (2.504 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029319897, Eval_paf_loss = 0.010855081, Evaluation Loss = 0.013429037, Global Steps = 139000, Learning Rate = 1e-07 (2.604 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024075566, Eval_paf_loss = 0.009188035, Evaluation Loss = 0.013288002, Global Steps = 139000, Learning Rate = 1e-07 (2.463 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020278927, Eval_paf_loss = 0.008338059, Evaluation Loss = 0.013079285, Global Steps = 139000, Learning Rate = 1e-07 (2.430 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040184367, Eval_paf_loss = 0.013724933, Evaluation Loss = 0.0133902235, Global Steps = 139000, Learning Rate = 1e-07 (2.664 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026401987, Eval_paf_loss = 0.010377179, Evaluation Loss = 0.01336692, Global Steps = 139000, Learning Rate = 1e-07 (2.318 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.00455109, Eval_paf_loss = 0.01486862, Evaluation Loss = 0.013722966, Global Steps = 139000, Learning Rate = 1e-07 (2.461 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027894182, Eval_paf_loss = 0.0107708275, Evaluation Loss = 0.013713927, Global Steps = 139000, Learning Rate = 1e-07 (2.407 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003951681, Eval_paf_loss = 0.013259249, Evaluation Loss = 0.013897981, Global Steps = 139000, Learning Rate = 1e-07 (0.898 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-02:57:41
+INFO:tensorflow:Saving dict for global step 139000: global_step = 139000, loss = 0.013897981
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 139000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-139000
+INFO:tensorflow:global_step/sec: 1.42543
+INFO:tensorflow:loss = 0.0048307497, step = 139000 (701.542 sec)
+INFO:tensorflow:Global Steps = 139000, Learning Rate = 1e-07, Train_hm_Loss = 0.0010345606, Train_paf_Loss = 0.0037961893, Training Loss = 0.0048307497 (184.127 sec)
+INFO:tensorflow:Global Steps = 139100, Learning Rate = 1e-07, Train_hm_Loss = 0.0016578097, Train_paf_Loss = 0.0053971717, Training Loss = 0.0070549813 (55.343 sec)
+INFO:tensorflow:Global Steps = 139200, Learning Rate = 1e-07, Train_hm_Loss = 0.0012704653, Train_paf_Loss = 0.0047680372, Training Loss = 0.006038503 (57.369 sec)
+INFO:tensorflow:Global Steps = 139300, Learning Rate = 1e-07, Train_hm_Loss = 0.0014818021, Train_paf_Loss = 0.0054158526, Training Loss = 0.006897655 (58.647 sec)
+INFO:tensorflow:Global Steps = 139400, Learning Rate = 1e-07, Train_hm_Loss = 0.0015257286, Train_paf_Loss = 0.0060331644, Training Loss = 0.007558893 (58.332 sec)
+INFO:tensorflow:Global Steps = 139500, Learning Rate = 1e-07, Train_hm_Loss = 0.0014926498, Train_paf_Loss = 0.0055376715, Training Loss = 0.0070303213 (58.140 sec)
+INFO:tensorflow:Global Steps = 139600, Learning Rate = 1e-07, Train_hm_Loss = 0.0016716965, Train_paf_Loss = 0.0074073323, Training Loss = 0.009079029 (57.739 sec)
+INFO:tensorflow:Global Steps = 139700, Learning Rate = 1e-07, Train_hm_Loss = 0.0010946498, Train_paf_Loss = 0.004485784, Training Loss = 0.0055804336 (57.467 sec)
+INFO:tensorflow:Global Steps = 139800, Learning Rate = 1e-07, Train_hm_Loss = 0.0015364235, Train_paf_Loss = 0.005793162, Training Loss = 0.0073295855 (57.448 sec)
+INFO:tensorflow:Global Steps = 139900, Learning Rate = 1e-07, Train_hm_Loss = 0.00076758396, Train_paf_Loss = 0.0031056372, Training Loss = 0.003873221 (57.263 sec)
+INFO:tensorflow:Saving checkpoints for 140000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T03:07:34Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-140000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026482472, Eval_paf_loss = 0.0100774625, Evaluation Loss = 0.01272571, Global Steps = 140000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034830524, Eval_paf_loss = 0.011634903, Evaluation Loss = 0.013921833, Global Steps = 140000, Learning Rate = 1e-07 (2.349 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033474076, Eval_paf_loss = 0.010897073, Evaluation Loss = 0.014029381, Global Steps = 140000, Learning Rate = 1e-07 (2.323 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028170282, Eval_paf_loss = 0.009384404, Evaluation Loss = 0.013572394, Global Steps = 140000, Learning Rate = 1e-07 (2.405 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030277076, Eval_paf_loss = 0.010444148, Evaluation Loss = 0.013552286, Global Steps = 140000, Learning Rate = 1e-07 (2.382 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023324322, Eval_paf_loss = 0.0096234, Evaluation Loss = 0.013286211, Global Steps = 140000, Learning Rate = 1e-07 (2.244 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004075057, Eval_paf_loss = 0.012982278, Evaluation Loss = 0.0138249425, Global Steps = 140000, Learning Rate = 1e-07 (2.232 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023542799, Eval_paf_loss = 0.009505335, Evaluation Loss = 0.013579277, Global Steps = 140000, Learning Rate = 1e-07 (2.345 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003599477, Eval_paf_loss = 0.012725887, Evaluation Loss = 0.013884398, Global Steps = 140000, Learning Rate = 1e-07 (2.304 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025806383, Eval_paf_loss = 0.009915343, Evaluation Loss = 0.013745557, Global Steps = 140000, Learning Rate = 1e-07 (2.303 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019751417, Eval_paf_loss = 0.0078117857, Evaluation Loss = 0.013385682, Global Steps = 140000, Learning Rate = 1e-07 (2.314 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029289944, Eval_paf_loss = 0.010845403, Evaluation Loss = 0.013418075, Global Steps = 140000, Learning Rate = 1e-07 (2.218 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024113904, Eval_paf_loss = 0.009183466, Evaluation Loss = 0.013277828, Global Steps = 140000, Learning Rate = 1e-07 (2.409 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020271756, Eval_paf_loss = 0.008333123, Evaluation Loss = 0.013069433, Global Steps = 140000, Learning Rate = 1e-07 (2.377 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040081544, Eval_paf_loss = 0.013718498, Evaluation Loss = 0.013379914, Global Steps = 140000, Learning Rate = 1e-07 (2.386 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002638003, Eval_paf_loss = 0.0103869615, Evaluation Loss = 0.01335773, Global Steps = 140000, Learning Rate = 1e-07 (2.322 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045407517, Eval_paf_loss = 0.014842828, Evaluation Loss = 0.013712191, Global Steps = 140000, Learning Rate = 1e-07 (2.308 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027891188, Eval_paf_loss = 0.010774225, Evaluation Loss = 0.013703923, Global Steps = 140000, Learning Rate = 1e-07 (2.471 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003954853, Eval_paf_loss = 0.013288321, Evaluation Loss = 0.013890199, Global Steps = 140000, Learning Rate = 1e-07 (0.869 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-03:08:22
+INFO:tensorflow:Saving dict for global step 140000: global_step = 140000, loss = 0.013890199
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 140000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-140000
+INFO:tensorflow:global_step/sec: 1.55995
+INFO:tensorflow:loss = 0.0050329543, step = 140000 (641.046 sec)
+INFO:tensorflow:Global Steps = 140000, Learning Rate = 1e-07, Train_hm_Loss = 0.0010544453, Train_paf_Loss = 0.003978509, Training Loss = 0.0050329543 (123.297 sec)
+INFO:tensorflow:Global Steps = 140100, Learning Rate = 1e-07, Train_hm_Loss = 0.0012396824, Train_paf_Loss = 0.0046427026, Training Loss = 0.005882385 (55.695 sec)
+INFO:tensorflow:Global Steps = 140200, Learning Rate = 1e-07, Train_hm_Loss = 0.0011951296, Train_paf_Loss = 0.0044837105, Training Loss = 0.00567884 (57.728 sec)
+INFO:tensorflow:Global Steps = 140300, Learning Rate = 1e-07, Train_hm_Loss = 0.0011485217, Train_paf_Loss = 0.004562183, Training Loss = 0.0057107043 (58.108 sec)
+INFO:tensorflow:Global Steps = 140400, Learning Rate = 1e-07, Train_hm_Loss = 0.001745061, Train_paf_Loss = 0.006697802, Training Loss = 0.008442863 (57.993 sec)
+INFO:tensorflow:Global Steps = 140500, Learning Rate = 1e-07, Train_hm_Loss = 0.0013640125, Train_paf_Loss = 0.0053017735, Training Loss = 0.006665786 (57.778 sec)
+INFO:tensorflow:Global Steps = 140600, Learning Rate = 1e-07, Train_hm_Loss = 0.0031682865, Train_paf_Loss = 0.010734066, Training Loss = 0.013902353 (57.720 sec)
+INFO:tensorflow:Global Steps = 140700, Learning Rate = 1e-07, Train_hm_Loss = 0.0039789192, Train_paf_Loss = 0.012453875, Training Loss = 0.016432794 (57.682 sec)
+INFO:tensorflow:Global Steps = 140800, Learning Rate = 1e-07, Train_hm_Loss = 0.0032992708, Train_paf_Loss = 0.00997693, Training Loss = 0.013276201 (57.361 sec)
+INFO:tensorflow:Global Steps = 140900, Learning Rate = 1e-07, Train_hm_Loss = 0.0010968681, Train_paf_Loss = 0.0034420379, Training Loss = 0.004538906 (57.326 sec)
+INFO:tensorflow:Saving checkpoints for 141000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T03:18:17Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-141000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026579124, Eval_paf_loss = 0.010094983, Evaluation Loss = 0.012752895, Global Steps = 141000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034889176, Eval_paf_loss = 0.011633926, Evaluation Loss = 0.01393787, Global Steps = 141000, Learning Rate = 1e-07 (2.414 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033574502, Eval_paf_loss = 0.010919907, Evaluation Loss = 0.014051032, Global Steps = 141000, Learning Rate = 1e-07 (2.362 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028189898, Eval_paf_loss = 0.009381314, Evaluation Loss = 0.01358835, Global Steps = 141000, Learning Rate = 1e-07 (2.416 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003035889, Eval_paf_loss = 0.010458475, Evaluation Loss = 0.013569553, Global Steps = 141000, Learning Rate = 1e-07 (2.400 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002329561, Eval_paf_loss = 0.009605756, Evaluation Loss = 0.013297181, Global Steps = 141000, Learning Rate = 1e-07 (2.454 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004073709, Eval_paf_loss = 0.012962094, Evaluation Loss = 0.01383127, Global Steps = 141000, Learning Rate = 1e-07 (2.415 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023573742, Eval_paf_loss = 0.009503575, Evaluation Loss = 0.01358498, Global Steps = 141000, Learning Rate = 1e-07 (2.356 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036037827, Eval_paf_loss = 0.012727792, Evaluation Loss = 0.013890157, Global Steps = 141000, Learning Rate = 1e-07 (2.495 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025965876, Eval_paf_loss = 0.009947992, Evaluation Loss = 0.013755599, Global Steps = 141000, Learning Rate = 1e-07 (2.352 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.001976525, Eval_paf_loss = 0.0077956733, Evaluation Loss = 0.013393471, Global Steps = 141000, Learning Rate = 1e-07 (2.424 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029323408, Eval_paf_loss = 0.01084085, Evaluation Loss = 0.013425115, Global Steps = 141000, Learning Rate = 1e-07 (2.503 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024127197, Eval_paf_loss = 0.009206876, Evaluation Loss = 0.013286228, Global Steps = 141000, Learning Rate = 1e-07 (2.434 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020337468, Eval_paf_loss = 0.00834246, Evaluation Loss = 0.013078369, Global Steps = 141000, Learning Rate = 1e-07 (2.321 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040179417, Eval_paf_loss = 0.013711488, Evaluation Loss = 0.01338844, Global Steps = 141000, Learning Rate = 1e-07 (2.370 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026364503, Eval_paf_loss = 0.01037675, Evaluation Loss = 0.013364987, Global Steps = 141000, Learning Rate = 1e-07 (2.450 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004547619, Eval_paf_loss = 0.01485691, Evaluation Loss = 0.013720254, Global Steps = 141000, Learning Rate = 1e-07 (2.494 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027908136, Eval_paf_loss = 0.010768014, Evaluation Loss = 0.013711287, Global Steps = 141000, Learning Rate = 1e-07 (2.405 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039573717, Eval_paf_loss = 0.013257474, Evaluation Loss = 0.013895684, Global Steps = 141000, Learning Rate = 1e-07 (0.916 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-03:19:06
+INFO:tensorflow:Saving dict for global step 141000: global_step = 141000, loss = 0.013895684
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 141000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-141000
+INFO:tensorflow:global_step/sec: 1.55353
+INFO:tensorflow:loss = 0.0053462572, step = 141000 (643.695 sec)
+INFO:tensorflow:Global Steps = 141000, Learning Rate = 1e-07, Train_hm_Loss = 0.0010510903, Train_paf_Loss = 0.004295167, Training Loss = 0.0053462572 (126.302 sec)
+INFO:tensorflow:Global Steps = 141100, Learning Rate = 1e-07, Train_hm_Loss = 0.0010539007, Train_paf_Loss = 0.004324852, Training Loss = 0.005378753 (55.670 sec)
+INFO:tensorflow:Global Steps = 141200, Learning Rate = 1e-07, Train_hm_Loss = 0.0015457063, Train_paf_Loss = 0.005846237, Training Loss = 0.007391943 (58.033 sec)
+INFO:tensorflow:Global Steps = 141300, Learning Rate = 1e-07, Train_hm_Loss = 0.0024886918, Train_paf_Loss = 0.0088547375, Training Loss = 0.011343429 (58.248 sec)
+INFO:tensorflow:Global Steps = 141400, Learning Rate = 1e-07, Train_hm_Loss = 0.0016677523, Train_paf_Loss = 0.006359071, Training Loss = 0.008026823 (58.058 sec)
+INFO:tensorflow:Global Steps = 141500, Learning Rate = 1e-07, Train_hm_Loss = 0.0017250439, Train_paf_Loss = 0.0067218374, Training Loss = 0.008446882 (57.977 sec)
+INFO:tensorflow:Global Steps = 141600, Learning Rate = 1e-07, Train_hm_Loss = 0.0013765325, Train_paf_Loss = 0.00464002, Training Loss = 0.0060165524 (57.687 sec)
+INFO:tensorflow:Global Steps = 141700, Learning Rate = 1e-07, Train_hm_Loss = 0.0012680005, Train_paf_Loss = 0.004702249, Training Loss = 0.0059702494 (57.595 sec)
+INFO:tensorflow:Global Steps = 141800, Learning Rate = 1e-07, Train_hm_Loss = 0.0015791986, Train_paf_Loss = 0.005642469, Training Loss = 0.0072216676 (57.574 sec)
+INFO:tensorflow:Global Steps = 141900, Learning Rate = 1e-07, Train_hm_Loss = 0.0013063345, Train_paf_Loss = 0.0058981054, Training Loss = 0.00720444 (57.516 sec)
+INFO:tensorflow:Saving checkpoints for 142000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T03:29:00Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-142000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026517715, Eval_paf_loss = 0.010090187, Evaluation Loss = 0.012741959, Global Steps = 142000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034905483, Eval_paf_loss = 0.011639011, Evaluation Loss = 0.01393576, Global Steps = 142000, Learning Rate = 1e-07 (2.373 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033514926, Eval_paf_loss = 0.010916419, Evaluation Loss = 0.014046478, Global Steps = 142000, Learning Rate = 1e-07 (2.395 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028188373, Eval_paf_loss = 0.00938164, Evaluation Loss = 0.013584977, Global Steps = 142000, Learning Rate = 1e-07 (2.338 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030306792, Eval_paf_loss = 0.010458244, Evaluation Loss = 0.013565767, Global Steps = 142000, Learning Rate = 1e-07 (2.331 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023313458, Eval_paf_loss = 0.009622625, Evaluation Loss = 0.013297134, Global Steps = 142000, Learning Rate = 1e-07 (2.332 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004076278, Eval_paf_loss = 0.012977939, Evaluation Loss = 0.01383386, Global Steps = 142000, Learning Rate = 1e-07 (2.247 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023592752, Eval_paf_loss = 0.009513194, Evaluation Loss = 0.0135886865, Global Steps = 142000, Learning Rate = 1e-07 (2.418 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035966395, Eval_paf_loss = 0.012713185, Evaluation Loss = 0.013891035, Global Steps = 142000, Learning Rate = 1e-07 (2.411 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025885669, Eval_paf_loss = 0.009931931, Evaluation Loss = 0.01375398, Global Steps = 142000, Learning Rate = 1e-07 (2.281 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019744425, Eval_paf_loss = 0.0078088646, Evaluation Loss = 0.013393011, Global Steps = 142000, Learning Rate = 1e-07 (2.335 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029278235, Eval_paf_loss = 0.010839899, Evaluation Loss = 0.013424236, Global Steps = 142000, Learning Rate = 1e-07 (2.362 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002413411, Eval_paf_loss = 0.009200183, Evaluation Loss = 0.013284956, Global Steps = 142000, Learning Rate = 1e-07 (2.326 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020291994, Eval_paf_loss = 0.0083351815, Evaluation Loss = 0.013076344, Global Steps = 142000, Learning Rate = 1e-07 (2.328 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040133703, Eval_paf_loss = 0.013719504, Evaluation Loss = 0.013386779, Global Steps = 142000, Learning Rate = 1e-07 (2.360 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026346948, Eval_paf_loss = 0.010384914, Evaluation Loss = 0.013363831, Global Steps = 142000, Learning Rate = 1e-07 (2.316 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045429682, Eval_paf_loss = 0.014850425, Evaluation Loss = 0.01371851, Global Steps = 142000, Learning Rate = 1e-07 (2.379 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027882692, Eval_paf_loss = 0.010774631, Evaluation Loss = 0.0137098655, Global Steps = 142000, Learning Rate = 1e-07 (2.271 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003956845, Eval_paf_loss = 0.013272384, Evaluation Loss = 0.013895094, Global Steps = 142000, Learning Rate = 1e-07 (0.896 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-03:29:49
+INFO:tensorflow:Saving dict for global step 142000: global_step = 142000, loss = 0.013895094
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 142000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-142000
+INFO:tensorflow:global_step/sec: 1.55467
+INFO:tensorflow:loss = 0.010429876, step = 142000 (643.224 sec)
+INFO:tensorflow:Global Steps = 142000, Learning Rate = 1e-07, Train_hm_Loss = 0.0022049737, Train_paf_Loss = 0.008224902, Training Loss = 0.010429876 (124.866 sec)
+INFO:tensorflow:Global Steps = 142100, Learning Rate = 1e-07, Train_hm_Loss = 0.0016417833, Train_paf_Loss = 0.0048133633, Training Loss = 0.0064551467 (55.652 sec)
+INFO:tensorflow:Global Steps = 142200, Learning Rate = 1e-07, Train_hm_Loss = 0.0020728486, Train_paf_Loss = 0.006756597, Training Loss = 0.008829446 (58.001 sec)
+INFO:tensorflow:Global Steps = 142300, Learning Rate = 1e-07, Train_hm_Loss = 0.0013100031, Train_paf_Loss = 0.0049057635, Training Loss = 0.0062157665 (58.395 sec)
+INFO:tensorflow:Global Steps = 142400, Learning Rate = 1e-07, Train_hm_Loss = 0.0011606126, Train_paf_Loss = 0.0048224395, Training Loss = 0.005983052 (58.192 sec)
+INFO:tensorflow:Global Steps = 142500, Learning Rate = 1e-07, Train_hm_Loss = 0.0014800833, Train_paf_Loss = 0.004335383, Training Loss = 0.0058154664 (57.935 sec)
+INFO:tensorflow:Global Steps = 142600, Learning Rate = 1e-07, Train_hm_Loss = 0.0014450377, Train_paf_Loss = 0.005686652, Training Loss = 0.0071316897 (57.671 sec)
+INFO:tensorflow:Global Steps = 142700, Learning Rate = 1e-07, Train_hm_Loss = 0.0011684877, Train_paf_Loss = 0.004153251, Training Loss = 0.005321739 (57.594 sec)
+INFO:tensorflow:Global Steps = 142800, Learning Rate = 1e-07, Train_hm_Loss = 0.0011307208, Train_paf_Loss = 0.0042991946, Training Loss = 0.005429915 (57.487 sec)
+INFO:tensorflow:Global Steps = 142900, Learning Rate = 1e-07, Train_hm_Loss = 0.0014783123, Train_paf_Loss = 0.0053659203, Training Loss = 0.006844233 (57.646 sec)
+INFO:tensorflow:Saving checkpoints for 143000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T03:39:43Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-143000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002648081, Eval_paf_loss = 0.010080108, Evaluation Loss = 0.012728189, Global Steps = 143000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003479851, Eval_paf_loss = 0.011630211, Evaluation Loss = 0.013919126, Global Steps = 143000, Learning Rate = 1e-07 (2.236 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033519145, Eval_paf_loss = 0.010910422, Evaluation Loss = 0.01403353, Global Steps = 143000, Learning Rate = 1e-07 (2.279 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028136694, Eval_paf_loss = 0.009387378, Evaluation Loss = 0.013575409, Global Steps = 143000, Learning Rate = 1e-07 (2.319 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030311611, Eval_paf_loss = 0.010447922, Evaluation Loss = 0.013556143, Global Steps = 143000, Learning Rate = 1e-07 (2.288 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023297137, Eval_paf_loss = 0.00961555, Evaluation Loss = 0.013287663, Global Steps = 143000, Learning Rate = 1e-07 (2.208 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004073402, Eval_paf_loss = 0.012984328, Evaluation Loss = 0.0138262445, Global Steps = 143000, Learning Rate = 1e-07 (2.307 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002353404, Eval_paf_loss = 0.009499652, Evaluation Loss = 0.013579596, Global Steps = 143000, Learning Rate = 1e-07 (2.262 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036056272, Eval_paf_loss = 0.012735294, Evaluation Loss = 0.01388641, Global Steps = 143000, Learning Rate = 1e-07 (2.264 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025850586, Eval_paf_loss = 0.009938727, Evaluation Loss = 0.013750148, Global Steps = 143000, Learning Rate = 1e-07 (2.297 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019757776, Eval_paf_loss = 0.007805552, Evaluation Loss = 0.013389346, Global Steps = 143000, Learning Rate = 1e-07 (2.187 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029284284, Eval_paf_loss = 0.010842728, Evaluation Loss = 0.013421164, Global Steps = 143000, Learning Rate = 1e-07 (2.243 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024078686, Eval_paf_loss = 0.009183525, Evaluation Loss = 0.013280412, Global Steps = 143000, Learning Rate = 1e-07 (2.349 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020269596, Eval_paf_loss = 0.008334608, Evaluation Loss = 0.0130719235, Global Steps = 143000, Learning Rate = 1e-07 (2.168 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004014177, Eval_paf_loss = 0.013720285, Evaluation Loss = 0.01338276, Global Steps = 143000, Learning Rate = 1e-07 (2.308 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026390224, Eval_paf_loss = 0.010380543, Evaluation Loss = 0.01336006, Global Steps = 143000, Learning Rate = 1e-07 (2.278 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004545913, Eval_paf_loss = 0.014851525, Evaluation Loss = 0.0137152, Global Steps = 143000, Learning Rate = 1e-07 (2.335 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002789803, Eval_paf_loss = 0.01077029, Evaluation Loss = 0.013706583, Global Steps = 143000, Learning Rate = 1e-07 (2.216 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003951418, Eval_paf_loss = 0.0132714715, Evaluation Loss = 0.013891651, Global Steps = 143000, Learning Rate = 1e-07 (0.893 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-03:40:30
+INFO:tensorflow:Saving dict for global step 143000: global_step = 143000, loss = 0.013891651
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 143000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-143000
+INFO:tensorflow:global_step/sec: 1.56017
+INFO:tensorflow:loss = 0.0046952055, step = 143000 (640.955 sec)
+INFO:tensorflow:Global Steps = 143000, Learning Rate = 1e-07, Train_hm_Loss = 0.0009809858, Train_paf_Loss = 0.0037142197, Training Loss = 0.0046952055 (122.383 sec)
+INFO:tensorflow:Global Steps = 143100, Learning Rate = 1e-07, Train_hm_Loss = 0.0015534987, Train_paf_Loss = 0.0056898175, Training Loss = 0.007243316 (55.706 sec)
+INFO:tensorflow:Global Steps = 143200, Learning Rate = 1e-07, Train_hm_Loss = 0.0011856485, Train_paf_Loss = 0.0047721704, Training Loss = 0.005957819 (58.021 sec)
+INFO:tensorflow:Global Steps = 143300, Learning Rate = 1e-07, Train_hm_Loss = 0.0014230529, Train_paf_Loss = 0.00429453, Training Loss = 0.005717583 (58.257 sec)
+INFO:tensorflow:Global Steps = 143400, Learning Rate = 1e-07, Train_hm_Loss = 0.0017165006, Train_paf_Loss = 0.0061449967, Training Loss = 0.007861497 (58.067 sec)
+INFO:tensorflow:Global Steps = 143500, Learning Rate = 1e-07, Train_hm_Loss = 0.0014272502, Train_paf_Loss = 0.0059156623, Training Loss = 0.0073429123 (58.105 sec)
+INFO:tensorflow:Global Steps = 143600, Learning Rate = 1e-07, Train_hm_Loss = 0.0015181167, Train_paf_Loss = 0.0049571656, Training Loss = 0.0064752824 (57.835 sec)
+INFO:tensorflow:Global Steps = 143700, Learning Rate = 1e-07, Train_hm_Loss = 0.0014443542, Train_paf_Loss = 0.00519531, Training Loss = 0.006639664 (57.845 sec)
+INFO:tensorflow:Global Steps = 143800, Learning Rate = 1e-07, Train_hm_Loss = 0.0014648648, Train_paf_Loss = 0.0055707763, Training Loss = 0.007035641 (57.668 sec)
+INFO:tensorflow:Global Steps = 143900, Learning Rate = 1e-07, Train_hm_Loss = 0.0011007724, Train_paf_Loss = 0.003590601, Training Loss = 0.0046913736 (57.636 sec)
+INFO:tensorflow:Saving checkpoints for 144000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T03:50:25Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-144000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026478567, Eval_paf_loss = 0.010075956, Evaluation Loss = 0.012723813, Global Steps = 144000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003484478, Eval_paf_loss = 0.011635466, Evaluation Loss = 0.013921878, Global Steps = 144000, Learning Rate = 1e-07 (2.210 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033468052, Eval_paf_loss = 0.010893486, Evaluation Loss = 0.0140280165, Global Steps = 144000, Learning Rate = 1e-07 (2.354 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002819452, Eval_paf_loss = 0.009381446, Evaluation Loss = 0.013571236, Global Steps = 144000, Learning Rate = 1e-07 (2.259 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030267113, Eval_paf_loss = 0.010440742, Evaluation Loss = 0.01355048, Global Steps = 144000, Learning Rate = 1e-07 (2.236 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023333803, Eval_paf_loss = 0.00962478, Evaluation Loss = 0.013285093, Global Steps = 144000, Learning Rate = 1e-07 (2.233 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040765596, Eval_paf_loss = 0.012978594, Evaluation Loss = 0.013823673, Global Steps = 144000, Learning Rate = 1e-07 (2.298 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002354836, Eval_paf_loss = 0.0095061865, Evaluation Loss = 0.013578342, Global Steps = 144000, Learning Rate = 1e-07 (2.321 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035957333, Eval_paf_loss = 0.012714898, Evaluation Loss = 0.01388193, Global Steps = 144000, Learning Rate = 1e-07 (2.268 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025795102, Eval_paf_loss = 0.009907302, Evaluation Loss = 0.013742419, Global Steps = 144000, Learning Rate = 1e-07 (2.209 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019748786, Eval_paf_loss = 0.007813441, Evaluation Loss = 0.013382955, Global Steps = 144000, Learning Rate = 1e-07 (2.243 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002928701, Eval_paf_loss = 0.010844722, Evaluation Loss = 0.013415494, Global Steps = 144000, Learning Rate = 1e-07 (2.351 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024133401, Eval_paf_loss = 0.009185279, Evaluation Loss = 0.013275734, Global Steps = 144000, Learning Rate = 1e-07 (2.236 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020270036, Eval_paf_loss = 0.00833093, Evaluation Loss = 0.01306732, Global Steps = 144000, Learning Rate = 1e-07 (2.284 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040065567, Eval_paf_loss = 0.013719552, Evaluation Loss = 0.013377906, Global Steps = 144000, Learning Rate = 1e-07 (2.270 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026368443, Eval_paf_loss = 0.0103859855, Evaluation Loss = 0.013355713, Global Steps = 144000, Learning Rate = 1e-07 (2.243 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004540123, Eval_paf_loss = 0.014839865, Evaluation Loss = 0.0137100825, Global Steps = 144000, Learning Rate = 1e-07 (2.354 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027882594, Eval_paf_loss = 0.010774141, Evaluation Loss = 0.013701878, Global Steps = 144000, Learning Rate = 1e-07 (2.245 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003954937, Eval_paf_loss = 0.013286901, Evaluation Loss = 0.013888191, Global Steps = 144000, Learning Rate = 1e-07 (0.965 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-03:51:13
+INFO:tensorflow:Saving dict for global step 144000: global_step = 144000, loss = 0.013888191
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 144000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-144000
+INFO:tensorflow:global_step/sec: 1.55595
+INFO:tensorflow:loss = 0.005201163, step = 144000 (642.695 sec)
+INFO:tensorflow:Global Steps = 144000, Learning Rate = 1e-07, Train_hm_Loss = 0.0010700302, Train_paf_Loss = 0.0041311327, Training Loss = 0.005201163 (123.556 sec)
+INFO:tensorflow:Global Steps = 144100, Learning Rate = 1e-07, Train_hm_Loss = 0.0018423917, Train_paf_Loss = 0.006558754, Training Loss = 0.008401146 (55.659 sec)
+INFO:tensorflow:Global Steps = 144200, Learning Rate = 1e-07, Train_hm_Loss = 0.003951257, Train_paf_Loss = 0.012013311, Training Loss = 0.015964568 (58.160 sec)
+INFO:tensorflow:Global Steps = 144300, Learning Rate = 1e-07, Train_hm_Loss = 0.0039235535, Train_paf_Loss = 0.012286536, Training Loss = 0.01621009 (58.341 sec)
+INFO:tensorflow:Global Steps = 144400, Learning Rate = 1e-07, Train_hm_Loss = 0.0038955056, Train_paf_Loss = 0.011894834, Training Loss = 0.01579034 (58.178 sec)
+INFO:tensorflow:Global Steps = 144500, Learning Rate = 1e-07, Train_hm_Loss = 0.00070140517, Train_paf_Loss = 0.0026968482, Training Loss = 0.0033982533 (58.077 sec)
+INFO:tensorflow:Global Steps = 144600, Learning Rate = 1e-07, Train_hm_Loss = 0.0009005587, Train_paf_Loss = 0.003468866, Training Loss = 0.0043694247 (57.845 sec)
+INFO:tensorflow:Global Steps = 144700, Learning Rate = 1e-07, Train_hm_Loss = 0.0012888844, Train_paf_Loss = 0.004044954, Training Loss = 0.0053338385 (57.907 sec)
+INFO:tensorflow:Global Steps = 144800, Learning Rate = 1e-07, Train_hm_Loss = 0.0012943437, Train_paf_Loss = 0.0042981952, Training Loss = 0.005592539 (57.580 sec)
+INFO:tensorflow:Global Steps = 144900, Learning Rate = 1e-07, Train_hm_Loss = 0.0011526081, Train_paf_Loss = 0.004378453, Training Loss = 0.005531061 (57.759 sec)
+INFO:tensorflow:Saving checkpoints for 145000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T04:01:07Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-145000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026499077, Eval_paf_loss = 0.01009157, Evaluation Loss = 0.012741478, Global Steps = 145000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003480046, Eval_paf_loss = 0.011628801, Evaluation Loss = 0.013925163, Global Steps = 145000, Learning Rate = 1e-07 (2.330 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033607783, Eval_paf_loss = 0.010932161, Evaluation Loss = 0.014047754, Global Steps = 145000, Learning Rate = 1e-07 (2.284 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028114344, Eval_paf_loss = 0.0093807345, Evaluation Loss = 0.013583858, Global Steps = 145000, Learning Rate = 1e-07 (2.249 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030368662, Eval_paf_loss = 0.010460561, Evaluation Loss = 0.013566571, Global Steps = 145000, Learning Rate = 1e-07 (2.409 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023264315, Eval_paf_loss = 0.00960072, Evaluation Loss = 0.013293334, Global Steps = 145000, Learning Rate = 1e-07 (2.218 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004068416, Eval_paf_loss = 0.012975248, Evaluation Loss = 0.013829096, Global Steps = 145000, Learning Rate = 1e-07 (2.266 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023533741, Eval_paf_loss = 0.009499386, Evaluation Loss = 0.0135820545, Global Steps = 145000, Learning Rate = 1e-07 (2.271 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036059003, Eval_paf_loss = 0.0127305025, Evaluation Loss = 0.013888094, Global Steps = 145000, Learning Rate = 1e-07 (2.334 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025885482, Eval_paf_loss = 0.009948903, Evaluation Loss = 0.0137530295, Global Steps = 145000, Learning Rate = 1e-07 (2.342 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019774707, Eval_paf_loss = 0.007806462, Evaluation Loss = 0.0133922035, Global Steps = 145000, Learning Rate = 1e-07 (2.374 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029282146, Eval_paf_loss = 0.010837319, Evaluation Loss = 0.013423313, Global Steps = 145000, Learning Rate = 1e-07 (2.370 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002405821, Eval_paf_loss = 0.009189919, Evaluation Loss = 0.013282731, Global Steps = 145000, Learning Rate = 1e-07 (2.200 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002030729, Eval_paf_loss = 0.008340911, Evaluation Loss = 0.013074796, Global Steps = 145000, Learning Rate = 1e-07 (2.291 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.00401962, Eval_paf_loss = 0.013712423, Evaluation Loss = 0.013385279, Global Steps = 145000, Learning Rate = 1e-07 (2.325 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026370604, Eval_paf_loss = 0.010361534, Evaluation Loss = 0.013361111, Global Steps = 145000, Learning Rate = 1e-07 (2.201 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045471396, Eval_paf_loss = 0.014858769, Evaluation Loss = 0.013716687, Global Steps = 145000, Learning Rate = 1e-07 (2.407 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027885248, Eval_paf_loss = 0.010765598, Evaluation Loss = 0.013707656, Global Steps = 145000, Learning Rate = 1e-07 (2.200 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003952338, Eval_paf_loss = 0.013250802, Evaluation Loss = 0.01389163, Global Steps = 145000, Learning Rate = 1e-07 (0.919 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-04:01:54
+INFO:tensorflow:Saving dict for global step 145000: global_step = 145000, loss = 0.01389163
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 145000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-145000
+INFO:tensorflow:global_step/sec: 1.55892
+INFO:tensorflow:loss = 0.006666094, step = 145000 (641.470 sec)
+INFO:tensorflow:Global Steps = 145000, Learning Rate = 1e-07, Train_hm_Loss = 0.0014644852, Train_paf_Loss = 0.005201609, Training Loss = 0.006666094 (121.965 sec)
+INFO:tensorflow:Global Steps = 145100, Learning Rate = 1e-07, Train_hm_Loss = 0.0032516017, Train_paf_Loss = 0.0114666885, Training Loss = 0.01471829 (55.851 sec)
+INFO:tensorflow:Global Steps = 145200, Learning Rate = 1e-07, Train_hm_Loss = 0.0012882916, Train_paf_Loss = 0.0044451384, Training Loss = 0.00573343 (58.088 sec)
+INFO:tensorflow:Global Steps = 145300, Learning Rate = 1e-07, Train_hm_Loss = 0.0016147433, Train_paf_Loss = 0.0063156392, Training Loss = 0.007930382 (58.234 sec)
+INFO:tensorflow:Global Steps = 145400, Learning Rate = 1e-07, Train_hm_Loss = 0.001430984, Train_paf_Loss = 0.0050180685, Training Loss = 0.0064490526 (58.095 sec)
+INFO:tensorflow:Global Steps = 145500, Learning Rate = 1e-07, Train_hm_Loss = 0.0012640231, Train_paf_Loss = 0.0046764445, Training Loss = 0.0059404676 (57.835 sec)
+INFO:tensorflow:Global Steps = 145600, Learning Rate = 1e-07, Train_hm_Loss = 0.0012013802, Train_paf_Loss = 0.004652049, Training Loss = 0.005853429 (57.558 sec)
+INFO:tensorflow:Global Steps = 145700, Learning Rate = 1e-07, Train_hm_Loss = 0.0016455796, Train_paf_Loss = 0.005735219, Training Loss = 0.0073807985 (57.612 sec)
+INFO:tensorflow:Global Steps = 145800, Learning Rate = 1e-07, Train_hm_Loss = 0.00069110596, Train_paf_Loss = 0.0026443608, Training Loss = 0.0033354666 (57.641 sec)
+INFO:tensorflow:Global Steps = 145900, Learning Rate = 1e-07, Train_hm_Loss = 0.0013552479, Train_paf_Loss = 0.0050442494, Training Loss = 0.0063994974 (57.409 sec)
+INFO:tensorflow:Saving checkpoints for 146000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T04:11:48Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-146000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002649476, Eval_paf_loss = 0.010085514, Evaluation Loss = 0.01273499, Global Steps = 146000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034806414, Eval_paf_loss = 0.011630612, Evaluation Loss = 0.013923122, Global Steps = 146000, Learning Rate = 1e-07 (2.391 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033540067, Eval_paf_loss = 0.0109175015, Evaluation Loss = 0.014039251, Global Steps = 146000, Learning Rate = 1e-07 (2.301 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028126366, Eval_paf_loss = 0.009390925, Evaluation Loss = 0.013580328, Global Steps = 146000, Learning Rate = 1e-07 (2.266 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030312603, Eval_paf_loss = 0.010447613, Evaluation Loss = 0.013560037, Global Steps = 146000, Learning Rate = 1e-07 (2.333 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002328683, Eval_paf_loss = 0.009609382, Evaluation Loss = 0.013289709, Global Steps = 146000, Learning Rate = 1e-07 (2.334 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040723677, Eval_paf_loss = 0.0129819205, Evaluation Loss = 0.0138275055, Global Steps = 146000, Learning Rate = 1e-07 (2.234 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023562445, Eval_paf_loss = 0.00950425, Evaluation Loss = 0.01358163, Global Steps = 146000, Learning Rate = 1e-07 (2.306 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036075048, Eval_paf_loss = 0.012739007, Evaluation Loss = 0.01388884, Global Steps = 146000, Learning Rate = 1e-07 (2.319 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025876816, Eval_paf_loss = 0.009946291, Evaluation Loss = 0.013753353, Global Steps = 146000, Learning Rate = 1e-07 (2.263 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019757869, Eval_paf_loss = 0.007801321, Evaluation Loss = 0.013391877, Global Steps = 146000, Learning Rate = 1e-07 (2.333 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029316721, Eval_paf_loss = 0.010852344, Evaluation Loss = 0.013424556, Global Steps = 146000, Learning Rate = 1e-07 (2.323 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002408109, Eval_paf_loss = 0.009188807, Evaluation Loss = 0.013283968, Global Steps = 146000, Learning Rate = 1e-07 (2.193 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002027832, Eval_paf_loss = 0.008336561, Evaluation Loss = 0.013075427, Global Steps = 146000, Learning Rate = 1e-07 (2.234 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004016192, Eval_paf_loss = 0.013719885, Evaluation Loss = 0.013386137, Global Steps = 146000, Learning Rate = 1e-07 (2.176 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002638983, Eval_paf_loss = 0.010374678, Evaluation Loss = 0.0133628575, Global Steps = 146000, Learning Rate = 1e-07 (2.217 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004549161, Eval_paf_loss = 0.014862866, Evaluation Loss = 0.013718691, Global Steps = 146000, Learning Rate = 1e-07 (2.100 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027891898, Eval_paf_loss = 0.010767959, Evaluation Loss = 0.0137097165, Global Steps = 146000, Learning Rate = 1e-07 (2.247 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039513474, Eval_paf_loss = 0.013256792, Evaluation Loss = 0.013893845, Global Steps = 146000, Learning Rate = 1e-07 (0.832 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-04:12:35
+INFO:tensorflow:Saving dict for global step 146000: global_step = 146000, loss = 0.013893845
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 146000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-146000
+INFO:tensorflow:global_step/sec: 1.56016
+INFO:tensorflow:loss = 0.007006861, step = 146000 (640.960 sec)
+INFO:tensorflow:Global Steps = 146000, Learning Rate = 1e-07, Train_hm_Loss = 0.0016158562, Train_paf_Loss = 0.0053910045, Training Loss = 0.007006861 (122.636 sec)
+INFO:tensorflow:Global Steps = 146100, Learning Rate = 1e-07, Train_hm_Loss = 0.0013127706, Train_paf_Loss = 0.004734424, Training Loss = 0.006047195 (55.665 sec)
+INFO:tensorflow:Global Steps = 146200, Learning Rate = 1e-07, Train_hm_Loss = 0.0015144834, Train_paf_Loss = 0.0052032215, Training Loss = 0.0067177047 (57.468 sec)
+INFO:tensorflow:Global Steps = 146300, Learning Rate = 1e-07, Train_hm_Loss = 0.0016211547, Train_paf_Loss = 0.00639896, Training Loss = 0.008020115 (58.023 sec)
+INFO:tensorflow:Global Steps = 146400, Learning Rate = 1e-07, Train_hm_Loss = 0.0012729297, Train_paf_Loss = 0.0049583362, Training Loss = 0.006231266 (57.793 sec)
+INFO:tensorflow:Global Steps = 146500, Learning Rate = 1e-07, Train_hm_Loss = 0.0013959451, Train_paf_Loss = 0.005154276, Training Loss = 0.006550221 (57.693 sec)
+INFO:tensorflow:Global Steps = 146600, Learning Rate = 1e-07, Train_hm_Loss = 0.0019001549, Train_paf_Loss = 0.007222399, Training Loss = 0.009122554 (57.588 sec)
+INFO:tensorflow:Global Steps = 146700, Learning Rate = 1e-07, Train_hm_Loss = 0.0011364687, Train_paf_Loss = 0.005032726, Training Loss = 0.006169195 (57.702 sec)
+INFO:tensorflow:Global Steps = 146800, Learning Rate = 1e-07, Train_hm_Loss = 0.0011838528, Train_paf_Loss = 0.0051772906, Training Loss = 0.0063611437 (57.345 sec)
+INFO:tensorflow:Global Steps = 146900, Learning Rate = 1e-07, Train_hm_Loss = 0.0015813664, Train_paf_Loss = 0.0057031224, Training Loss = 0.0072844885 (57.414 sec)
+INFO:tensorflow:Saving checkpoints for 147000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T04:22:27Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-147000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026479242, Eval_paf_loss = 0.010075524, Evaluation Loss = 0.012723449, Global Steps = 147000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003482769, Eval_paf_loss = 0.011632348, Evaluation Loss = 0.013919283, Global Steps = 147000, Learning Rate = 1e-07 (2.243 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033473466, Eval_paf_loss = 0.010895211, Evaluation Loss = 0.014027041, Global Steps = 147000, Learning Rate = 1e-07 (2.210 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028158673, Eval_paf_loss = 0.009382939, Evaluation Loss = 0.013569983, Global Steps = 147000, Learning Rate = 1e-07 (2.417 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030272321, Eval_paf_loss = 0.010440429, Evaluation Loss = 0.013549519, Global Steps = 147000, Learning Rate = 1e-07 (2.303 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023314555, Eval_paf_loss = 0.009618331, Evaluation Loss = 0.013282896, Global Steps = 147000, Learning Rate = 1e-07 (2.333 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040741814, Eval_paf_loss = 0.012978167, Evaluation Loss = 0.013821389, Global Steps = 147000, Learning Rate = 1e-07 (2.439 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023544193, Eval_paf_loss = 0.009503704, Evaluation Loss = 0.01357598, Global Steps = 147000, Learning Rate = 1e-07 (2.315 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003599704, Eval_paf_loss = 0.012722902, Evaluation Loss = 0.013881161, Global Steps = 147000, Learning Rate = 1e-07 (2.360 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025808285, Eval_paf_loss = 0.009914791, Evaluation Loss = 0.013742606, Global Steps = 147000, Learning Rate = 1e-07 (2.350 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019750851, Eval_paf_loss = 0.007809923, Evaluation Loss = 0.013382825, Global Steps = 147000, Learning Rate = 1e-07 (2.361 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029292866, Eval_paf_loss = 0.010844407, Evaluation Loss = 0.013415397, Global Steps = 147000, Learning Rate = 1e-07 (2.390 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002410905, Eval_paf_loss = 0.009182514, Evaluation Loss = 0.013275245, Global Steps = 147000, Learning Rate = 1e-07 (2.348 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020268143, Eval_paf_loss = 0.008330623, Evaluation Loss = 0.01306683, Global Steps = 147000, Learning Rate = 1e-07 (2.341 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004008303, Eval_paf_loss = 0.013716204, Evaluation Loss = 0.013377342, Global Steps = 147000, Learning Rate = 1e-07 (2.390 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002637863, Eval_paf_loss = 0.010383199, Evaluation Loss = 0.013355075, Global Steps = 147000, Learning Rate = 1e-07 (2.354 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045412937, Eval_paf_loss = 0.014841691, Evaluation Loss = 0.013709658, Global Steps = 147000, Learning Rate = 1e-07 (2.266 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002789031, Eval_paf_loss = 0.010771119, Evaluation Loss = 0.013701352, Global Steps = 147000, Learning Rate = 1e-07 (2.363 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039538755, Eval_paf_loss = 0.013282808, Evaluation Loss = 0.013887423, Global Steps = 147000, Learning Rate = 1e-07 (0.901 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-04:23:15
+INFO:tensorflow:Saving dict for global step 147000: global_step = 147000, loss = 0.013887423
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 147000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-147000
+INFO:tensorflow:global_step/sec: 1.56405
+INFO:tensorflow:loss = 0.0076068062, step = 147000 (639.363 sec)
+INFO:tensorflow:Global Steps = 147000, Learning Rate = 1e-07, Train_hm_Loss = 0.0014187496, Train_paf_Loss = 0.006188057, Training Loss = 0.0076068062 (122.673 sec)
+INFO:tensorflow:Global Steps = 147100, Learning Rate = 1e-07, Train_hm_Loss = 0.0011363069, Train_paf_Loss = 0.0038266415, Training Loss = 0.004962948 (55.661 sec)
+INFO:tensorflow:Global Steps = 147200, Learning Rate = 1e-07, Train_hm_Loss = 0.0015930957, Train_paf_Loss = 0.006401922, Training Loss = 0.007995018 (57.650 sec)
+INFO:tensorflow:Global Steps = 147300, Learning Rate = 1e-07, Train_hm_Loss = 0.001297873, Train_paf_Loss = 0.004525149, Training Loss = 0.0058230218 (58.199 sec)
+INFO:tensorflow:Global Steps = 147400, Learning Rate = 1e-07, Train_hm_Loss = 0.0011926368, Train_paf_Loss = 0.0045042355, Training Loss = 0.0056968722 (57.924 sec)
+INFO:tensorflow:Global Steps = 147500, Learning Rate = 1e-07, Train_hm_Loss = 0.0013455565, Train_paf_Loss = 0.0049547707, Training Loss = 0.0063003274 (57.702 sec)
+INFO:tensorflow:Global Steps = 147600, Learning Rate = 1e-07, Train_hm_Loss = 0.001797614, Train_paf_Loss = 0.0062894025, Training Loss = 0.008087017 (57.673 sec)
+INFO:tensorflow:Global Steps = 147700, Learning Rate = 1e-07, Train_hm_Loss = 0.002570002, Train_paf_Loss = 0.007956866, Training Loss = 0.0105268685 (57.532 sec)
+INFO:tensorflow:Global Steps = 147800, Learning Rate = 1e-07, Train_hm_Loss = 0.0039194208, Train_paf_Loss = 0.011511944, Training Loss = 0.015431365 (57.404 sec)
+INFO:tensorflow:Global Steps = 147900, Learning Rate = 1e-07, Train_hm_Loss = 0.004234111, Train_paf_Loss = 0.013343931, Training Loss = 0.017578043 (57.275 sec)
+INFO:tensorflow:Saving checkpoints for 148000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T04:33:08Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-148000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.00266156, Eval_paf_loss = 0.010100776, Evaluation Loss = 0.012762336, Global Steps = 148000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034931412, Eval_paf_loss = 0.011639477, Evaluation Loss = 0.013947478, Global Steps = 148000, Learning Rate = 1e-07 (2.291 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033625907, Eval_paf_loss = 0.010929616, Evaluation Loss = 0.014062387, Global Steps = 148000, Learning Rate = 1e-07 (2.292 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028230457, Eval_paf_loss = 0.009386205, Evaluation Loss = 0.013599103, Global Steps = 148000, Learning Rate = 1e-07 (2.273 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030386455, Eval_paf_loss = 0.010459538, Evaluation Loss = 0.013578919, Global Steps = 148000, Learning Rate = 1e-07 (2.377 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023296543, Eval_paf_loss = 0.009599633, Evaluation Loss = 0.01330398, Global Steps = 148000, Learning Rate = 1e-07 (2.367 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040759826, Eval_paf_loss = 0.012961249, Evaluation Loss = 0.013837301, Global Steps = 148000, Learning Rate = 1e-07 (2.245 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023586706, Eval_paf_loss = 0.009503853, Evaluation Loss = 0.013590454, Global Steps = 148000, Learning Rate = 1e-07 (2.408 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036059443, Eval_paf_loss = 0.01272534, Evaluation Loss = 0.013894992, Global Steps = 148000, Learning Rate = 1e-07 (2.451 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002602284, Eval_paf_loss = 0.009963023, Evaluation Loss = 0.013762022, Global Steps = 148000, Learning Rate = 1e-07 (2.353 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019787687, Eval_paf_loss = 0.0077981343, Evaluation Loss = 0.013399739, Global Steps = 148000, Learning Rate = 1e-07 (2.295 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002933346, Eval_paf_loss = 0.010839269, Evaluation Loss = 0.013430811, Global Steps = 148000, Learning Rate = 1e-07 (2.328 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024139455, Eval_paf_loss = 0.009215692, Evaluation Loss = 0.01329226, Global Steps = 148000, Learning Rate = 1e-07 (2.366 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020360374, Eval_paf_loss = 0.00834576, Evaluation Loss = 0.01308437, Global Steps = 148000, Learning Rate = 1e-07 (2.298 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004022359, Eval_paf_loss = 0.013717902, Evaluation Loss = 0.013394763, Global Steps = 148000, Learning Rate = 1e-07 (2.356 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026388622, Eval_paf_loss = 0.010379092, Evaluation Loss = 0.013371212, Global Steps = 148000, Learning Rate = 1e-07 (2.355 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004552761, Eval_paf_loss = 0.014862735, Evaluation Loss = 0.013726759, Global Steps = 148000, Learning Rate = 1e-07 (2.283 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002792569, Eval_paf_loss = 0.010768593, Evaluation Loss = 0.013717558, Global Steps = 148000, Learning Rate = 1e-07 (2.369 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003956027, Eval_paf_loss = 0.013245099, Evaluation Loss = 0.013900904, Global Steps = 148000, Learning Rate = 1e-07 (0.830 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-04:33:56
+INFO:tensorflow:Saving dict for global step 148000: global_step = 148000, loss = 0.013900904
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 148000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-148000
+INFO:tensorflow:global_step/sec: 1.55883
+INFO:tensorflow:loss = 0.008079637, step = 148000 (641.506 sec)
+INFO:tensorflow:Global Steps = 148000, Learning Rate = 1e-07, Train_hm_Loss = 0.0017110312, Train_paf_Loss = 0.006368606, Training Loss = 0.008079637 (124.485 sec)
+INFO:tensorflow:Global Steps = 148100, Learning Rate = 1e-07, Train_hm_Loss = 0.0009540615, Train_paf_Loss = 0.003063831, Training Loss = 0.0040178923 (55.652 sec)
+INFO:tensorflow:Global Steps = 148200, Learning Rate = 1e-07, Train_hm_Loss = 0.0014114904, Train_paf_Loss = 0.0045339386, Training Loss = 0.005945429 (57.372 sec)
+INFO:tensorflow:Global Steps = 148300, Learning Rate = 1e-07, Train_hm_Loss = 0.0025367222, Train_paf_Loss = 0.0075564324, Training Loss = 0.010093154 (57.936 sec)
+INFO:tensorflow:Global Steps = 148400, Learning Rate = 1e-07, Train_hm_Loss = 0.0014850748, Train_paf_Loss = 0.005092158, Training Loss = 0.006577233 (57.711 sec)
+INFO:tensorflow:Global Steps = 148500, Learning Rate = 1e-07, Train_hm_Loss = 0.0020865952, Train_paf_Loss = 0.0077265943, Training Loss = 0.0098131895 (57.663 sec)
+INFO:tensorflow:Global Steps = 148600, Learning Rate = 1e-07, Train_hm_Loss = 0.0010431501, Train_paf_Loss = 0.004353941, Training Loss = 0.005397091 (57.410 sec)
+INFO:tensorflow:Global Steps = 148700, Learning Rate = 1e-07, Train_hm_Loss = 0.0012991191, Train_paf_Loss = 0.0056740334, Training Loss = 0.0069731525 (57.272 sec)
+INFO:tensorflow:Global Steps = 148800, Learning Rate = 1e-07, Train_hm_Loss = 0.0020087096, Train_paf_Loss = 0.0069589703, Training Loss = 0.00896768 (57.397 sec)
+INFO:tensorflow:Global Steps = 148900, Learning Rate = 1e-07, Train_hm_Loss = 0.0013933637, Train_paf_Loss = 0.0065131853, Training Loss = 0.007906549 (57.259 sec)
+INFO:tensorflow:Saving checkpoints for 149000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T04:43:48Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-149000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026508318, Eval_paf_loss = 0.010087679, Evaluation Loss = 0.012738511, Global Steps = 149000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034852796, Eval_paf_loss = 0.011631948, Evaluation Loss = 0.0139278695, Global Steps = 149000, Learning Rate = 1e-07 (2.417 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033533513, Eval_paf_loss = 0.010916333, Evaluation Loss = 0.0140418075, Global Steps = 149000, Learning Rate = 1e-07 (2.501 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028177756, Eval_paf_loss = 0.009378288, Evaluation Loss = 0.013580372, Global Steps = 149000, Learning Rate = 1e-07 (2.473 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030313055, Eval_paf_loss = 0.010455076, Evaluation Loss = 0.013561574, Global Steps = 149000, Learning Rate = 1e-07 (2.501 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023292573, Eval_paf_loss = 0.009616032, Evaluation Loss = 0.013292193, Global Steps = 149000, Learning Rate = 1e-07 (2.402 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040750895, Eval_paf_loss = 0.012976369, Evaluation Loss = 0.013829231, Global Steps = 149000, Learning Rate = 1e-07 (2.413 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002356161, Eval_paf_loss = 0.009506407, Evaluation Loss = 0.013583398, Global Steps = 149000, Learning Rate = 1e-07 (2.480 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035980104, Eval_paf_loss = 0.012716503, Evaluation Loss = 0.013886856, Global Steps = 149000, Learning Rate = 1e-07 (2.408 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025880411, Eval_paf_loss = 0.009932534, Evaluation Loss = 0.013750228, Global Steps = 149000, Learning Rate = 1e-07 (2.322 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019731408, Eval_paf_loss = 0.0078026713, Evaluation Loss = 0.013388918, Global Steps = 149000, Learning Rate = 1e-07 (2.431 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002927269, Eval_paf_loss = 0.010838051, Evaluation Loss = 0.013420285, Global Steps = 149000, Learning Rate = 1e-07 (2.434 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024126498, Eval_paf_loss = 0.00920196, Evaluation Loss = 0.013281386, Global Steps = 149000, Learning Rate = 1e-07 (2.410 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020289954, Eval_paf_loss = 0.008335835, Evaluation Loss = 0.013073062, Global Steps = 149000, Learning Rate = 1e-07 (2.408 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040134075, Eval_paf_loss = 0.013716508, Evaluation Loss = 0.013383518, Global Steps = 149000, Learning Rate = 1e-07 (2.486 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026353463, Eval_paf_loss = 0.010382079, Evaluation Loss = 0.013360637, Global Steps = 149000, Learning Rate = 1e-07 (2.434 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045416728, Eval_paf_loss = 0.014845528, Evaluation Loss = 0.0137151405, Global Steps = 149000, Learning Rate = 1e-07 (2.517 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027881144, Eval_paf_loss = 0.010770447, Evaluation Loss = 0.013706442, Global Steps = 149000, Learning Rate = 1e-07 (2.433 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039540287, Eval_paf_loss = 0.013268345, Evaluation Loss = 0.013891491, Global Steps = 149000, Learning Rate = 1e-07 (0.963 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-04:44:38
+INFO:tensorflow:Saving dict for global step 149000: global_step = 149000, loss = 0.013891491
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 149000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-149000
+INFO:tensorflow:global_step/sec: 1.55744
+INFO:tensorflow:loss = 0.009174456, step = 149000 (642.082 sec)
+INFO:tensorflow:Global Steps = 149000, Learning Rate = 1e-07, Train_hm_Loss = 0.0019356449, Train_paf_Loss = 0.007238811, Training Loss = 0.009174456 (126.409 sec)
+INFO:tensorflow:Global Steps = 149100, Learning Rate = 1e-07, Train_hm_Loss = 0.0014968329, Train_paf_Loss = 0.0058542327, Training Loss = 0.0073510655 (55.636 sec)
+INFO:tensorflow:Global Steps = 149200, Learning Rate = 1e-07, Train_hm_Loss = 0.0020065086, Train_paf_Loss = 0.006250427, Training Loss = 0.0082569355 (57.197 sec)
+INFO:tensorflow:Global Steps = 149300, Learning Rate = 1e-07, Train_hm_Loss = 0.0011072755, Train_paf_Loss = 0.0039453455, Training Loss = 0.005052621 (57.903 sec)
+INFO:tensorflow:Global Steps = 149400, Learning Rate = 1e-07, Train_hm_Loss = 0.0013064404, Train_paf_Loss = 0.0041518984, Training Loss = 0.005458339 (57.718 sec)
+INFO:tensorflow:Global Steps = 149500, Learning Rate = 1e-07, Train_hm_Loss = 0.0012996099, Train_paf_Loss = 0.004748111, Training Loss = 0.006047721 (57.559 sec)
+INFO:tensorflow:Global Steps = 149600, Learning Rate = 1e-07, Train_hm_Loss = 0.0010278377, Train_paf_Loss = 0.0042562303, Training Loss = 0.005284068 (57.285 sec)
+INFO:tensorflow:Global Steps = 149700, Learning Rate = 1e-07, Train_hm_Loss = 0.00093163736, Train_paf_Loss = 0.0038977342, Training Loss = 0.0048293713 (57.379 sec)
+INFO:tensorflow:Global Steps = 149800, Learning Rate = 1e-07, Train_hm_Loss = 0.0009812665, Train_paf_Loss = 0.0038014872, Training Loss = 0.0047827535 (57.256 sec)
+INFO:tensorflow:Global Steps = 149900, Learning Rate = 1e-07, Train_hm_Loss = 0.0014724255, Train_paf_Loss = 0.0051770755, Training Loss = 0.006649501 (57.117 sec)
+INFO:tensorflow:Saving checkpoints for 150000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T04:54:28Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-150000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026475661, Eval_paf_loss = 0.010078886, Evaluation Loss = 0.012726452, Global Steps = 150000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034784114, Eval_paf_loss = 0.011628156, Evaluation Loss = 0.013916509, Global Steps = 150000, Learning Rate = 1e-07 (2.226 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033526022, Eval_paf_loss = 0.01091128, Evaluation Loss = 0.014032301, Global Steps = 150000, Learning Rate = 1e-07 (2.251 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028131597, Eval_paf_loss = 0.009387465, Evaluation Loss = 0.013574381, Global Steps = 150000, Learning Rate = 1e-07 (2.257 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003030842, Eval_paf_loss = 0.010446096, Evaluation Loss = 0.013554892, Global Steps = 150000, Learning Rate = 1e-07 (2.262 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023289486, Eval_paf_loss = 0.009612134, Evaluation Loss = 0.013285924, Global Steps = 150000, Learning Rate = 1e-07 (2.081 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004072192, Eval_paf_loss = 0.012981404, Evaluation Loss = 0.013824163, Global Steps = 150000, Learning Rate = 1e-07 (2.309 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023529404, Eval_paf_loss = 0.009497061, Evaluation Loss = 0.013577392, Global Steps = 150000, Learning Rate = 1e-07 (2.234 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036064947, Eval_paf_loss = 0.012735115, Evaluation Loss = 0.013884528, Global Steps = 150000, Learning Rate = 1e-07 (2.230 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025850553, Eval_paf_loss = 0.009940567, Evaluation Loss = 0.0137486365, Global Steps = 150000, Learning Rate = 1e-07 (2.302 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019760067, Eval_paf_loss = 0.007804891, Evaluation Loss = 0.013387933, Global Steps = 150000, Learning Rate = 1e-07 (2.293 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029284176, Eval_paf_loss = 0.010842947, Evaluation Loss = 0.013419886, Global Steps = 150000, Learning Rate = 1e-07 (2.202 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002407485, Eval_paf_loss = 0.009183972, Evaluation Loss = 0.013279239, Global Steps = 150000, Learning Rate = 1e-07 (2.265 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020267128, Eval_paf_loss = 0.008333818, Evaluation Loss = 0.013070759, Global Steps = 150000, Learning Rate = 1e-07 (2.229 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004015546, Eval_paf_loss = 0.013720545, Evaluation Loss = 0.013381781, Global Steps = 150000, Learning Rate = 1e-07 (2.268 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026392702, Eval_paf_loss = 0.010377488, Evaluation Loss = 0.013358967, Global Steps = 150000, Learning Rate = 1e-07 (2.174 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045467955, Eval_paf_loss = 0.014852637, Evaluation Loss = 0.013714289, Global Steps = 150000, Learning Rate = 1e-07 (2.289 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027896217, Eval_paf_loss = 0.010768528, Evaluation Loss = 0.013705615, Global Steps = 150000, Learning Rate = 1e-07 (2.285 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003950089, Eval_paf_loss = 0.0132653965, Evaluation Loss = 0.013890345, Global Steps = 150000, Learning Rate = 1e-07 (0.810 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-04:55:14
+INFO:tensorflow:Saving dict for global step 150000: global_step = 150000, loss = 0.013890345
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 150000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-150000
+INFO:tensorflow:global_step/sec: 1.57262
+INFO:tensorflow:loss = 0.006456588, step = 150000 (635.877 sec)
+INFO:tensorflow:Global Steps = 150000, Learning Rate = 1e-07, Train_hm_Loss = 0.001603594, Train_paf_Loss = 0.004852994, Training Loss = 0.006456588 (120.826 sec)
+INFO:tensorflow:Global Steps = 150100, Learning Rate = 1e-07, Train_hm_Loss = 0.001372654, Train_paf_Loss = 0.0056385216, Training Loss = 0.0070111756 (55.568 sec)
+INFO:tensorflow:Global Steps = 150200, Learning Rate = 1e-07, Train_hm_Loss = 0.001690358, Train_paf_Loss = 0.005886078, Training Loss = 0.007576436 (57.289 sec)
+INFO:tensorflow:Global Steps = 150300, Learning Rate = 1e-07, Train_hm_Loss = 0.0018301571, Train_paf_Loss = 0.005851212, Training Loss = 0.007681369 (57.828 sec)
+INFO:tensorflow:Global Steps = 150400, Learning Rate = 1e-07, Train_hm_Loss = 0.0015249031, Train_paf_Loss = 0.006054939, Training Loss = 0.0075798417 (57.891 sec)
+INFO:tensorflow:Global Steps = 150500, Learning Rate = 1e-07, Train_hm_Loss = 0.0014228973, Train_paf_Loss = 0.00517098, Training Loss = 0.0065938774 (57.628 sec)
+INFO:tensorflow:Global Steps = 150600, Learning Rate = 1e-07, Train_hm_Loss = 0.0024049955, Train_paf_Loss = 0.00966454, Training Loss = 0.012069535 (57.613 sec)
+INFO:tensorflow:Global Steps = 150700, Learning Rate = 1e-07, Train_hm_Loss = 0.0012408171, Train_paf_Loss = 0.005863915, Training Loss = 0.007104732 (57.162 sec)
+INFO:tensorflow:Global Steps = 150800, Learning Rate = 1e-07, Train_hm_Loss = 0.0013873824, Train_paf_Loss = 0.0046714884, Training Loss = 0.006058871 (57.223 sec)
+INFO:tensorflow:Global Steps = 150900, Learning Rate = 1e-07, Train_hm_Loss = 0.0012642333, Train_paf_Loss = 0.0042438437, Training Loss = 0.005508077 (57.198 sec)
+INFO:tensorflow:Saving checkpoints for 151000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T05:05:04Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-151000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026475221, Eval_paf_loss = 0.010073989, Evaluation Loss = 0.012721511, Global Steps = 151000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003483877, Eval_paf_loss = 0.011633482, Evaluation Loss = 0.0139194345, Global Steps = 151000, Learning Rate = 1e-07 (2.281 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003347428, Eval_paf_loss = 0.010892988, Evaluation Loss = 0.014026429, Global Steps = 151000, Learning Rate = 1e-07 (2.284 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028191933, Eval_paf_loss = 0.0093813315, Evaluation Loss = 0.013569953, Global Steps = 151000, Learning Rate = 1e-07 (2.297 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030266847, Eval_paf_loss = 0.0104394015, Evaluation Loss = 0.013549179, Global Steps = 151000, Learning Rate = 1e-07 (2.349 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023330434, Eval_paf_loss = 0.009622887, Evaluation Loss = 0.013283637, Global Steps = 151000, Learning Rate = 1e-07 (2.135 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040760622, Eval_paf_loss = 0.012977417, Evaluation Loss = 0.013822186, Global Steps = 151000, Learning Rate = 1e-07 (2.244 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023549611, Eval_paf_loss = 0.009505215, Evaluation Loss = 0.013576935, Global Steps = 151000, Learning Rate = 1e-07 (2.282 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0035965752, Eval_paf_loss = 0.01271451, Evaluation Loss = 0.01388073, Global Steps = 151000, Learning Rate = 1e-07 (2.184 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025794131, Eval_paf_loss = 0.009907152, Evaluation Loss = 0.013741313, Global Steps = 151000, Learning Rate = 1e-07 (2.269 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019748108, Eval_paf_loss = 0.007813548, Evaluation Loss = 0.013381954, Global Steps = 151000, Learning Rate = 1e-07 (2.138 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029282765, Eval_paf_loss = 0.010842078, Evaluation Loss = 0.013414321, Global Steps = 151000, Learning Rate = 1e-07 (2.273 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024130505, Eval_paf_loss = 0.009185034, Evaluation Loss = 0.01327461, Global Steps = 151000, Learning Rate = 1e-07 (2.355 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020270424, Eval_paf_loss = 0.008330692, Evaluation Loss = 0.013066262, Global Steps = 151000, Learning Rate = 1e-07 (2.223 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040069446, Eval_paf_loss = 0.013718518, Evaluation Loss = 0.013376876, Global Steps = 151000, Learning Rate = 1e-07 (2.273 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026367889, Eval_paf_loss = 0.010384437, Evaluation Loss = 0.013354648, Global Steps = 151000, Learning Rate = 1e-07 (2.233 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004540181, Eval_paf_loss = 0.014838229, Evaluation Loss = 0.013708986, Global Steps = 151000, Learning Rate = 1e-07 (2.205 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002788287, Eval_paf_loss = 0.010772939, Evaluation Loss = 0.013700778, Global Steps = 151000, Learning Rate = 1e-07 (2.264 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039545065, Eval_paf_loss = 0.01328561, Evaluation Loss = 0.013887059, Global Steps = 151000, Learning Rate = 1e-07 (0.805 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-05:05:51
+INFO:tensorflow:Saving dict for global step 151000: global_step = 151000, loss = 0.013887059
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 151000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-151000
+INFO:tensorflow:global_step/sec: 1.56983
+INFO:tensorflow:loss = 0.007253759, step = 151000 (637.012 sec)
+INFO:tensorflow:Global Steps = 151000, Learning Rate = 1e-07, Train_hm_Loss = 0.0015659947, Train_paf_Loss = 0.0056877644, Training Loss = 0.007253759 (121.612 sec)
+INFO:tensorflow:Global Steps = 151100, Learning Rate = 1e-07, Train_hm_Loss = 0.001200669, Train_paf_Loss = 0.0048632235, Training Loss = 0.0060638925 (55.659 sec)
+INFO:tensorflow:Global Steps = 151200, Learning Rate = 1e-07, Train_hm_Loss = 0.0025982058, Train_paf_Loss = 0.010051228, Training Loss = 0.012649434 (57.237 sec)
+INFO:tensorflow:Global Steps = 151300, Learning Rate = 1e-07, Train_hm_Loss = 0.0022443484, Train_paf_Loss = 0.008151201, Training Loss = 0.010395549 (57.885 sec)
+INFO:tensorflow:Global Steps = 151400, Learning Rate = 1e-07, Train_hm_Loss = 0.0036571168, Train_paf_Loss = 0.012792548, Training Loss = 0.016449666 (57.880 sec)
+INFO:tensorflow:Global Steps = 151500, Learning Rate = 1e-07, Train_hm_Loss = 0.0033265136, Train_paf_Loss = 0.011066834, Training Loss = 0.014393348 (57.527 sec)
+INFO:tensorflow:Global Steps = 151600, Learning Rate = 1e-07, Train_hm_Loss = 0.0011787538, Train_paf_Loss = 0.004314358, Training Loss = 0.005493112 (57.408 sec)
+INFO:tensorflow:Global Steps = 151700, Learning Rate = 1e-07, Train_hm_Loss = 0.0019828966, Train_paf_Loss = 0.007237626, Training Loss = 0.009220522 (57.269 sec)
+INFO:tensorflow:Global Steps = 151800, Learning Rate = 1e-07, Train_hm_Loss = 0.0014388008, Train_paf_Loss = 0.0055937846, Training Loss = 0.0070325853 (57.229 sec)
+INFO:tensorflow:Global Steps = 151900, Learning Rate = 1e-07, Train_hm_Loss = 0.00090441096, Train_paf_Loss = 0.004093542, Training Loss = 0.0049979533 (57.011 sec)
+INFO:tensorflow:Saving checkpoints for 152000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T05:15:40Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-152000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026496593, Eval_paf_loss = 0.010088685, Evaluation Loss = 0.012738344, Global Steps = 152000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034807958, Eval_paf_loss = 0.011630206, Evaluation Loss = 0.013924673, Global Steps = 152000, Learning Rate = 1e-07 (2.362 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033584067, Eval_paf_loss = 0.010927868, Evaluation Loss = 0.014045208, Global Steps = 152000, Learning Rate = 1e-07 (2.397 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002810021, Eval_paf_loss = 0.009379283, Evaluation Loss = 0.013581231, Global Steps = 152000, Learning Rate = 1e-07 (2.306 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030355616, Eval_paf_loss = 0.010460825, Evaluation Loss = 0.013564262, Global Steps = 152000, Learning Rate = 1e-07 (2.236 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023265744, Eval_paf_loss = 0.009604233, Evaluation Loss = 0.013292019, Global Steps = 152000, Learning Rate = 1e-07 (2.284 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040675923, Eval_paf_loss = 0.0129689975, Evaluation Loss = 0.013826958, Global Steps = 152000, Learning Rate = 1e-07 (2.303 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023538142, Eval_paf_loss = 0.009496331, Evaluation Loss = 0.013579857, Global Steps = 152000, Learning Rate = 1e-07 (2.238 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036055115, Eval_paf_loss = 0.012729198, Evaluation Loss = 0.013885952, Global Steps = 152000, Learning Rate = 1e-07 (2.365 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025879457, Eval_paf_loss = 0.00994668, Evaluation Loss = 0.013750819, Global Steps = 152000, Learning Rate = 1e-07 (2.202 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019774307, Eval_paf_loss = 0.007808148, Evaluation Loss = 0.013390342, Global Steps = 152000, Learning Rate = 1e-07 (2.300 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029277757, Eval_paf_loss = 0.010836485, Evaluation Loss = 0.013421502, Global Steps = 152000, Learning Rate = 1e-07 (2.212 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024065713, Eval_paf_loss = 0.009191364, Evaluation Loss = 0.013281227, Global Steps = 152000, Learning Rate = 1e-07 (2.212 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002029783, Eval_paf_loss = 0.008338594, Evaluation Loss = 0.013073167, Global Steps = 152000, Learning Rate = 1e-07 (2.165 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040178625, Eval_paf_loss = 0.013712546, Evaluation Loss = 0.013383648, Global Steps = 152000, Learning Rate = 1e-07 (2.275 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026365034, Eval_paf_loss = 0.0103639215, Evaluation Loss = 0.013359698, Global Steps = 152000, Learning Rate = 1e-07 (2.197 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045473687, Eval_paf_loss = 0.01485731, Evaluation Loss = 0.013715285, Global Steps = 152000, Learning Rate = 1e-07 (2.294 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027886806, Eval_paf_loss = 0.010765384, Evaluation Loss = 0.013706328, Global Steps = 152000, Learning Rate = 1e-07 (2.273 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003952744, Eval_paf_loss = 0.013249957, Evaluation Loss = 0.013890348, Global Steps = 152000, Learning Rate = 1e-07 (0.798 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-05:16:27
+INFO:tensorflow:Saving dict for global step 152000: global_step = 152000, loss = 0.013890348
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 152000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-152000
+INFO:tensorflow:global_step/sec: 1.57309
+INFO:tensorflow:loss = 0.007807878, step = 152000 (635.692 sec)
+INFO:tensorflow:Global Steps = 152000, Learning Rate = 1e-07, Train_hm_Loss = 0.0016118474, Train_paf_Loss = 0.0061960304, Training Loss = 0.007807878 (120.585 sec)
+INFO:tensorflow:Global Steps = 152100, Learning Rate = 1e-07, Train_hm_Loss = 0.0023670099, Train_paf_Loss = 0.009415339, Training Loss = 0.011782348 (55.711 sec)
+INFO:tensorflow:Global Steps = 152200, Learning Rate = 1e-07, Train_hm_Loss = 0.0012115552, Train_paf_Loss = 0.005149745, Training Loss = 0.0063613 (57.262 sec)
+INFO:tensorflow:Global Steps = 152300, Learning Rate = 1e-07, Train_hm_Loss = 0.00093843415, Train_paf_Loss = 0.003473618, Training Loss = 0.004412052 (57.933 sec)
+INFO:tensorflow:Global Steps = 152400, Learning Rate = 1e-07, Train_hm_Loss = 0.0015533733, Train_paf_Loss = 0.0064506973, Training Loss = 0.00800407 (57.823 sec)
+INFO:tensorflow:Global Steps = 152500, Learning Rate = 1e-07, Train_hm_Loss = 0.0008341428, Train_paf_Loss = 0.0034249902, Training Loss = 0.004259133 (57.400 sec)
+INFO:tensorflow:Global Steps = 152600, Learning Rate = 1e-07, Train_hm_Loss = 0.0020733823, Train_paf_Loss = 0.006587632, Training Loss = 0.008661014 (57.266 sec)
+INFO:tensorflow:Global Steps = 152700, Learning Rate = 1e-07, Train_hm_Loss = 0.0021853445, Train_paf_Loss = 0.0074242214, Training Loss = 0.009609566 (57.047 sec)
+INFO:tensorflow:Global Steps = 152800, Learning Rate = 1e-07, Train_hm_Loss = 0.0014015725, Train_paf_Loss = 0.005383361, Training Loss = 0.0067849336 (57.120 sec)
+INFO:tensorflow:Global Steps = 152900, Learning Rate = 1e-07, Train_hm_Loss = 0.0013794769, Train_paf_Loss = 0.005291374, Training Loss = 0.006670851 (57.001 sec)
+INFO:tensorflow:Saving checkpoints for 153000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T05:26:15Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-153000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026495021, Eval_paf_loss = 0.010081957, Evaluation Loss = 0.012731459, Global Steps = 153000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034813443, Eval_paf_loss = 0.011629021, Evaluation Loss = 0.0139209125, Global Steps = 153000, Learning Rate = 1e-07 (2.427 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003352702, Eval_paf_loss = 0.010913325, Evaluation Loss = 0.01403595, Global Steps = 153000, Learning Rate = 1e-07 (2.370 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002812141, Eval_paf_loss = 0.009385873, Evaluation Loss = 0.013576467, Global Steps = 153000, Learning Rate = 1e-07 (2.265 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030297264, Eval_paf_loss = 0.010443343, Evaluation Loss = 0.0135557875, Global Steps = 153000, Learning Rate = 1e-07 (2.223 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023282522, Eval_paf_loss = 0.009606505, Evaluation Loss = 0.0132856155, Global Steps = 153000, Learning Rate = 1e-07 (2.281 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040719924, Eval_paf_loss = 0.012977617, Evaluation Loss = 0.0138233295, Global Steps = 153000, Learning Rate = 1e-07 (2.312 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023563115, Eval_paf_loss = 0.009503613, Evaluation Loss = 0.013577904, Global Steps = 153000, Learning Rate = 1e-07 (2.361 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036064594, Eval_paf_loss = 0.012735423, Evaluation Loss = 0.013885012, Global Steps = 153000, Learning Rate = 1e-07 (2.235 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025874767, Eval_paf_loss = 0.009941098, Evaluation Loss = 0.0137493685, Global Steps = 153000, Learning Rate = 1e-07 (2.259 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019748984, Eval_paf_loss = 0.0077988617, Evaluation Loss = 0.013387949, Global Steps = 153000, Learning Rate = 1e-07 (2.463 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002932454, Eval_paf_loss = 0.01085242, Evaluation Loss = 0.013421026, Global Steps = 153000, Learning Rate = 1e-07 (2.375 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024086817, Eval_paf_loss = 0.009189825, Evaluation Loss = 0.013280833, Global Steps = 153000, Learning Rate = 1e-07 (2.389 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020277433, Eval_paf_loss = 0.008334396, Evaluation Loss = 0.013072355, Global Steps = 153000, Learning Rate = 1e-07 (2.329 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040150303, Eval_paf_loss = 0.013716843, Evaluation Loss = 0.013382989, Global Steps = 153000, Learning Rate = 1e-07 (2.243 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026382138, Eval_paf_loss = 0.010375584, Evaluation Loss = 0.0133599145, Global Steps = 153000, Learning Rate = 1e-07 (2.394 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045471666, Eval_paf_loss = 0.014857022, Evaluation Loss = 0.01371546, Global Steps = 153000, Learning Rate = 1e-07 (2.387 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027886496, Eval_paf_loss = 0.010765802, Evaluation Loss = 0.013706516, Global Steps = 153000, Learning Rate = 1e-07 (2.373 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003950979, Eval_paf_loss = 0.013254595, Evaluation Loss = 0.013890676, Global Steps = 153000, Learning Rate = 1e-07 (0.864 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-05:27:03
+INFO:tensorflow:Saving dict for global step 153000: global_step = 153000, loss = 0.013890676
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 153000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-153000
+INFO:tensorflow:global_step/sec: 1.57112
+INFO:tensorflow:loss = 0.0065029706, step = 153000 (636.489 sec)
+INFO:tensorflow:Global Steps = 153000, Learning Rate = 1e-07, Train_hm_Loss = 0.0012441212, Train_paf_Loss = 0.0052588494, Training Loss = 0.0065029706 (121.926 sec)
+INFO:tensorflow:Global Steps = 153100, Learning Rate = 1e-07, Train_hm_Loss = 0.0011269711, Train_paf_Loss = 0.0042358493, Training Loss = 0.0053628203 (55.457 sec)
+INFO:tensorflow:Global Steps = 153200, Learning Rate = 1e-07, Train_hm_Loss = 0.0014345953, Train_paf_Loss = 0.0041567204, Training Loss = 0.0055913157 (56.824 sec)
+INFO:tensorflow:Global Steps = 153300, Learning Rate = 1e-07, Train_hm_Loss = 0.0011026209, Train_paf_Loss = 0.004837162, Training Loss = 0.0059397826 (57.459 sec)
+INFO:tensorflow:Global Steps = 153400, Learning Rate = 1e-07, Train_hm_Loss = 0.0010706171, Train_paf_Loss = 0.004776976, Training Loss = 0.0058475933 (57.680 sec)
+INFO:tensorflow:Global Steps = 153500, Learning Rate = 1e-07, Train_hm_Loss = 0.0013910359, Train_paf_Loss = 0.004511103, Training Loss = 0.005902139 (57.362 sec)
+INFO:tensorflow:Global Steps = 153600, Learning Rate = 1e-07, Train_hm_Loss = 0.0014736023, Train_paf_Loss = 0.005321636, Training Loss = 0.0067952382 (57.161 sec)
+INFO:tensorflow:Global Steps = 153700, Learning Rate = 1e-07, Train_hm_Loss = 0.00126296, Train_paf_Loss = 0.005128431, Training Loss = 0.006391391 (57.105 sec)
+INFO:tensorflow:Global Steps = 153800, Learning Rate = 1e-07, Train_hm_Loss = 0.0013299073, Train_paf_Loss = 0.005097442, Training Loss = 0.006427349 (56.975 sec)
+INFO:tensorflow:Global Steps = 153900, Learning Rate = 1e-07, Train_hm_Loss = 0.0017931833, Train_paf_Loss = 0.0057460098, Training Loss = 0.007539193 (56.905 sec)
+INFO:tensorflow:Saving checkpoints for 154000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T05:36:51Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-154000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026475666, Eval_paf_loss = 0.0100729475, Evaluation Loss = 0.012720514, Global Steps = 154000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034817946, Eval_paf_loss = 0.011629094, Evaluation Loss = 0.013915702, Global Steps = 154000, Learning Rate = 1e-07 (2.242 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033468867, Eval_paf_loss = 0.010894257, Evaluation Loss = 0.014024182, Global Steps = 154000, Learning Rate = 1e-07 (2.385 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028148654, Eval_paf_loss = 0.009380927, Evaluation Loss = 0.013567084, Global Steps = 154000, Learning Rate = 1e-07 (2.343 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030268668, Eval_paf_loss = 0.0104389135, Evaluation Loss = 0.013546824, Global Steps = 154000, Learning Rate = 1e-07 (2.339 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.00233072, Eval_paf_loss = 0.009616309, Evaluation Loss = 0.013280191, Global Steps = 154000, Learning Rate = 1e-07 (2.320 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040738736, Eval_paf_loss = 0.012976218, Evaluation Loss = 0.013818749, Global Steps = 154000, Learning Rate = 1e-07 (2.218 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002353803, Eval_paf_loss = 0.00950014, Evaluation Loss = 0.013573148, Global Steps = 154000, Learning Rate = 1e-07 (2.434 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.003599626, Eval_paf_loss = 0.012719391, Evaluation Loss = 0.013878245, Global Steps = 154000, Learning Rate = 1e-07 (2.422 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002580962, Eval_paf_loss = 0.009915499, Evaluation Loss = 0.0137400655, Global Steps = 154000, Learning Rate = 1e-07 (2.328 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019744905, Eval_paf_loss = 0.0078073456, Evaluation Loss = 0.013380227, Global Steps = 154000, Learning Rate = 1e-07 (2.384 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002928733, Eval_paf_loss = 0.010840824, Evaluation Loss = 0.01341267, Global Steps = 154000, Learning Rate = 1e-07 (2.400 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024103983, Eval_paf_loss = 0.009183263, Evaluation Loss = 0.0132727465, Global Steps = 154000, Learning Rate = 1e-07 (2.391 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002026641, Eval_paf_loss = 0.008329685, Evaluation Loss = 0.01306443, Global Steps = 154000, Learning Rate = 1e-07 (2.356 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040079537, Eval_paf_loss = 0.013713316, Evaluation Loss = 0.013374886, Global Steps = 154000, Learning Rate = 1e-07 (2.352 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026375991, Eval_paf_loss = 0.010382437, Evaluation Loss = 0.013352708, Global Steps = 154000, Learning Rate = 1e-07 (2.339 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045408043, Eval_paf_loss = 0.01483933, Evaluation Loss = 0.013707262, Global Steps = 154000, Learning Rate = 1e-07 (2.256 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027886077, Eval_paf_loss = 0.010769447, Evaluation Loss = 0.013698974, Global Steps = 154000, Learning Rate = 1e-07 (2.347 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039529083, Eval_paf_loss = 0.013279386, Evaluation Loss = 0.013884938, Global Steps = 154000, Learning Rate = 1e-07 (0.911 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-05:37:40
+INFO:tensorflow:Saving dict for global step 154000: global_step = 154000, loss = 0.013884938
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 154000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-154000
+INFO:tensorflow:global_step/sec: 1.57038
+INFO:tensorflow:loss = 0.006012261, step = 154000 (636.788 sec)
+INFO:tensorflow:Global Steps = 154000, Learning Rate = 1e-07, Train_hm_Loss = 0.0013084977, Train_paf_Loss = 0.004703763, Training Loss = 0.006012261 (123.861 sec)
+INFO:tensorflow:Global Steps = 154100, Learning Rate = 1e-07, Train_hm_Loss = 0.0013618537, Train_paf_Loss = 0.0057056, Training Loss = 0.007067454 (55.543 sec)
+INFO:tensorflow:Global Steps = 154200, Learning Rate = 1e-07, Train_hm_Loss = 0.0011334324, Train_paf_Loss = 0.0045834114, Training Loss = 0.0057168435 (56.707 sec)
+INFO:tensorflow:Global Steps = 154300, Learning Rate = 1e-07, Train_hm_Loss = 0.001371333, Train_paf_Loss = 0.0052879923, Training Loss = 0.006659325 (57.439 sec)
+INFO:tensorflow:Global Steps = 154400, Learning Rate = 1e-07, Train_hm_Loss = 0.0013559372, Train_paf_Loss = 0.0050061373, Training Loss = 0.0063620745 (57.406 sec)
+INFO:tensorflow:Global Steps = 154500, Learning Rate = 1e-07, Train_hm_Loss = 0.0017367831, Train_paf_Loss = 0.005957573, Training Loss = 0.007694356 (57.351 sec)
+INFO:tensorflow:Global Steps = 154600, Learning Rate = 1e-07, Train_hm_Loss = 0.0015283286, Train_paf_Loss = 0.004911571, Training Loss = 0.0064398996 (57.231 sec)
+INFO:tensorflow:Global Steps = 154700, Learning Rate = 1e-07, Train_hm_Loss = 0.0012946994, Train_paf_Loss = 0.004217914, Training Loss = 0.0055126133 (56.979 sec)
+INFO:tensorflow:Global Steps = 154800, Learning Rate = 1e-07, Train_hm_Loss = 0.003519577, Train_paf_Loss = 0.010332161, Training Loss = 0.013851738 (56.910 sec)
+INFO:tensorflow:Global Steps = 154900, Learning Rate = 1e-07, Train_hm_Loss = 0.003945656, Train_paf_Loss = 0.013166969, Training Loss = 0.017112624 (56.971 sec)
+INFO:tensorflow:Saving checkpoints for 155000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T05:47:26Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-155000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026582712, Eval_paf_loss = 0.010093124, Evaluation Loss = 0.012751395, Global Steps = 155000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034903544, Eval_paf_loss = 0.011635173, Evaluation Loss = 0.013938461, Global Steps = 155000, Learning Rate = 1e-07 (2.159 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033588728, Eval_paf_loss = 0.0109201735, Evaluation Loss = 0.01405199, Global Steps = 155000, Learning Rate = 1e-07 (2.293 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028211582, Eval_paf_loss = 0.009381836, Evaluation Loss = 0.013589742, Global Steps = 155000, Learning Rate = 1e-07 (2.154 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030349547, Eval_paf_loss = 0.010451459, Evaluation Loss = 0.013569077, Global Steps = 155000, Learning Rate = 1e-07 (2.219 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023279164, Eval_paf_loss = 0.009597288, Evaluation Loss = 0.013295098, Global Steps = 155000, Learning Rate = 1e-07 (2.244 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0040733363, Eval_paf_loss = 0.012957872, Evaluation Loss = 0.013828828, Global Steps = 155000, Learning Rate = 1e-07 (2.321 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023559364, Eval_paf_loss = 0.009499874, Evaluation Loss = 0.013582201, Global Steps = 155000, Learning Rate = 1e-07 (2.142 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036019757, Eval_paf_loss = 0.012715006, Evaluation Loss = 0.013886065, Global Steps = 155000, Learning Rate = 1e-07 (2.263 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0025984996, Eval_paf_loss = 0.009953958, Evaluation Loss = 0.0137527045, Global Steps = 155000, Learning Rate = 1e-07 (2.288 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0019772756, Eval_paf_loss = 0.0077981246, Evaluation Loss = 0.013391132, Global Steps = 155000, Learning Rate = 1e-07 (2.211 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029299988, Eval_paf_loss = 0.010832308, Evaluation Loss = 0.013422064, Global Steps = 155000, Learning Rate = 1e-07 (2.187 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024124833, Eval_paf_loss = 0.009210583, Evaluation Loss = 0.013283679, Global Steps = 155000, Learning Rate = 1e-07 (2.255 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002033809, Eval_paf_loss = 0.00834136, Evaluation Loss = 0.013075928, Global Steps = 155000, Learning Rate = 1e-07 (2.376 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004017707, Eval_paf_loss = 0.01371317, Evaluation Loss = 0.013386259, Global Steps = 155000, Learning Rate = 1e-07 (2.208 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026376087, Eval_paf_loss = 0.010377673, Evaluation Loss = 0.013363073, Global Steps = 155000, Learning Rate = 1e-07 (2.195 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045486237, Eval_paf_loss = 0.014853752, Evaluation Loss = 0.013718326, Global Steps = 155000, Learning Rate = 1e-07 (2.327 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002789808, Eval_paf_loss = 0.010764198, Evaluation Loss = 0.013709197, Global Steps = 155000, Learning Rate = 1e-07 (2.316 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.0039536757, Eval_paf_loss = 0.013246083, Evaluation Loss = 0.013892911, Global Steps = 155000, Learning Rate = 1e-07 (0.807 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-05:48:13
+INFO:tensorflow:Saving dict for global step 155000: global_step = 155000, loss = 0.013892911
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 155000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-155000
+INFO:tensorflow:global_step/sec: 1.5813
+INFO:tensorflow:loss = 0.014372543, step = 155000 (632.394 sec)
+INFO:tensorflow:Global Steps = 155000, Learning Rate = 1e-07, Train_hm_Loss = 0.0034768994, Train_paf_Loss = 0.010895644, Training Loss = 0.014372543 (119.857 sec)
+INFO:tensorflow:Global Steps = 155100, Learning Rate = 1e-07, Train_hm_Loss = 0.0007634003, Train_paf_Loss = 0.003026944, Training Loss = 0.003790344 (55.567 sec)
+INFO:tensorflow:Global Steps = 155200, Learning Rate = 1e-07, Train_hm_Loss = 0.0007992842, Train_paf_Loss = 0.0030873404, Training Loss = 0.0038866247 (57.111 sec)
+INFO:tensorflow:Global Steps = 155300, Learning Rate = 1e-07, Train_hm_Loss = 0.001692237, Train_paf_Loss = 0.0052246796, Training Loss = 0.0069169165 (57.637 sec)
+INFO:tensorflow:Global Steps = 155400, Learning Rate = 1e-07, Train_hm_Loss = 0.0012467251, Train_paf_Loss = 0.0039160997, Training Loss = 0.005162825 (57.781 sec)
+INFO:tensorflow:Global Steps = 155500, Learning Rate = 1e-07, Train_hm_Loss = 0.0015246262, Train_paf_Loss = 0.0049515637, Training Loss = 0.00647619 (57.370 sec)
+INFO:tensorflow:Global Steps = 155600, Learning Rate = 1e-07, Train_hm_Loss = 0.0010766916, Train_paf_Loss = 0.0036428114, Training Loss = 0.004719503 (57.097 sec)
+INFO:tensorflow:Global Steps = 155700, Learning Rate = 1e-07, Train_hm_Loss = 0.0030310652, Train_paf_Loss = 0.010792024, Training Loss = 0.01382309 (57.099 sec)
+INFO:tensorflow:Global Steps = 155800, Learning Rate = 1e-07, Train_hm_Loss = 0.0015462015, Train_paf_Loss = 0.0057732747, Training Loss = 0.0073194765 (57.120 sec)
+INFO:tensorflow:Global Steps = 155900, Learning Rate = 1e-07, Train_hm_Loss = 0.002068921, Train_paf_Loss = 0.007392739, Training Loss = 0.00946166 (56.891 sec)
+INFO:tensorflow:Saving checkpoints for 156000 into ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-05-28T05:58:01Z
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-156000
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Evaluation [1/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0026491, Eval_paf_loss = 0.010085949, Evaluation Loss = 0.012735048, Global Steps = 156000, Learning Rate = 1e-07
+INFO:tensorflow:Evaluation [2/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0034816402, Eval_paf_loss = 0.011627532, Evaluation Loss = 0.01392211, Global Steps = 156000, Learning Rate = 1e-07 (2.365 sec)
+INFO:tensorflow:Evaluation [3/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0033559392, Eval_paf_loss = 0.010920838, Evaluation Loss = 0.014040332, Global Steps = 156000, Learning Rate = 1e-07 (2.349 sec)
+INFO:tensorflow:Evaluation [4/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0028170752, Eval_paf_loss = 0.009375972, Evaluation Loss = 0.013578511, Global Steps = 156000, Learning Rate = 1e-07 (2.462 sec)
+INFO:tensorflow:Evaluation [5/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0030341581, Eval_paf_loss = 0.010460298, Evaluation Loss = 0.0135617005, Global Steps = 156000, Learning Rate = 1e-07 (2.444 sec)
+INFO:tensorflow:Evaluation [6/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002327813, Eval_paf_loss = 0.009611811, Evaluation Loss = 0.013291354, Global Steps = 156000, Learning Rate = 1e-07 (2.373 sec)
+INFO:tensorflow:Evaluation [7/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004074633, Eval_paf_loss = 0.012978182, Evaluation Loss = 0.013828705, Global Steps = 156000, Learning Rate = 1e-07 (2.321 sec)
+INFO:tensorflow:Evaluation [8/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0023544757, Eval_paf_loss = 0.0095028775, Evaluation Loss = 0.013582286, Global Steps = 156000, Learning Rate = 1e-07 (2.492 sec)
+INFO:tensorflow:Evaluation [9/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0036000642, Eval_paf_loss = 0.012718127, Evaluation Loss = 0.013886277, Global Steps = 156000, Learning Rate = 1e-07 (2.353 sec)
+INFO:tensorflow:Evaluation [10/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002587219, Eval_paf_loss = 0.009936251, Evaluation Loss = 0.013749996, Global Steps = 156000, Learning Rate = 1e-07 (2.330 sec)
+INFO:tensorflow:Evaluation [11/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.001973409, Eval_paf_loss = 0.0078070494, Evaluation Loss = 0.013389128, Global Steps = 156000, Learning Rate = 1e-07 (2.447 sec)
+INFO:tensorflow:Evaluation [12/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0029253312, Eval_paf_loss = 0.010829044, Evaluation Loss = 0.013419566, Global Steps = 156000, Learning Rate = 1e-07 (2.312 sec)
+INFO:tensorflow:Evaluation [13/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0024109923, Eval_paf_loss = 0.009196983, Evaluation Loss = 0.013280213, Global Steps = 156000, Learning Rate = 1e-07 (2.468 sec)
+INFO:tensorflow:Evaluation [14/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0020294602, Eval_paf_loss = 0.008337189, Evaluation Loss = 0.013072101, Global Steps = 156000, Learning Rate = 1e-07 (2.319 sec)
+INFO:tensorflow:Evaluation [15/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.004014561, Eval_paf_loss = 0.013715586, Evaluation Loss = 0.013382638, Global Steps = 156000, Learning Rate = 1e-07 (2.328 sec)
+INFO:tensorflow:Evaluation [16/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.002634624, Eval_paf_loss = 0.010372985, Evaluation Loss = 0.013359198, Global Steps = 156000, Learning Rate = 1e-07 (2.446 sec)
+INFO:tensorflow:Evaluation [17/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0045411084, Eval_paf_loss = 0.0148449205, Evaluation Loss = 0.013713717, Global Steps = 156000, Learning Rate = 1e-07 (2.321 sec)
+INFO:tensorflow:Evaluation [18/19]
+INFO:tensorflow:Batch Size = 128, Eval_hm_Loss = 0.0027874922, Eval_paf_loss = 0.010766439, Evaluation Loss = 0.01370484, Global Steps = 156000, Learning Rate = 1e-07 (2.322 sec)
+INFO:tensorflow:Evaluation [19/19]
+INFO:tensorflow:Batch Size = 42, Eval_hm_Loss = 0.003952708, Eval_paf_loss = 0.013262112, Evaluation Loss = 0.013889576, Global Steps = 156000, Learning Rate = 1e-07 (0.944 sec)
+INFO:tensorflow:Finished evaluation at 2020-05-28-05:58:50
+INFO:tensorflow:Saving dict for global step 156000: global_step = 156000, loss = 0.013889576
+INFO:tensorflow:Saving 'checkpoint_path' summary for global step 156000: ../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-156000
+INFO:tensorflow:global_step/sec: 1.56941
+INFO:tensorflow:loss = 0.0074362666, step = 156000 (637.180 sec)
+INFO:tensorflow:Global Steps = 156000, Learning Rate = 1e-07, Train_hm_Loss = 0.0017497959, Train_paf_Loss = 0.005686471, Training Loss = 0.0074362666 (123.506 sec)
+INFO:tensorflow:Global Steps = 156100, Learning Rate = 1e-07, Train_hm_Loss = 0.0010528689, Train_paf_Loss = 0.00462783, Training Loss = 0.005680699 (55.599 sec)
+INFO:tensorflow:Global Steps = 156200, Learning Rate = 1e-07, Train_hm_Loss = 0.0015769682, Train_paf_Loss = 0.006105046, Training Loss = 0.0076820143 (56.885 sec)
+INFO:tensorflow:Global Steps = 156300, Learning Rate = 1e-07, Train_hm_Loss = 0.00095319643, Train_paf_Loss = 0.0034786507, Training Loss = 0.004431847 (57.793 sec)
+INFO:tensorflow:Global Steps = 156400, Learning Rate = 1e-07, Train_hm_Loss = 0.0018767465, Train_paf_Loss = 0.0064870734, Training Loss = 0.00836382 (57.634 sec)
+INFO:tensorflow:Global Steps = 156500, Learning Rate = 1e-07, Train_hm_Loss = 0.001589206, Train_paf_Loss = 0.0054550576, Training Loss = 0.0070442636 (57.548 sec)
+INFO:tensorflow:Global Steps = 156600, Learning Rate = 1e-07, Train_hm_Loss = 0.001484199, Train_paf_Loss = 0.0053381263, Training Loss = 0.0068223253 (57.343 sec)
+INFO:tensorflow:Global Steps = 156700, Learning Rate = 1e-07, Train_hm_Loss = 0.002103668, Train_paf_Loss = 0.0066165784, Training Loss = 0.008720246 (57.360 sec)
+INFO:tensorflow:Global Steps = 156800, Learning Rate = 1e-07, Train_hm_Loss = 0.0014352466, Train_paf_Loss = 0.0050501944, Training Loss = 0.006485441 (57.324 sec)

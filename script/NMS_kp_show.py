@@ -91,7 +91,7 @@ def main(_):
             width = 432
             hight = 368
 
-            image = cv2.imread('../data/5ppl.jpg')
+            image = cv2.imread('../data/apink3.jpg')
             image_np = image.copy()
             image_resized = cv2.resize(image,dsize=(width,hight))
             image_ = cv2.cvtColor(image_resized, cv2.COLOR_BGR2RGB)

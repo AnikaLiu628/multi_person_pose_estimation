@@ -14,7 +14,7 @@ import time
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tensorflow Openpose Inference')
-    parser.add_argument('--imgpath', type=str, default='../data/apink3.jpg')
+    parser.add_argument('--imgpath', type=str, default='../data/IMG_3204.JPG')
     parser.add_argument('--input-width', type=int, default=432)
     parser.add_argument('--input-height', type=int, default=368)
     args = parser.parse_args()

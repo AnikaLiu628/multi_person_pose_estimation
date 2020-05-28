@@ -72,11 +72,11 @@ CocoColors = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255
               [170, 0, 255], [255, 0, 255], [255, 0, 170], [255, 0, 85]]
 
 
-NMS_Threshold = 0.1
+NMS_Threshold = 0.8
 InterMinAbove_Threshold = 6
 Inter_Threashold = 0.1
 Min_Subset_Cnt = 4
-Min_Subset_Score = 0.8
+Min_Subset_Score = 0.8 #0.8
 Max_Human = 96
 
 
@@ -149,13 +149,15 @@ def estimate_pose(heatMat, pafMat):
     empty_set = set()
     while True:
         is_merged = False
-        for h1, h2 in itertools.combinations(conns_by_human.keys(), 2): #所有可能的連線 h1->所有h2, h2->所有h1
-            # print('h1, h2:  ', (h1, h2))
+        # print('conns_by_human.keys():   ', conns_by_human.keys())
+        for h1, h2 in itertools.combinations(conns_by_human.keys(), 2): #所有可能的連線 h1->所有h2, h2->所有h1        #itertools.combinations(range(3), 2) 求列表或生成器中指定數目的元素不重複的所有組合
+            # print('h1, h2:  ', (h1, h2)) # ['human1', 'human2', ...]
             if h1 == h2:
                 continue
             if h2 in no_merge_cache[h1]:
                 continue
-            for c1, c2 in itertools.product(conns_by_human[h1], conns_by_human[h2]):
+            for c1, c2 in itertools.product(conns_by_human[h1], conns_by_human[h2]): #產生多個列表和迭代器的(積)
+                print('c1, c2:  ', (c1, c2))
                 # if two humans share a part (same part idx and coordinates), merge those humans
                 if set(c1['uPartIdx']) & set(c2['uPartIdx']) != empty_set:
                     is_merged = True
@@ -240,15 +242,15 @@ def get_score(x1, y1, x2, y2, pafMatX, pafMatY):
     ys = (ys + 0.5).astype(np.int8)
 
     # without vectorization
-    pafXs = np.zeros(num_inter)
-    pafYs = np.zeros(num_inter)
-    for idx, (mx, my) in enumerate(zip(xs, ys)):
-        pafXs[idx] = pafMatX[my][mx]
-        pafYs[idx] = pafMatY[my][mx]
+    # pafXs = np.zeros(num_inter)
+    # pafYs = np.zeros(num_inter)
+    # for idx, (mx, my) in enumerate(zip(xs, ys)):
+    #     pafXs[idx] = pafMatX[my][mx]
+    #     pafYs[idx] = pafMatY[my][mx]
 
     # vectorization slow?
-    # pafXs = pafMatX[ys, xs]
-    # pafYs = pafMatY[ys, xs]
+    pafXs = pafMatX[ys, xs]
+    pafYs = pafMatY[ys, xs]
 
     local_scores = pafXs * vx + pafYs * vy
     thidxs = local_scores > Inter_Threashold
@@ -256,8 +258,11 @@ def get_score(x1, y1, x2, y2, pafMatX, pafMatY):
     return sum(local_scores * thidxs), sum(thidxs)
 
 
-def read_imgfile(path, width, height):
-    img = cv2.imread(path)
+def read_imgfile(path, width, height, web_cam = False):
+    if web_cam is True:
+        img = path
+    else:
+        img = cv2.imread(path)
     val_img = preprocess(img, width, height)
     return val_img
 
