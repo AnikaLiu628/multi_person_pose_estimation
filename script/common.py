@@ -123,48 +123,51 @@ def estimate_pose(heatMat, pafMat):
     coords = [] # for each part index, it stores coordinates of candidates
     for heatmap in heatMat[:]: # heatMat = (17, 46, 54) # find the max. location by NMS
         part_candidates = non_max_suppression(heatmap, 5, _NMS_Threshold)
-        
-        # for i in range(len(part_candidates)): #check NMS find kps number
-        #     for j in range(len(part_candidates[0])):
-        #         if part_candidates[i][j]!=0:
-        #             print(k)
-        #             print((i, j))
-        #             print('------------------')
-        # print(np.where(part_candidates >= _NMS_Threshold))
         coords.append(np.where(part_candidates >= _NMS_Threshold))
         k+=1
 
+    #計算linear intergral, assignment
     connection_all = [] # all connections detected. no information about what humans they belong to
     for (idx1, idx2), (paf_x_idx, paf_y_idx) in zip(CocoPairs, CocoPairsNetwork):
         connection = estimate_pose_pair(coords, idx1, idx2, pafMat[paf_x_idx], pafMat[paf_y_idx])
         connection_all.extend(connection)
+    # example: connection_all = [{'score': 9.898817479610443, 'coord_p1': (22, 20), 'coord_p2': (23, 24), 'idx': (2, 2), 'partIdx': (5, 7), 'uPartIdx': ('22-20-5', '23-24-7')}, {.}, {.}...]
 
+    #給idx
     conns_by_human = dict()
     for idx, c in enumerate(connection_all):
         conns_by_human['human_%d' % idx] = [c] # at first, all connections belong to different humans
-    # print('conns_by_human;  ', conns_by_human)
+    # example: conns_by_human = {'human_0': [{'score': 9.898817479610443, 'coord_p1': (22, 20), 'coord_p2': (23, 24), 
+    #                                           'idx': (2, 2), 'partIdx': (5, 7), 'uPartIdx': ('22-20-5', '23-24-7')}], 
+    #                            'human_1'[{...}], ...} #gives idx human%d
 
     # Merging
     no_merge_cache = defaultdict(list)
     empty_set = set()
     while True:
         is_merged = False
-        # print('conns_by_human.keys():   ', conns_by_human.keys())
-        for h1, h2 in itertools.combinations(conns_by_human.keys(), 2): #所有可能的連線 h1->所有h2, h2->所有h1        #itertools.combinations(range(3), 2) 求列表或生成器中指定數目的元素不重複的所有組合
-            # print('h1, h2:  ', (h1, h2)) # ['human1', 'human2', ...]
-            if h1 == h2:
+        for h1, h2 in itertools.combinations(conns_by_human.keys(), 2): #所有可能的連線 h1->所有h2, h2->所有h1  #itertools.combinations(range(3), 2) 求列表或生成器中指定數目的元素不重複的所有組合
+            # conns_by_human.keys() = ['human1', 'human2', ...]
+            if h1 == h2: 
                 continue
+            # print('no_merge_cache[h1]:  ', no_merge_cache[h1])
             if h2 in no_merge_cache[h1]:
                 continue
             for c1, c2 in itertools.product(conns_by_human[h1], conns_by_human[h2]): #產生多個列表和迭代器的(積)
-                print('c1, c2:  ', (c1, c2))
+                # print('conns_by_human[h1]:  ', conns_by_human[h1])
+                # print('conns_by_human[h2]:  ', conns_by_human[h2])
                 # if two humans share a part (same part idx and coordinates), merge those humans
                 if set(c1['uPartIdx']) & set(c2['uPartIdx']) != empty_set:
+                    # print(c1['uPartIdx'])
+                    # if abs(int(c1['uPartIdx'][2:])-int(c2['uPartIdx'][2:])) > 10:
+                    #     break
+                    # else:
                     is_merged = True
                     # extend human1 connectios with human2 connections
                     conns_by_human[h1].extend(conns_by_human[h2])
                     conns_by_human.pop(h2) # delete human2
                     break
+                # print('conns_by_human:  ', conns_by_human)
             if is_merged:
                 no_merge_cache.pop(h1, None)
                 break
@@ -173,12 +176,13 @@ def estimate_pose(heatMat, pafMat):
 
         if not is_merged: # if no more mergings are possible, then break
             break
-
+    # print('conns_by_human.items():  ', conns_by_human.items())
     # reject by subset count
     conns_by_human = {h: conns for (h, conns) in conns_by_human.items() if len(conns) >= Min_Subset_Cnt}
     # reject by subset max score
     conns_by_human = {h: conns for (h, conns) in conns_by_human.items() if max([conn['score'] for conn in conns]) >= Min_Subset_Score}
 
+    # print('conns_by_human:  ', conns_by_human)
     # list of humans
     humans = [human_conns_to_human_parts(human_conns, heatMat) for human_conns in conns_by_human.values()]
     # print(humans)
@@ -197,7 +201,9 @@ def estimate_pose_pair(coords, partIdx1, partIdx2, pafMatX, pafMatY):
                     continue
             elif count < InterMinAbove_Threshold or score <= 0.0:
                 continue
-            # print((x1, y1), (x2, y2), (partIdx1, pa nrtIdx2))
+            elif abs(x1-x2)>=12:
+                continue
+            # print((x1, y1), (x2, y2), (partIdx1, partIdx2))
             print('score:   ', score)
             print('coord_p1:    ', (x1, y1))
             print('coord_p2:    ', (x2, y2))
