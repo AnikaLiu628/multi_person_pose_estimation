@@ -77,7 +77,7 @@ class MobilePifPaf():
 
     def build(self, features):
         n_heatmaps = 17
-        paf_nfields = 10
+        paf_nfields = 18
         paf_nvectors = 2
         paf_nscales = 0
         # end_points=[]

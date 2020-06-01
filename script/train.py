@@ -12,22 +12,25 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'dataset_path',
-    '/datasets/coco/intermediate/coco_mp_keypoints_feature_gk3th3_train.record-00000-of-00001',
+    '/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_train.record-00000-of-00001',
     'Training data (separated by comma)'
 )
 flags.DEFINE_string(
     'validationset_path',
-    '/datasets/coco/intermediate/coco_mp_keypoints_feature_gk3th3_val.record-00000-of-00001',
+    '/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_val.record-00000-of-00001',
     'Validation data'
 )
+########################
+#######confirm, plz#####
+########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7',
+    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v10',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
     'pretrained_model_path',
-    '../models/MPPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_v3/model.ckpt-36000',
+    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-11000',
     'Path of pretrained model(ckpt)'
 )
 flags.DEFINE_string(

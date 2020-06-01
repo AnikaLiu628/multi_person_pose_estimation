@@ -47,7 +47,7 @@ class MobilenetNetworkThin(network_base.BaseNetwork):
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_2')
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_3')
              .separable_conv(1, 1, depth2(512), 1, name=prefix + '_L1_4')
-             .separable_conv(1, 1, 20, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
+             .separable_conv(1, 1, 36, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
 
             (self.feed(feature_lv)
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_1')
@@ -67,7 +67,7 @@ class MobilenetNetworkThin(network_base.BaseNetwork):
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_2')
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_3')
                  .separable_conv(1, 1, depth2(128), 1, name=prefix + '_L1_4')
-                 .separable_conv(1, 1, 20, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
+                 .separable_conv(1, 1, 36, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
 
                 (self.feed(prefix + '_concat')
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_1')
