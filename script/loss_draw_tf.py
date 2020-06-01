@@ -3,7 +3,7 @@ import numpy as np
 from scipy.interpolate import interp1d
 
 #MPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_vsp_1.log
-t_num = 100
+t_num = 1
 v_num = t_num //10
 
 loss_ylim = 0.1
@@ -12,7 +12,7 @@ paf_ylim = 0.08
 
 val_batch_size = 128
 def main():
-    model_name = 'MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8'
+    model_name = 'MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11'
     path_root = '../logs/{}.log'.format(model_name)
     print('Model: ', model_name)
     training_data = []
