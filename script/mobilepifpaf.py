@@ -112,28 +112,34 @@ class MobilePifPaf():
             # nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
             ps1 = self.PixelShuffle(backbone_end, 2, 
                         scope='PixelShuffle1')
-
             paf_duc1 = self.DUC(ps1,
                         filters=512,
                         upscale_factor=2,
                         is_training=self.is_training,
                         scope='PAF_DUC1')
-
             paf_duc2 = self.DUC(paf_duc1,
                         filters=256,
                         upscale_factor=2,
                         is_training=self.is_training,
                         scope='PAF_DUC2')
+            paf_conv_feature1 = tf.space_to_depth(paf_duc2,
+                                                block_size=int(2),
+                                                data_format='NHWC',
+                                                name='space_to_depth_1')
+            paf_conv_out1 = tf.layers.conv2d(paf_conv_feature1, 20, #38
+                                        kernel_size=[3, 3],
+                                        name='PAF_output')
             paf_duc2_pad = tf.pad(paf_duc2,
                             [[0, 0], [1, 1], [1, 1], [0, 0]],
                             name='duc2_padding')
-            paf_conv_out = tf.layers.conv2d(paf_duc2_pad, 38,
+            paf_conv_out = tf.layers.conv2d(paf_duc2_pad, 20, #38
                                         kernel_size=[3, 3],
-                                        name='PAF_output')
+                                        name='PAF_conv')
             paf_conv_feature = tf.space_to_depth(paf_conv_out,
                                                 block_size=int(4),
                                                 data_format='NHWC',
-                                                name='space_to_depth')
+                                                name='space_to_depth_2')
+            # print(paf_conv_out1)
             concat_feat = tf.concat(values=[ps1, paf_conv_feature], axis=3, name='concat_feat')
 
             duc1 = self.DUC(concat_feat,
@@ -141,20 +147,35 @@ class MobilePifPaf():
                         upscale_factor=2,
                         is_training=self.is_training,
                         scope='DUC1')
+            # print(duc1)
             duc2 = self.DUC(duc1,
                             filters=256,
                             upscale_factor=2,
                             is_training=self.is_training,
                             scope='DUC2')
-            duc2_pad = tf.pad(duc2,
-                            [[0, 0], [1, 1], [1, 1], [0, 0]],
-                            name='duc2_padding')
-
-            conv_out = tf.layers.conv2d(duc2_pad, self.number_keypoints,
+            hm_feature = tf.space_to_depth(duc2,
+                                        block_size=int(2),
+                                        data_format='NHWC',
+                                        name='space_to_depth_3')
+            hm_out = tf.layers.conv2d(hm_feature, self.number_keypoints, #38
                                         kernel_size=[3, 3],
                                         name='output')
-            conv_out = tf.transpose(conv_out, [0, 3, 1, 2], name='hm_out')
-            paf_conv_out = tf.transpose(paf_conv_out, [0, 3, 1, 2], name='paf_out')
+            # print(hm_feature_out)
+            # duc2_pad = tf.pad(duc2,
+            #                 [[0, 0], [1, 1], [1, 1], [0, 0]],
+            #                 name='duc2_padding')
+            # print(duc2_pad)
+            # conv_out = tf.layers.conv2d(duc2_pad, self.number_keypoints,
+            #                             kernel_size=[3, 3],
+            #                             name='output')
+            # print(conv_out)
+            # paf_conv_feature = tf.space_to_depth(paf_conv_out,
+            #                                     block_size=int(4),
+            #                                     data_format='NHWC',
+            #                                     name='space_to_depth_2')
+                                
+            conv_out = tf.transpose(hm_out, [0, 3, 1, 2], name='hm_out')
+            paf_conv_out = tf.transpose(paf_conv_out1, [0, 3, 1, 2], name='paf_out')
             end_points['heat_map'] = conv_out
             end_points['PAF'] = paf_conv_out
 
@@ -163,7 +184,7 @@ class MobilePifPaf():
 
 def main(_):
     print('Rebuild graph...')
-    model = MobilePifPaf(backbone='mobilenet_thin', is_training=False)
+    model = MobilePifPaf(backbone='mobilenet_v2', is_training=False)
 
     inputs = tf.placeholder(tf.float32,
                             shape=(1, 368, 432, 3),

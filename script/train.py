@@ -22,7 +22,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7',
+    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v12',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
@@ -37,7 +37,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_thin',
+    'mobilenet_v2',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin]'
 )
 flags.DEFINE_string(
