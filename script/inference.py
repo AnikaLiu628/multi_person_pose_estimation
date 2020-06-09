@@ -26,7 +26,7 @@ if __name__ == '__main__':
     from tensorflow.core.framework import graph_pb2
     graph_def = graph_pb2.GraphDef()
     # Download model from https://www.dropbox.com/s/2dw1oz9l9hi9avg/optimized_openpose.pb
-    with open('../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/output_model_11000/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8.pb', 'rb') as f:
+    with open('../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11/output_model_158000/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11.pb', 'rb') as f:
         graph_def.ParseFromString(f.read())
     tf.import_graph_def(graph_def, name='')
 

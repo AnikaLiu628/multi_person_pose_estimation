@@ -102,7 +102,7 @@ class Pipeline():
         #        {0:parsed_features['heatmap'], 
         #        1:parsed_features['PAF']}
 
-    def data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=4):
+    def data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
         preprocess = Preprocess()
         tfd = tf.data
         dataset = tfd.Dataset.from_tensor_slices(tf_record_path)
@@ -147,7 +147,7 @@ class Pipeline():
 
 
 
-    def eval_data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=4):
+    def eval_data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
         preprocess = Preprocess()
         tfd = tf.data
         dataset = tfd.TFRecordDataset(tf_record_path)

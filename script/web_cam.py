@@ -15,6 +15,7 @@ if __name__ == '__main__':
     parser.add_argument('--imgpath', type=str, default='../data/p2.jpg')
     parser.add_argument('--input-width', type=int, default=432)
     parser.add_argument('--input-height', type=int, default=368)
+    parser.add_argument('--model_name', type=str, default='MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v14')
     args = parser.parse_args()
 
     t0 = time.time()
@@ -24,22 +25,23 @@ if __name__ == '__main__':
     from tensorflow.core.framework import graph_pb2
     graph_def = graph_pb2.GraphDef()
     # Download model from https://www.dropbox.com/s/2dw1oz9l9hi9avg/optimized_openpose.pb
-    with open('../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/output_model_11000/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8.pb', 'rb') as f:
+    with open('../models/{}/output_model_102000/{}.pb'.format(args.model_name, args.model_name), 'rb') as f:
         graph_def.ParseFromString(f.read())
     tf.import_graph_def(graph_def, name='')
 
+    VideoWriter = cv2.VideoWriter('../data/output_{}.avi'.format(args.model_name), cv2.VideoWriter_fourcc(*'XVID'), 5, (args.input_width, args.input_height))
     t1 = time.time()
     print(t1 - t0)
     
     inputs = tf.get_default_graph().get_tensor_by_name('image:0')
     # outputs = tf.get_default_graph().get_tensor_by_name('shufflenet_v2/conv5/Relu:0')
-    outputs = tf.get_default_graph().get_tensor_by_name('feat_concat:0')
+    outputs = tf.get_default_graph().get_tensor_by_name('PixelShuffle1/depth_to_space:0')
     # heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('paf/class_out:0')
     heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('hm_out:0')
     # pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf/regression_out:0')
     pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf_out:0')
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('../data/VLC_正面試拍_C3.avi')
     while cap.isOpened():
         ret, img = cap.read()
         if ret:

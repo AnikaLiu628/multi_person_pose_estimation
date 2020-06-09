@@ -1,4 +1,55 @@
 # Changelog #
+## (2020-06-03) ##
+### [`MPPE_SRNET_MSE_COCO_368_432_v16`]
+(setting/MPPE_SRNET_MSE_COCO_368_432_v16.md)###
+
+[Training loss diagram](logs/MPPE_SRNET_MSE_COCO_368_432_v16.png) | [Log file](logs/MPPE_SRNET_MSE_COCO_368_432_v16.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and fullPAFs
+* Model: SRNet
+
+## (2020-06-03) ##
+### [`MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v14`]
+(setting/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v14.md)###
+
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v14.png) | [Log file](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v14.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and PAFs
+* Model: pretrain mobilenetv1(depth=1.0) with pafmodel
+
+
+## (2020-06-02) ##
+### [`MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11`]
+(setting/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11.md) ###
+
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11.png) | [Log file](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and 36 PAFs
+* Model: Mobilenet_thin
+
+## (2020-06-01) ##
+### [`MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v9`]
+(setting/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v9.md) ###
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v9.png) | [Log file](logs/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v9.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and 20 PAFs
+* Model: pretrain v8, train with gk2th2 data
 
 ## (2020-05-22) ##
 ### [`MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7`](setting/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v7.md) ###

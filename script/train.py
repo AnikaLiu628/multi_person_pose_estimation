@@ -20,17 +20,14 @@ flags.DEFINE_string(
     '/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_val.record-00000-of-00001',
     'Validation data'
 )
-########################
-#######confirm, plz#####
-########################
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v10',
+    '../models/MPPE_SRNET_MSE_COCO_368_432_v16',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
     'pretrained_model_path',
-    '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/model.ckpt-11000',
+    '../models/pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224.ckpt',
     'Path of pretrained model(ckpt)'
 )
 flags.DEFINE_string(
@@ -40,7 +37,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_thin',
+    'mobilenet_v1',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin]'
 )
 flags.DEFINE_string(
@@ -50,7 +47,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_float(
     'layer_depth_multiplier',
-    1.0,
+    0.75,
     'Depth multiplier of mobilenetv1 architecture'
 )
 flags.DEFINE_integer(
@@ -85,7 +82,7 @@ flags.DEFINE_float(
 )
 flags.DEFINE_integer(
     'decay_steps',
-    1000000000,
+    100000,
     'Decay steps of learning rate'
 )
 flags.DEFINE_float(

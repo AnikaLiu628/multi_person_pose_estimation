@@ -13,7 +13,7 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'dataset_path',
-    '/Users/anika/Documents/tfrecord_builder/run/test_tmp/coco_mp_keypoints_feature_train.record-00000-of-00001',
+    '/Users/anika/Documents/tfrecord_builder/run/tmp/coco_mp_keypoints_augfeature_test_train.record-00000-of-00001',
     'Training data'
 )
 flags.DEFINE_string(
@@ -287,9 +287,16 @@ def main(_):
                 con_kpf_val = con_kpf
                 mask = con_kpf > 8
                 con_kpf[mask] = 1
-            con_kpf = (con_kpf*255).astype("uint8")
+            corrd = []
+            for i in range(len(con_kpf)):
+                for j in range(len(con_kpf[0])):
+                    if con_kpf[i][j] == 1:
+                        corrd.append((i, j))
+            for c in range(len(corrd)):
+                cv2.circle(image, (corrd[c][1], corrd[c][0]), 4, (255, 0, 0), -1)
+            # con_kpf = (con_kpf*255).astype("uint8")
             
-            cv2.imshow('con_kpf', con_kpf)
+            cv2.imshow('con_kpf', image)
             
             if cv2.waitKey(0) & 0xFF == ord('q'):
                 break

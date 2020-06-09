@@ -5,6 +5,7 @@ from mobilenet_v1 import mobilenet_v1
 from mobilenet_v2 import mobilenet, training_scope
 from shufflenet_v2 import ShuffleNetV2
 from network_mobilenet_thin import MobilenetNetworkThin
+from hrnet import HRNet
 
 
 class MobilePifPaf():
@@ -83,7 +84,8 @@ class MobilePifPaf():
         # end_points=[]
         if self.backbone == 'mobilenet_v1':
             logits, end_points = mobilenet_v1(features, num_classes=False, is_training=self.is_training, depth_multiplier=self.depth_multiplier)
-            backbone_end = end_points['Conv2d_13_pointwise']
+            backbone_end = end_points['Conv2d_13_pointwise'] #1, 36, 46, 54
+            print(backbone_end)
 
         elif self.backbone == 'mobilenet_v2':
             with tf.contrib.slim.arg_scope(training_scope(is_training=self.is_training)):
@@ -95,6 +97,8 @@ class MobilePifPaf():
             end_points = basenet.build(features)
             backbone_end = end_points['base_net/out']
 
+        
+
         elif self.backbone == 'mobilenet_thin':
             out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
             end_points = out.get_layer()
@@ -103,67 +107,125 @@ class MobilePifPaf():
             paf = end_points['MConv_Stage6_L1_5']
             paf = tf.transpose(paf, [0, 3, 1, 2], name='paf_out')
 
+        elif self.backbone == 'hrnet':
+            end_points = dict()
+            out = HRNet(features)
+            # end_points = dict(out)
+            # end_points = out.get_layer() #net_output_final
+            backbone_end = out
+            # backbone_end = end_points['net_output_final']
+            s2d_1 = tf.space_to_depth(backbone_end,
+                                        block_size=int(4),
+                                        data_format='NHWC',
+                                        name='space_to_depth_1')
+            # s2d_2 = tf.space_to_depth(s2d_1,
+            #                             block_size=int(2),
+            #                             data_format='NHWC',
+            #                             name='space_to_depth_2')
+            # print(s2d_2)
+            paf_cov1 = tf.layers.conv2d(s2d_1, 64, #38
+                                        kernel_size=[1, 1],
+                                        name='paf_cov1')
+            s2d_2 = tf.space_to_depth(paf_cov1,
+                                        block_size=int(2),
+                                        data_format='NHWC',
+                                        name='space_to_depth_2')
+            paf = tf.layers.conv2d(s2d_2, 36, #38
+                                    kernel_size=[1, 1],
+                                    name='paf_conv')                         
+            # ps1 = self.PixelShuffle(s2d_1, 2, 
+            #             scope='PixelShuffle1')
+            concat_feat = tf.concat(values=[s2d_1, paf_cov1], axis=3, name='concat_feat')
+
+            ps1 = self.PixelShuffle(concat_feat, 2, 
+                        scope='PixelShuffle1')
+            hm_duc1 = self.DUC(ps1,
+                                filters=512,
+                                upscale_factor=2,
+                                is_training=self.is_training,
+                                scope='DUC1')
+            hm_duc2 = self.DUC(hm_duc1,
+                                filters=256,
+                                upscale_factor=2,
+                                is_training=self.is_training,
+                                scope='DUC2')
+            s2d_3 = tf.space_to_depth(paf_cov1,
+                                        block_size=int(2),
+                                        data_format='NHWC',
+                                        name='space_to_depth_3')
+            hm = tf.layers.conv2d(s2d_2, 17, #38
+                                        kernel_size=[1, 1],
+                                        name='hm_conv')
+            hm_out = tf.transpose(hm, [0, 3, 1, 2], name='hm_out')
+            paf_out = tf.transpose(paf, [0, 3, 1, 2], name='paf_out')
+            end_points['heat_map'] = hm_out
+            end_points['PAF'] = paf_out
+
         if self.backbone == 'mobilenet_thin':
-            # nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
             end_points['heat_map'] = hm
             end_points['PAF'] = paf
-            # end_points['outputs'] = [nets]
-        else:
-            # nets, hm, paf = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
-            ps1 = self.PixelShuffle(backbone_end, 2, 
-                        scope='PixelShuffle1')
+        # else:
+        #     ps1 = self.PixelShuffle(backbone_end, 2, 
+        #                 scope='PixelShuffle1')
+        #     paf_duc1 = self.DUC(ps1,
+        #                 filters=512,
+        #                 upscale_factor=2,
+        #                 is_training=self.is_training,
+        #                 scope='PAF_DUC1')
+        #     paf_duc2 = self.DUC(paf_duc1,
+        #                 filters=256,
+        #                 upscale_factor=2,
+        #                 is_training=self.is_training,
+        #                 scope='PAF_DUC2')
+        #     paf_conv_feature1 = tf.space_to_depth(paf_duc2,
+        #                                         block_size=int(2),
+        #                                         data_format='NHWC',
+        #                                         name='space_to_depth_1')
+        #     paf_conv_out1 = tf.layers.conv2d(paf_conv_feature1, 36, #38
+        #                                 kernel_size=[3, 3],
+        #                                 name='PAF_output')
+        #     paf_duc2_pad = tf.pad(paf_duc2,
+        #                     [[0, 0], [1, 1], [1, 1], [0, 0]],
+        #                     name='duc2_padding')
+        #     paf_conv_out = tf.layers.conv2d(paf_duc2_pad, 36,
+        #                                 kernel_size=[3, 3],
+        #                                 name='PAF_conv')
+        #     paf_conv_feature = tf.space_to_depth(paf_conv_out,
+        #                                         block_size=int(4),
+        #                                         data_format='NHWC',
+        #                                         name='space_to_depth_2')
+        #     concat_feat = tf.concat(values=[ps1, paf_conv_feature], axis=3, name='concat_feat')
 
-            paf_duc1 = self.DUC(ps1,
-                        filters=512,
-                        upscale_factor=2,
-                        is_training=self.is_training,
-                        scope='PAF_DUC1')
+        #     duc1 = self.DUC(concat_feat,
+        #                 filters=512,
+        #                 upscale_factor=2,
+        #                 is_training=self.is_training,
+        #                 scope='DUC1')
+        #     duc2 = self.DUC(duc1,
+        #                     filters=256,
+        #                     upscale_factor=2,
+        #                     is_training=self.is_training,
+        #                     scope='DUC2')
+        #     hm_feature = tf.space_to_depth(duc2,
+        #                                 block_size=int(2),
+        #                                 data_format='NHWC',
+        #                                 name='space_to_depth_3')
+        #     hm_out = tf.layers.conv2d(hm_feature, self.number_keypoints, #38
+        #                                 kernel_size=[3, 3],
+        #                                 name='output')
 
-            paf_duc2 = self.DUC(paf_duc1,
-                        filters=256,
-                        upscale_factor=2,
-                        is_training=self.is_training,
-                        scope='PAF_DUC2')
-            paf_duc2_pad = tf.pad(paf_duc2,
-                            [[0, 0], [1, 1], [1, 1], [0, 0]],
-                            name='duc2_padding')
-            paf_conv_out = tf.layers.conv2d(paf_duc2_pad, 38,
-                                        kernel_size=[3, 3],
-                                        name='PAF_output')
-            paf_conv_feature = tf.space_to_depth(paf_conv_out,
-                                                block_size=int(4),
-                                                data_format='NHWC',
-                                                name='space_to_depth')
-            concat_feat = tf.concat(values=[ps1, paf_conv_feature], axis=3, name='concat_feat')
-
-            duc1 = self.DUC(concat_feat,
-                        filters=512,
-                        upscale_factor=2,
-                        is_training=self.is_training,
-                        scope='DUC1')
-            duc2 = self.DUC(duc1,
-                            filters=256,
-                            upscale_factor=2,
-                            is_training=self.is_training,
-                            scope='DUC2')
-            duc2_pad = tf.pad(duc2,
-                            [[0, 0], [1, 1], [1, 1], [0, 0]],
-                            name='duc2_padding')
-
-            conv_out = tf.layers.conv2d(duc2_pad, self.number_keypoints,
-                                        kernel_size=[3, 3],
-                                        name='output')
-            conv_out = tf.transpose(conv_out, [0, 3, 1, 2], name='hm_out')
-            paf_conv_out = tf.transpose(paf_conv_out, [0, 3, 1, 2], name='paf_out')
-            end_points['heat_map'] = conv_out
-            end_points['PAF'] = paf_conv_out
+        #     conv_out = tf.transpose(hm_out, [0, 3, 1, 2], name='hm_out')
+        #     paf_conv_out = tf.transpose(paf_conv_out1, [0, 3, 1, 2], name='paf_out')
+        # end_points['heat_map'] = conv_out
+        # end_points['PAF'] = paf_conv_out
 
         return end_points
 
 
 def main(_):
     print('Rebuild graph...')
-    model = MobilePifPaf(backbone='mobilenet_thin', is_training=False)
+    #mobilenet_v1 hrnet
+    model = MobilePifPaf(backbone='hrnet', is_training=True)
 
     inputs = tf.placeholder(tf.float32,
                             shape=(1, 368, 432, 3),

@@ -15,7 +15,7 @@ top_ = 1
 def init_models():
     # HD = 'saved_model/frozen_inference_graph.pb'
     graph = tf.Graph()
-    POSE = '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8/output_model_11000/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v8.pb'
+    POSE = '../models/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11/output_model_158000/MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11.pb'
     with graph.as_default():
         graph_def = tf.GraphDef()
         with tf.gfile.GFile(POSE, 'rb') as fid:

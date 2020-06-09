@@ -56,7 +56,7 @@ class CocoPart(Enum):
 #     (11, 12), (12, 13), (1, 0), (0, 14), (14, 16), (0, 15), (15, 17), (2, 16), (5, 17)
 # ]   # = 19 [[5, 7], [7, 9], [6, 8], [8, 10], [11, 13], [13, 15], [12, 14], [14, 16], [5, 6], [11, 12]]
 CocoPairs = [
-    (5, 7), (7, 9), (6, 8), (8, 10), (11, 13), (13, 15), (12, 14), (14, 16), (5, 6), (11, 12)
+    (5, 7), (7, 9), (6, 8), (8, 10), (11, 13), (13, 15), (12, 14), (14, 16), (5, 6), (11, 12), (6, 12), (5, 11), (0, 1), (1, 3), (3, 5), (0, 2), (2, 4), (4, 6)
 ]
 CocoPairsRender = CocoPairs[:]
 # CocoPairsNetwork = [
@@ -64,7 +64,7 @@ CocoPairsRender = CocoPairs[:]
 #     (6, 7), (8, 9), (10, 11), (28, 29), (30, 31), (34, 35), (32, 33), (36, 37), (18, 19), (26, 27)
 #  ]  
 CocoPairsNetwork = [
-    (0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (10, 11), (12, 13), (14, 15), (16, 17), (18, 19)
+    (0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (10, 11), (12, 13), (14, 15), (16, 17), (18, 19), (20, 21), (22, 23), (24, 25), (26, 27), (28, 29), (30, 31), (32, 33), (34, 35), (36, 37)
  ]  
 
 CocoColors = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255, 0], [85, 255, 0], [0, 255, 0],
@@ -107,7 +107,7 @@ def estimate_pose(heatMat, pafMat):
     if heatMat.shape[2] == 17:
         # transform from [height, width, n_parts] to [n_parts, height, width]
         heatMat = np.rollaxis(heatMat, 2, 0)
-    if pafMat.shape[2] == 20:
+    if pafMat.shape[2] == 36:
         # transform from [height, width, 2*n_pairs] to [2*n_pairs, height, width]
         pafMat = np.rollaxis(pafMat, 2, 0)
 
@@ -201,7 +201,7 @@ def estimate_pose_pair(coords, partIdx1, partIdx2, pafMatX, pafMatY):
                     continue
             elif count < InterMinAbove_Threshold or score <= 0.0:
                 continue
-            elif abs(x1-x2)>=12:
+            elif abs(x1-x2)>=17:
                 continue
             # print((x1, y1), (x2, y2), (partIdx1, partIdx2))
             print('score:   ', score)

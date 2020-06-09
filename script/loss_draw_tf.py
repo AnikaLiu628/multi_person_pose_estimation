@@ -12,12 +12,12 @@ paf_ylim = 0.08
 
 val_batch_size = 128
 def main():
-    model_name = 'MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v11'
+    model_name = 'MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v14'
     path_root = '../logs/{}.log'.format(model_name)
     print('Model: ', model_name)
     training_data = []
     validation_data = []
-    evaluation_data_loss = []
+    evaluation_data_loss = []   
     training_data_loss = []
     evaluation_data = []
     pretrained_model_steps = 10000
