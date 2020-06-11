@@ -37,8 +37,8 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_v1',
-    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin]'
+    'hrnet',
+    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin, hrnet]'
 )
 flags.DEFINE_string(
     'loss_fn',
@@ -139,9 +139,9 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         # hm_x = hm_x[:, :, :-2, :]
         # paf_x = paf_x[:, :, :-2, :]
         
-        # with tf.device('/cpu:0'):
-        hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
-        paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
+        with tf.device('/cpu:0'):
+            hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
+            paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
 
         loss = hm_loss + paf_loss
 
@@ -410,12 +410,12 @@ def main(_):
         }
 
         session_config = tf.ConfigProto()
-        session_config.gpu_options.allow_growth = True
-        # strategy = tf.distribute.MirroredStrategy()
+        # session_config.gpu_options.allow_growth = True
+        strategy = tf.distribute.MirroredStrategy()
         config = (
             tf.estimator
-            .RunConfig()
-            # .RunConfig(train_distribute=strategy)
+            # .RunConfig()
+            .RunConfig(train_distribute=strategy)
             .replace(
                 session_config=session_config,
                 save_summary_steps=1000,
@@ -462,10 +462,10 @@ def main(_):
 if __name__ == '__main__':
     if not os.path.exists('../logs'):
         os.makedir('../logs')
-    # root = logging.getLogger()
-    # if root.handlers:
-    #     for handler in root.handlers:
-    #         root.removeHandler(handler)
+    root = logging.getLogger()
+    if root.handlers:
+        for handler in root.handlers:
+            root.removeHandler(handler)
     logging.basicConfig(
         filename='../logs/' + FLAGS.output_model_path.split('/')[-1] + '.log',
         level=logging.INFO

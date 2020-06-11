@@ -94,13 +94,13 @@ class Pipeline():
         parsed_features['image/human/heatmap'] = tf.transpose(parsed_features['image/human/heatmap'], [2, 0, 1])
         parsed_features['image/human/PAF'] = tf.transpose(parsed_features['image/human/PAF'], [2, 0, 1])
 
-        return parsed_features['image/human/resized_and_subtract_mean'], \
-                parsed_features['image/human/keypoints/feature'], \
-                parsed_features['image/human/heatmap'], \
-                parsed_features['image/human/PAF']
         # return parsed_features['image/human/resized_and_subtract_mean'], \
-        #        {0:parsed_features['heatmap'], 
-        #        1:parsed_features['PAF']}
+        #         parsed_features['image/human/keypoints/feature'], \
+        #         parsed_features['image/human/heatmap'], \
+        #         parsed_features['image/human/PAF']
+        return parsed_features['image/human/resized_and_subtract_mean'], \
+               {0:parsed_features['image/human/heatmap'], 
+               1:parsed_features['image/human/PAF']}
 
     def data_pipeline(self, tf_record_path, params={}, batch_size=64, num_parallel_calls=8):
         preprocess = Preprocess()
@@ -140,10 +140,10 @@ class Pipeline():
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
-        iterator = dataset.make_one_shot_iterator()
-        img, kps_f, hm, paf = iterator.get_next()
-        return img, [hm, paf]
-        # return dataset
+        # iterator = dataset.make_one_shot_iterator()
+        # img, kps_f, hm, paf = iterator.get_next()
+        # return img, [hm, paf]
+        return dataset
 
 
 
@@ -177,7 +177,7 @@ class Pipeline():
             num_parallel_calls=num_parallel_calls
         )
         dataset = dataset.batch(batch_size).prefetch(2 * batch_size)
-        iterator = dataset.make_one_shot_iterator()
-        img, kps_f, hm, paf = iterator.get_next()
-        return img, [hm, paf]
-        # return dataset
+        # iterator = dataset.make_one_shot_iterator()
+        # img, kps_f, hm, paf = iterator.get_next()
+        # return img, [hm, paf]
+        return dataset
