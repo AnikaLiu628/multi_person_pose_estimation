@@ -47,14 +47,14 @@ class MobilenetNetworkThin(network_base.BaseNetwork):
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_2')
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_3')
              .separable_conv(1, 1, depth2(512), 1, name=prefix + '_L1_4')
-             .separable_conv(1, 1, 36, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
+             .separable_conv(1, 1, 38, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
 
             (self.feed(feature_lv)
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_1')
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_2')
              .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_3')
              .separable_conv(1, 1, depth2(512), 1, name=prefix + '_L2_4')
-             .separable_conv(1, 1, 17, 1, relu=False, name=prefix + '_L2_5')) # kps = 17
+             .separable_conv(1, 1, 19, 1, relu=False, name=prefix + '_L2_5')) # kps = 17
 
             for stage_id in range(5):
                 prefix_prev = 'MConv_Stage%d' % (stage_id + 1)
@@ -67,14 +67,14 @@ class MobilenetNetworkThin(network_base.BaseNetwork):
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_2')
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L1_3')
                  .separable_conv(1, 1, depth2(128), 1, name=prefix + '_L1_4')
-                 .separable_conv(1, 1, 36, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
+                 .separable_conv(1, 1, 38, 1, relu=False, name=prefix + '_L1_5')) #paf = 20
 
                 (self.feed(prefix + '_concat')
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_1')
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_2')
                  .separable_conv(3, 3, depth2(128), 1, name=prefix + '_L2_3')
                  .separable_conv(1, 1, depth2(128), 1, name=prefix + '_L2_4')
-                 .separable_conv(1, 1, 17, 1, relu=False, name=prefix + '_L2_5')) # kps = 17
+                 .separable_conv(1, 1, 19, 1, relu=False, name=prefix + '_L2_5')) # kps = 17
 
             # final result
             (self.feed('MConv_Stage6_L2_5',

@@ -8,6 +8,8 @@ from input_pipeline import Pipeline
 from losses import MSMSE
 import numpy as np
 
+#python3 train.py --dataset_path=/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_train.record-00000-of-00001 --validationset_path=/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_val.record-00000-of-00001 --output_model_path=../models/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v17 --pretrained_model_path=../models/pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224.ckpt --backbone=mobilenet_thin --pretrained_model=True --learning_rate=0.001 --decay_steps=1000000 --validation_batch_size=4 
+
 slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
@@ -22,7 +24,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'output_model_path',
-    '../models/MPPE_SRNET_MSE_COCO_368_432_v16',
+    '../models/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v17',
     'Path of output human pose model'
 )
 flags.DEFINE_string(
@@ -37,7 +39,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'hrnet',
+    'mobilenet_thin',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin, hrnet]'
 )
 flags.DEFINE_string(
@@ -62,7 +64,7 @@ flags.DEFINE_integer(
 )
 flags.DEFINE_boolean(
     'pretrained_model',
-    False,
+    True,
     'Use pretrained model or not'
 )
 flags.DEFINE_boolean(
@@ -139,9 +141,9 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         # hm_x = hm_x[:, :, :-2, :]
         # paf_x = paf_x[:, :, :-2, :]
         
-        with tf.device('/cpu:0'):
-            hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
-            paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
+        # with tf.device('/cpu:0'):
+        hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
+        paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
 
         loss = hm_loss + paf_loss
 
@@ -410,12 +412,12 @@ def main(_):
         }
 
         session_config = tf.ConfigProto()
-        # session_config.gpu_options.allow_growth = True
-        strategy = tf.distribute.MirroredStrategy()
+        session_config.gpu_options.allow_growth = True
+        # strategy = tf.distribute.MirroredStrategy()
         config = (
             tf.estimator
-            # .RunConfig()
-            .RunConfig(train_distribute=strategy)
+            .RunConfig()
+            # .RunConfig(train_distribute=strategy)
             .replace(
                 session_config=session_config,
                 save_summary_steps=1000,
@@ -462,10 +464,10 @@ def main(_):
 if __name__ == '__main__':
     if not os.path.exists('../logs'):
         os.makedir('../logs')
-    root = logging.getLogger()
-    if root.handlers:
-        for handler in root.handlers:
-            root.removeHandler(handler)
+    # root = logging.getLogger()
+    # if root.handlers:
+    #     for handler in root.handlers:
+    #         root.removeHandler(handler)
     logging.basicConfig(
         filename='../logs/' + FLAGS.output_model_path.split('/')[-1] + '.log',
         level=logging.INFO

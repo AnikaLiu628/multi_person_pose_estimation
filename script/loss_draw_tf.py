@@ -10,9 +10,9 @@ loss_ylim = 0.1
 hm_ylim = 0.02
 paf_ylim = 0.08
 
-val_batch_size = 128
+val_batch_size = 64
 def main():
-    model_name = 'MPPE_MOBILENET_THIN_1.0_MSE_COCO_368_432_v14'
+    model_name = 'MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v17'
     path_root = '../logs/{}.log'.format(model_name)
     print('Model: ', model_name)
     training_data = []

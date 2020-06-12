@@ -1,0 +1,109 @@
+INFO:root:--dataset_path=/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_train.record-00000-of-00001 \
+--validationset_path=/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_val.record-00000-of-00001 \
+--output_model_path=../models/MPPE_SRNET_MSE_COCO_368_432_v16 \
+--pretrained_model_path=../models/pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224.ckpt \
+--model_type=MobilePifPaf \
+--backbone=hrnet \
+--loss_fn=MSE \
+--layer_depth_multiplier=0.75 \
+--number_keypoints=17 \
+--batch_size=16 \
+--pretrained_model=False \
+--data_augmentation=False \
+--optimizer=Adam \
+--learning_rate=0.001 \
+--decay_steps=100000 \
+--decay_factor=0.1 \
+--training_steps=300000 \
+--validation_interval=1000 \
+--validation_batch_size=128 \
+--ohem_top_k=8 
+
+WARNING:tensorflow:From train.py:520: tf_record_iterator (from tensorflow.python.lib.io.tf_record) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use eager execution and: 
+`tf.data.TFRecordDataset(path)`
+INFO:root:
+ validation data number: 2346 
+
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+INFO:tensorflow:Using config: {'_model_dir': '../models/MPPE_SRNET_MSE_COCO_368_432_v16', '_tf_random_seed': None, '_save_summary_steps': 1000, '_save_checkpoints_steps': 1000, '_save_checkpoints_secs': None, '_session_config': gpu_options {
+  allow_growth: true
+}
+, '_keep_checkpoint_max': 1000, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 1000, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x7fcc0b87b240>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO:tensorflow:Calling model_fn.
+WARNING:tensorflow:From /workspace/multi_person_pose_estimation/script/utils.py:24: conv2d (from tensorflow.python.layers.convolutional) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.conv2d instead.
+WARNING:tensorflow:From /workspace/multi_person_pose_estimation/script/utils.py:28: batch_normalization (from tensorflow.python.layers.normalization) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.batch_normalization instead.
+WARNING:tensorflow:From /workspace/multi_person_pose_estimation/script/mobilepifpaf.py:71: separable_conv2d (from tensorflow.python.layers.convolutional) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.separable_conv2d instead.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/losses/losses_impl.py:667: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/math_ops.py:3066: to_int32 (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Create CheckpointSaverHook.
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Saving checkpoints for 0 into ../models/MPPE_SRNET_MSE_COCO_368_432_v16/model.ckpt.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Starting evaluation at 2020-06-09T08:29:48Z
+INFO:tensorflow:Graph was finalized.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file APIs to check for files with this prefix.
+INFO:tensorflow:Restoring parameters from ../models/MPPE_SRNET_MSE_COCO_368_432_v16/model.ckpt-0
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:root:--dataset_path=/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_train.record-00000-of-00001 \
+--validationset_path=/datasets/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_val.record-00000-of-00001 \
+--output_model_path=../models/MPPE_SRNET_MSE_COCO_368_432_v16 \
+--pretrained_model_path=../models/pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224.ckpt \
+--model_type=MobilePifPaf \
+--backbone=hrnet \
+--loss_fn=MSE \
+--layer_depth_multiplier=0.75 \
+--number_keypoints=17 \
+--batch_size=16 \
+--pretrained_model=False \
+--data_augmentation=False \
+--optimizer=Adam \
+--learning_rate=0.001 \
+--decay_steps=100000 \
+--decay_factor=0.1 \
+--training_steps=300000 \
+--validation_interval=1000 \
+--validation_batch_size=128 \
+--ohem_top_k=8 
+
+WARNING:tensorflow:From train.py:520: tf_record_iterator (from tensorflow.python.lib.io.tf_record) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use eager execution and: 
+`tf.data.TFRecordDataset(path)`
+INFO:root:
+ validation data number: 2346 
+
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+INFO:tensorflow:Using config: {'_model_dir': '../models/MPPE_SRNET_MSE_COCO_368_432_v16', '_tf_random_seed': None, '_save_summary_steps': 1000, '_save_checkpoints_steps': 1000, '_save_checkpoints_secs': None, '_session_config': gpu_options {
+  allow_growth: true
+}
+, '_keep_checkpoint_max': 1000, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 1000, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x7f1a538e3160>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO:tensorflow:Calling model_fn.
+WARNING:tensorflow:From /workspace/multi_person_pose_estimation/script/utils.py:24: conv2d (from tensorflow.python.layers.convolutional) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.conv2d instead.
+WARNING:tensorflow:From /workspace/multi_person_pose_estimation/script/utils.py:28: batch_normalization (from tensorflow.python.layers.normalization) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.batch_normalization instead.

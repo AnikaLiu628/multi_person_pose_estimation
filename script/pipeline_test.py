@@ -13,7 +13,7 @@ slim = tf.contrib.slim
 flags = tf.app.flags
 flags.DEFINE_string(
     'dataset_path',
-    '/Users/anika/Documents/tfrecord_builder/run/tmp/coco_mp_keypoints_augfeature_test_train.record-00000-of-00001',
+    '/Users/anika/Documents/tfrecord_builder/run/tmp/coco_mp_keypoints_fullfeature_gk3th3_val.record-00000-of-00001',
     'Training data'
 )
 flags.DEFINE_string(
