@@ -204,11 +204,11 @@ def estimate_pose_pair(coords, partIdx1, partIdx2, pafMatX, pafMatY):
             elif abs(x1-x2)>=17:
                 continue
             # print((x1, y1), (x2, y2), (partIdx1, partIdx2))
-            print('score:   ', score)
-            print('coord_p1:    ', (x1, y1))
-            print('coord_p2:    ', (x2, y2))
-            print('idx: ', (idx1, idx2))
-            print('partIdx: ', (partIdx1, partIdx2))
+            # print('score:   ', score)
+            # print('coord_p1:    ', (x1, y1))
+            # print('coord_p2:    ', (x2, y2))
+            # print('idx: ', (idx1, idx2))
+            # print('partIdx: ', (partIdx1, partIdx2))
             connection_temp.append({
                 'score': score,
                 'coord_p1': (x1, y1),

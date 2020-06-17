@@ -24,8 +24,8 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'model_type',
-    'MobilePifPaf',
-    'Model architecture in [MobilePose, FPMobilePose, SEMobilePose, sppe, MobilePifPaf]'
+    'MobilePaf',
+    'Model architecture in [MobilePose, FPMobilePose, SEMobilePose, sppe, MobilePifPaf, MobilePaf]'
 )
 flags.DEFINE_string(
     'backbone',
@@ -210,6 +210,13 @@ def model_fn(features, labels, mode, params):
     elif params['model_arch'] == 'MobilePifPaf':
         from mobilepifpaf import MobilePifPaf
         model_arch = MobilePifPaf
+        output = 'heat_map'
+        multi_layer_labels = labels[0]
+        hm_labels = labels[0][0]
+        labels_weight = labels[0]
+    elif params['model_arch'] == 'MobilePaf':
+        from mobilepaf import MobilePaf
+        model_arch = MobilePaf
         output = 'heat_map'
         multi_layer_labels = labels[0]
         hm_labels = labels[0][0]

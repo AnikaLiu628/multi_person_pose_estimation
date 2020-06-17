@@ -19,8 +19,8 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'model_type',
-    'MobilePifPaf',
-    'Model architecture in [MobilePifPaf]'
+    'MobilePaf',
+    'Model architecture in [MobilePifPaf, MobilePaf]'
 )
 flags.DEFINE_string(
     'backbone',
@@ -128,9 +128,9 @@ def optimize_inference_model(frozen_graph_path,
 
 def main(_):
     print('Rebuild graph...')
-    if FLAGS.model_type == 'MobilePifPaf':
-        from mobilepifpaf import MobilePifPaf
-        model_arch = MobilePifPaf
+    if FLAGS.model_type == 'MobilePaf':
+        from mobilepaf import MobilePaf
+        model_arch = MobilePaf
     else:
         print('{} not supported.'.format(FLAGS.model_type))
         return 0

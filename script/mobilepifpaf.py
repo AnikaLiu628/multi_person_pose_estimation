@@ -81,7 +81,6 @@ class MobilePifPaf():
         paf_nfields = 18
         paf_nvectors = 2
         paf_nscales = 0
-        # end_points=[]
         if self.backbone == 'mobilenet_v1':
             logits, end_points = mobilenet_v1(features, num_classes=False, is_training=self.is_training, depth_multiplier=self.depth_multiplier)
             backbone_end = end_points['Conv2d_13_pointwise'] #1, 36, 46, 54
@@ -110,19 +109,11 @@ class MobilePifPaf():
         elif self.backbone == 'hrnet':
             end_points = dict()
             out = HRNet(features)
-            # end_points = dict(out)
-            # end_points = out.get_layer() #net_output_final
             backbone_end = out
-            # backbone_end = end_points['net_output_final']
             s2d_1 = tf.space_to_depth(backbone_end,
                                         block_size=int(4),
                                         data_format='NHWC',
                                         name='space_to_depth_1')
-            # s2d_2 = tf.space_to_depth(s2d_1,
-            #                             block_size=int(2),
-            #                             data_format='NHWC',
-            #                             name='space_to_depth_2')
-            # print(s2d_2)
             paf_cov1 = tf.layers.conv2d(s2d_1, 64, #38
                                         kernel_size=[1, 1],
                                         name='paf_cov1')
@@ -132,9 +123,7 @@ class MobilePifPaf():
                                         name='space_to_depth_2')
             paf = tf.layers.conv2d(s2d_2, 36, #38
                                     kernel_size=[1, 1],
-                                    name='paf_conv')                         
-            # ps1 = self.PixelShuffle(s2d_1, 2, 
-            #             scope='PixelShuffle1')
+                                    name='paf_conv')
             concat_feat = tf.concat(values=[s2d_1, paf_cov1], axis=3, name='concat_feat')
 
             ps1 = self.PixelShuffle(concat_feat, 2, 
@@ -224,24 +213,21 @@ class MobilePifPaf():
 
 def main(_):
     print('Rebuild graph...')
-    #mobilenet_v1 hrnet
+    
     model = MobilePifPaf(backbone='mobilenet_thin', is_training=True)
 
     inputs = tf.placeholder(tf.float32,
                             shape=(1, 368, 432, 3),
                             name='image')
+
     end_points = model.build(inputs)
-    # print(end_points) #([class, paf1, paf2], class, paf)
 
     print(end_points['PAF'])
-    # print(end_points['PAF'][0][1])
 
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
     end_points = sess.run(end_points, feed_dict={inputs: np.zeros((1, 368, 432, 3))})
     print(end_points['heat_map'].shape)
-    # print(PAF[0][0])
-    # print(PAF[1])
 
 
 if __name__ == '__main__':

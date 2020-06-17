@@ -34,8 +34,8 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'model_type',
-    'MobilePifPaf',
-    'Model architecture in [MobilePifPaf]'
+    'MobilePaf',
+    'Model architecture in [MobilePifPaf, MobilePaf]'
 )
 flags.DEFINE_string(
     'backbone',
@@ -231,9 +231,9 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
 
 
 def model_fn(features, labels, mode, params):
-    if params['model_arch'] == 'MobilePifPaf':
-        from mobilepifpaf import MobilePifPaf
-        model_arch = MobilePifPaf
+    if params['model_arch'] == 'MobilePaf':
+        from mobilepaf import MobilePaf
+        model_arch = MobilePaf
         output = 'outputs'
         multi_head_labels = labels
     else:
