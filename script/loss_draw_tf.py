@@ -5,7 +5,7 @@ from scipy.interpolate import interp1d
 
 #MPE_SHUFFLENET_V2_1.0_MSE_COCO_360_640_vsp_1.log
 parser = argparse.ArgumentParser(description='Plot Loss')
-parser.add_argument('--model_name', type=str, default='MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v17')
+parser.add_argument('--model', type=str, default='MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v19')
 args = parser.parse_args()
 
 t_num = 1
@@ -17,7 +17,7 @@ paf_ylim = 0.08
 
 val_batch_size = 64
 def main():
-    model_name = args.model_name
+    model_name = args.model
     path_root = '../logs/{}.log'.format(model_name)
     print('Model: ', model_name)
     training_data = []

@@ -12,12 +12,11 @@ fps_time = 0
 
 # if __name__ == '__main__':
 parser = argparse.ArgumentParser(description='Tensorflow Openpose Inference')
-parser.add_argument('--imgpath', type=str, default='../data/p2.jpg')
 parser.add_argument('--input_width', type=int, default=432)
 parser.add_argument('--input_height', type=int, default=368)
-parser.add_argument('--model_name', type=str, default='MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v19')
-parser.add_argument('--checkpoint', type=str, default='295000')
-parser.add_argument('--video', type=str, default='../data/video/VLC_正面試拍_C3.avi')
+parser.add_argument('--model', type=str, default='MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v19')
+parser.add_argument('--checkpoint', type=str, default='522000')
+parser.add_argument('--video', type=str, default='../data/video/A043_P003_C005_D002_S012.avi')
 args = parser.parse_args()
 
 video_name = args.video.split('/')[3].split('.')[0]
@@ -28,11 +27,11 @@ tf.reset_default_graph()
 from tensorflow.core.framework import graph_pb2
 graph_def = graph_pb2.GraphDef()
 # Download model from https://www.dropbox.com/s/2dw1oz9l9hi9avg/optimized_openpose.pb
-with open('../models/{}/output_model_{}/{}.pb'.format(args.model_name, args.checkpoint, args.model_name), 'rb') as f:
+with open('../models/{}/output_model_{}/{}.pb'.format(args.model, args.checkpoint, args.model), 'rb') as f:
     graph_def.ParseFromString(f.read())
 tf.import_graph_def(graph_def, name='')
 
-VideoWriter = cv2.VideoWriter('../data/video_record/output_{}_{}.avi'.format(video_name, args.model_name), cv2.VideoWriter_fourcc(*'XVID'), 1, (853, 480))
+VideoWriter = cv2.VideoWriter('../data/video_record/output_{}_{}.avi'.format(video_name, args.model), cv2.VideoWriter_fourcc(*'XVID'), 1, (853, 480))
 t1 = time.time()
 print(t1 - t0)
 

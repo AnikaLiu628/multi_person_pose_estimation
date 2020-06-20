@@ -1,4 +1,17 @@
 # Changelog #
+## (2020-06-22) ##
+### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22.md) ###
+
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22.png) | [Log file](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and fullPAFs
+* Data: orginal + rotate90 + rotate270 + panoptic
+* Model: pretrain mobilenet_thin
+
 ## (2020-06-17) ##
 ### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v20`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v20.md) ###
 

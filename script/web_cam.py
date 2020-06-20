@@ -30,7 +30,7 @@ with open('../models/{}/output_model_{}/{}.pb'.format(args.model_name, args.chec
     graph_def.ParseFromString(f.read())
 tf.import_graph_def(graph_def, name='')
 
-VideoWriter = cv2.VideoWriter('../data/video_record/output_{}_small.avi'.format(args.model_name), cv2.VideoWriter_fourcc(*'XVID'), 5, (853, 480))
+VideoWriter = cv2.VideoWriter('../data/video_record/output_{}_small.avi'.format(args.model_name), cv2.VideoWriter_fourcc(*'XVID'), 3, (640, 480))
 t1 = time.time()
 print(t1 - t0)
 
@@ -44,7 +44,7 @@ heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('hm_out:0')
 pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf_out:0')
 
 # cap = cv2.VideoCapture(args.video)
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 while cap.isOpened():
     ret, img = cap.read()
     if ret:
@@ -79,7 +79,7 @@ while cap.isOpened():
 
             scale = 480.0 / image_h
             newh, neww = 480, int(scale * image_w + 0.5)
-            # print(neww, newh)
+            print(neww, newh)
             image = cv2.resize(image, (neww, newh), interpolation=cv2.INTER_AREA)
 
             # cv2.imshow('result', image)
