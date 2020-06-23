@@ -1,0 +1,2 @@
+model_checkpoint_path: "Mobilenet_v1_thin_360_640"
+all_model_checkpoint_paths: "Mobilenet_v1_thin_360_640"

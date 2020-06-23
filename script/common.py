@@ -72,10 +72,10 @@ CocoColors = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255
               [170, 0, 255], [255, 0, 255], [255, 0, 170], [255, 0, 85]]
 
 
-NMS_Threshold = 0.1 #0.8
+NMS_Threshold = 0.8 #0.8
 InterMinAbove_Threshold = 6
 Inter_Threashold = 0.1
-Min_Subset_Cnt = 2 #4
+Min_Subset_Cnt = 4 #4
 Min_Subset_Score = 0.8 #0.8
 Max_Human = 96
 

@@ -1,4 +1,30 @@
 # Changelog #
+## (2020-06-23) ##
+### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v25`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v25.md) ###
+
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v25.png) | [Log file](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v25.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and fullPAFs
+* Data: orginal + rotate90 + rotate270 + panoptic
+* Model: pretrain mobilenet_thin + [more layers](script/network_mobilenet_thin.py)
+
+## (2020-06-23) ##
+### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.md) ###
+
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.png) | [Log file](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and fullPAFs
+* Data: orginal + rotate90 + rotate270 + panoptic
+* Model: pretrain mobilenet_thin + [one s2d layer](script/mobilepaf.py)
+
 ## (2020-06-22) ##
 ### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22.md) ###
 
