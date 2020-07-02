@@ -45,19 +45,20 @@ heatmaps_tensor = tf.get_default_graph().get_tensor_by_name('hm_out:0')
 pafs_tensor = tf.get_default_graph().get_tensor_by_name('paf_out:0')
 
 cap = cv2.VideoCapture(args.video)
-while cap.isOpened():
-    ret, img = cap.read()
-    if ret:
-        t2 = time.time()
-        print('rea model time cost:   ', t2 - t1)
+with tf.Session() as sess:
+    while cap.isOpened():
+        ret, img = cap.read()
+        if ret:
+            t2 = time.time()
+            print('rea model time cost:   ', t2 - t1)
 
-        image = read_imgfile(img, args.input_width, args.input_height, web_cam=True)
-        # img_np = image.copy()
+            image = read_imgfile(img, args.input_width, args.input_height, web_cam=True)
+            # img_np = image.copy()
 
-        t3 = time.time()
-        print('read image time cost:    ', t3 - t2)
+            t3 = time.time()
+            print('read image time cost:    ', t3 - t2)
 
-        with tf.Session() as sess:
+        
             backbone_feature = sess.run(outputs, feed_dict = {inputs: image})
             heatMat, pafMat = sess.run([heatmaps_tensor, pafs_tensor], feed_dict={
                 outputs: backbone_feature

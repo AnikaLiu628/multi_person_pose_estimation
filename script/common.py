@@ -58,7 +58,7 @@ class CocoPart(Enum):
 CocoPairs = [
     (5, 7), (7, 9), (6, 8), (8, 10), (11, 13), (13, 15), (12, 14), (14, 16), (5, 6), (11, 12), (6, 12), (5, 11), (0, 1), (1, 3), (3, 5), (0, 2), (2, 4), (4, 6)
 ]
-CocoPairsRender = CocoPairs[:]
+CocoPairsRender = CocoPairs[:-6]
 # CocoPairsNetwork = [
 #     (12, 13), (20, 21), (14, 15), (16, 17), (22, 23), (24, 25), (0, 1), (2, 3), (4, 5),
 #     (6, 7), (8, 9), (10, 11), (28, 29), (30, 31), (34, 35), (32, 33), (36, 37), (18, 19), (26, 27)
@@ -72,10 +72,10 @@ CocoColors = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255
               [170, 0, 255], [255, 0, 255], [255, 0, 170], [255, 0, 85]]
 
 
-NMS_Threshold = 0.1 #0.8
+NMS_Threshold = 0.8 #0.8
 InterMinAbove_Threshold = 6
 Inter_Threashold = 0.1
-Min_Subset_Cnt = 2 #4
+Min_Subset_Cnt = 4 #4
 Min_Subset_Score = 0.8 #0.8
 Max_Human = 96
 
