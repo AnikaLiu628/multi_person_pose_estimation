@@ -118,7 +118,7 @@ def main(_):
     saver = tf.train.Saver()
     sess = tf.Session()
     sess.run(tf.initializers.global_variables())
-    saver.save(sess, 'MobilenetNetworkThin/Mobilenet_v1_thin_360_640')
+    # saver.save(sess, 'MobilenetNetworkThin/Mobilenet_v1_thin_360_640')
     output = sess.run(end_point, feed_dict={inputs: np.zeros((1, 368, 432, 3))})
     # print()
 

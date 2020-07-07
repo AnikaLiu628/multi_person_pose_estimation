@@ -101,8 +101,19 @@ class MobilePaf():
             end_points = out.get_layer()
             ###HEATMAP
             thin_hm = end_points['MConv_Stage6_L2_5']
-            s2d_hm = tf.space_to_depth(thin_hm, block_size=int(2), data_format='NHWC', name='space_to_depth_hm')
-            hm_duc = self.DUC(s2d_hm, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm')
+            s2d_hm1 = tf.space_to_depth(thin_hm, block_size=int(2), data_format='NHWC', name='space_to_depth_hm1')
+            hm_duc = self.DUC(s2d_hm1, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm')
+            # s2d_hm2 = tf.space_to_depth(s2d_hm1, block_size=int(2), data_format='NHWC', name='space_to_depth_hm2')
+            # hm_duc2 = self.DUC(s2d_hm2, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm2')
+            # hm_duc2_2 = self.DUC(hm_duc2, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm2_2')
+            # s2d_hm3 = tf.space_to_depth(s2d_hm2, block_size=int(2), data_format='NHWC', name='space_to_depth_hm3')
+            # hm_duc3 = self.DUC(s2d_hm3, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm3')
+            # hm_duc3_2 = self.DUC(hm_duc_3_1, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm3_2')
+            # hm_duc3_3 = self.DUC(hm_duc3_2, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm3_3')
+            print(hm_duc)
+            # print(hm_duc2)
+            # print(hm_duc3)
+            # concat_feat = tf.concat(values=[ps1, paf_conv_feature], axis=3, name='concat_feat')
             hm_out = tf.layers.conv2d(hm_duc, 17, kernel_size=[1, 1], name='hm_conv')  
             hm = tf.transpose(hm_out, [0, 3, 1, 2], name='hm_out')
             ###PAF
