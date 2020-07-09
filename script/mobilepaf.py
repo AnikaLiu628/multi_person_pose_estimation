@@ -134,6 +134,7 @@ class MobilePaf():
             end_points = dict()
             out = HRNet(features)
             backbone_end = out
+            print(backbone_end)
             s2d_1 = tf.space_to_depth(backbone_end,
                                         block_size=int(4),
                                         data_format='NHWC',
@@ -173,6 +174,31 @@ class MobilePaf():
             paf_out = tf.transpose(paf, [0, 3, 1, 2], name='paf_out')
             end_points['heat_map'] = hm_out
             end_points['PAF'] = paf_out
+
+        elif self.backbone == 'hrnet_tiny':
+            end_points = dict()
+            out = HRNet(features)
+            backbone_end = out
+            conv_paf1 = tf.layers.conv2d(backbone_end, 128, 3, strides=2, name='paf_conv1')
+            conv_paf2 = tf.layers.conv2d(conv_paf1, 128, 3, strides=2, name='paf_conv2')
+            conv_paf3 = tf.layers.conv2d(conv_paf2, 128, 3, strides=1, name='paf_conv3')
+            conv_paf4 = tf.layers.conv2d(conv_paf3, 128, 3, strides=2, name='paf_conv4')
+            pad_paf = tf.pad(conv_paf4, [[0, 0], [1, 1], [1, 1], [0, 0]], name='paf_pad')
+            paf = tf.layers.conv2d(pad_paf, 36, kernel_size=[1, 1], name='paf_conv')
+
+            conv_hm1 = tf.layers.conv2d(backbone_end, 128, 3, strides=2, name='hm_conv1')
+            conv_hm2 = tf.layers.conv2d(conv_hm1, 128, 3, strides=2, name='hm_conv2')
+            conv_hm3 = tf.layers.conv2d(conv_hm2, 128, 3, strides=1, name='hm_conv3')
+            conv_hm4 = tf.layers.conv2d(conv_hm3, 128, 3, strides=2, name='hm_conv4')
+            pad_hm = tf.pad(conv_hm4, [[0, 0], [1, 1], [1, 1], [0, 0]], name='hm_pad')
+            hm = tf.layers.conv2d(pad_hm, 17, kernel_size=[1, 1], name='hm_conv')
+
+            hm_out = tf.transpose(hm, [0, 3, 1, 2], name='hm_out')
+            paf_out = tf.transpose(paf, [0, 3, 1, 2], name='paf_out')
+            end_points['heat_map'] = hm_out
+            end_points['PAF'] = paf_out
+
+
 
         if self.backbone == 'mobilenet_thin':
             end_points['heat_map'] = hm
@@ -238,7 +264,7 @@ class MobilePaf():
 def main(_):
     print('Rebuild graph...')
     
-    model = MobilePaf(backbone='mobilenet_thin', is_training=True)
+    model = MobilePaf(backbone='hrnet_v2', is_training=True)
 
     inputs = tf.placeholder(tf.float32,
                             shape=(1, 368, 432, 3),

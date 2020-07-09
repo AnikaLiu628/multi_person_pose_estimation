@@ -1,8 +1,9 @@
 # Changelog #
-## (2020-07-08) ##
-### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29.md) ###
 
-[Training loss diagram](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29.png) | [Log file](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29.log)
+## (2020-07-09) ##
+### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.md) ###
+
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.png) | [Log file](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.log)
 
 **Implemented enhancements:**
 
@@ -10,7 +11,7 @@
 	* Input size: (368, 432)
 	* Build heatmaps and fullPAFs
 * Data: orginal + rotate90 + rotate270 + panoptic + rotate180
-* Model: pretrain mobilenet_thin, add FPN
+* Model: HRnet
 
 ## (2020-07-01) ##
 ### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26.md) ###
