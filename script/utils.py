@@ -145,7 +145,7 @@ def exchange_between_stage(inputs, name='exchange_between_stage', is_training=Tr
 
 
 @slim.add_arg_scope
-def residual_unit_bottleneck(input, name='RU_bottleneck', channels=64, is_training=True):
+def residual_unit_bottleneck(input, name='RU_bottleneck', channels=16, is_training=True):
     """
     Residual unit with bottleneck design, default width is 64.
     :param input:

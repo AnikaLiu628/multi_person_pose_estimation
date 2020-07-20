@@ -23,7 +23,7 @@ def stage1(input, name='stage1', is_training=True):
         s1_res2 = residual_unit_bottleneck(s1_res1, name='rs2', is_training=is_training)
         s1_res3 = residual_unit_bottleneck(s1_res2, name='rs3', is_training=is_training)
         s1_res4 = residual_unit_bottleneck(s1_res3, name='rs4', is_training=is_training)
-        output.append(conv_2d(s1_res4, channels=32, activation=leaky_Relu, name=name + '_output',
+        output.append(conv_2d(s1_res4, channels=16, activation=leaky_Relu, name=name + '_output',
                               is_training=is_training))
     return output
 
@@ -61,15 +61,15 @@ def stage4(input, name='stage4', is_training=True):
 def HRNet(input, is_training=True, eps=1e-10):
     output = stage1(input=input, is_training=is_training)
     output = stage2(input=output, is_training=is_training)
-    # output = stage3(input=output, is_training=is_training)
-    # output = stage4(input=output, is_training=is_training)
+    output = stage3(input=output, is_training=is_training)
+    output = stage4(input=output, is_training=is_training)
 
     # The output contains 4 sub-networks, we only need the first one, which contains information of all
     # resolution levels
     output = output[0]
 
     # using a 3x3 convolution to reduce the channels of feature maps to 14 (the number of keypoints)
-    output = conv_2d(output, channels=14, kernel_size=3, batch_normalization=False, name='change_channel',
+    output = conv_2d(output, channels=17, kernel_size=3, batch_normalization=False, name='change_channel',
                      is_training=is_training, activation=tf.nn.relu)
     # sigmoid can convert the output to the interval of (0, 1)
     # output = tf.nn.sigmoid(output, name='net_output')
