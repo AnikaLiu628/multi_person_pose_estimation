@@ -230,7 +230,7 @@ class MobilePaf():
             end_points['heat_map'] = hm_out
             end_points['PAF'] = paf_out
 
-        elif self.backbone == 'pre_hrnet':
+        elif self.backbone == 'higher_hrnet':
             is_training = True
             end_points = dict()
             backbone_end = HRNet(features)
@@ -250,38 +250,38 @@ class MobilePaf():
             paf_final_conv2 = tf.layers.conv2d(paf_final_conv1, 192, 1, strides=1, name='final_conv2_paf')
             # pad_final_conv2 = tf.pad(final_conv2, [[0, 0], [1, 1], [1, 1], [0, 0]], name='final_conv2_pad')
             paf_output = tf.concat(values=[paf_final_conv2, downsample3], axis=3, name='ouput_paf')
-            paf_adjust = tf.layers.conv2d(paf_output, 38, 1, strides=1, name='adjust_paf')
+            paf_adjust = tf.layers.conv2d(paf_output, 36, 1, strides=1, name='adjust_paf')
             
             #FinalLayer
-            print(downsample2)
+            # print(downsample2)
             # pad_downsample2 = tf.pad(downsample2, [[0, 0], [1, 1], [1, 1], [0, 0]], name='downsample2_pad')
             final_conv1 = tf.layers.conv2d(downsample2, 192, 1, strides=1, name='final_conv1')
             final_conv2 = tf.layers.conv2d(final_conv1, 192, 1, strides=1, name='final_conv2')
             # pad_final_conv2 = tf.pad(final_conv2, [[0, 0], [1, 1], [1, 1], [0, 0]], name='final_conv2_pad')
             conc_final_conv2 = tf.concat(values=[final_conv2, downsample2], axis=3, name='concat_finalconv2_downsam2')
             #Deconv block
-            print(conc_final_conv2)
+            # print(conc_final_conv2)
             # ps1 = self.PixelShuffle(conc_final_conv2, 2, scope='PixelShuffle1')
             ps1 = self.DUC(conc_final_conv2, filters=32, upscale_factor=2, is_training=self.is_training, scope='DUC1')
-            print(ps1)
+            # print(ps1)
             # ps2 = self.PixelShuffle(ps1, 2, scope='PixelShuffle2')
             ps2 = self.DUC(ps1, filters=32, upscale_factor=2, is_training=self.is_training, scope='DUC2')
-            print(ps2)
+            # print(ps2)
             s2d_1 = tf.space_to_depth(ps2, block_size=int(4), data_format='NHWC', name='space_to_depth_1')
-            print(s2d_1)
+            # print(s2d_1)
             s2d_2 = tf.space_to_depth(s2d_1, block_size=int(2), data_format='NHWC', name='space_to_depth_2')
-            print(s2d_2)
+            # print(s2d_2)
             #BasicLayer
             basic1 = self.HR_BasicBlock(s2d_2, filters=32, is_training=self.is_training, scope='basic_block1')
-            print(basic1)
+            # print(basic1)
             basic2 = self.HR_BasicBlock(basic1, filters=32, is_training=self.is_training, scope='basic_block2')
-            print(basic2)
+            # print(basic2)
             basic3 = self.HR_BasicBlock(basic2, filters=32, is_training=self.is_training, scope='basic_block3')
-            print(basic3)
+            # print(basic3)
             basic4 = self.HR_BasicBlock(basic3, filters=32, is_training=self.is_training, scope='basic_block4')
             # basic5 = self.HR_BasicBlock(basic4, filters=17, is_training=self.is_training, scope='basic_block5')
             basic4 = tf.nn.relu(basic4)
-            print(basic4)
+            # print(basic4)
             pad_basic4 = tf.pad(basic4, [[0, 0], [1, 1], [1, 1], [0, 0]], name='basic4_padding')
             adjust = tf.layers.conv2d(pad_basic4, 17, 3, strides=1, name='adjust')
             # pad_adjust = tf.pad(adjust, [[0, 0], [1, 1], [1, 1], [0, 0]], name='adjust_padding')
@@ -290,8 +290,6 @@ class MobilePaf():
             paf_out = tf.transpose(paf_adjust, [0, 3, 1, 2], name='paf_out')
             end_points['heat_map'] = hm_out
             end_points['PAF'] = paf_out
-
-
 
         if self.backbone == 'mobilenet_thin':
             end_points['heat_map'] = hm
@@ -304,7 +302,7 @@ class MobilePaf():
 def main(_):
     print('Rebuild graph...')
     
-    model = MobilePaf(backbone='pre_hrnet', is_training=True)
+    model = MobilePaf(backbone='higher_hrnet', is_training=True)
 
     inputs = tf.placeholder(tf.float32,
                             shape=(1, 368, 432, 3),

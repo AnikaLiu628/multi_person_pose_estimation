@@ -61,8 +61,8 @@ def stage4(input, name='stage4', is_training=True):
 def HRNet(input, is_training=True, eps=1e-10):
     output = stage1(input=input, is_training=is_training)
     output = stage2(input=output, is_training=is_training)
-    output = stage3(input=output, is_training=is_training)
-    output = stage4(input=output, is_training=is_training)
+    # output = stage3(input=output, is_training=is_training)
+    # output = stage4(input=output, is_training=is_training)
 
     # The output contains 4 sub-networks, we only need the first one, which contains information of all
     # resolution levels
