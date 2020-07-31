@@ -6,7 +6,8 @@ from mobilenet_v1 import mobilenet_v1
 from mobilenet_v2 import mobilenet, training_scope
 from shufflenet_v2 import ShuffleNetV2
 from network_mobilenet_thin import MobilenetNetworkThin
-from hrnet import HRNet
+# from hrnet import HRNet
+from net.model import HRNet
 # from pre_hrnet.model import HRNet
 
 
@@ -290,6 +291,12 @@ class MobilePaf():
             paf_out = tf.transpose(paf_adjust, [0, 3, 1, 2], name='paf_out')
             end_points['heat_map'] = hm_out
             end_points['PAF'] = paf_out
+
+        elif self.backbone == 'pre_hrnet':
+            end_points = dict()
+            hrnet = HRNet(cfgfile='/cfgs/w30_s4.cfg')
+            backbone_end = hrnet.forward_train(features)
+            print(backbone_end)
 
         if self.backbone == 'mobilenet_thin':
             end_points['heat_map'] = hm
