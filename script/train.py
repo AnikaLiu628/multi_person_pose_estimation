@@ -40,7 +40,7 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'backbone',
-    'mobilenet_thin',
+    'mobilenet_v2',
     'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin]'
 )
 flags.DEFINE_string(
