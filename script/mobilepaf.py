@@ -6,9 +6,9 @@ from mobilenet_v1 import mobilenet_v1
 from mobilenet_v2 import mobilenet, training_scope
 from shufflenet_v2 import ShuffleNetV2
 from network_mobilenet_thin import MobilenetNetworkThin
-# from hrnet import HRNet
-from net.model import HRNet
-# from pre_hrnet.model import HRNet
+from hrnet import HRNet
+from net.model import HRNet as preHRnet
+# from pre_hrnet.model import HRNet 
 
 
 class MobilePaf():
@@ -94,20 +94,6 @@ class MobilePaf():
             
         return net
 
-    def HR_FinalLayer(self, x, filters, is_training, scope='HR_FinalLayer'):
-        with tf.variable_scope(scope, reuse=tf.AUTO_REUSE):
-            x_pad = tf.pad(x,
-                           [[0, 0], [1, 1], [1, 1], [0, 0]],
-                           name='x_padding')
-            net = tf.layers.separable_conv2d(x_pad, filters,
-                                             kernel_size=[3, 3],
-                                             use_bias=False,
-                                             name='sep_conv')
-            net = tf.layers.batch_normalization(net,
-                                                name='bn',
-                                                training=is_training)
-            net = tf.nn.relu(net)
-        return net
 
     def build(self, features):
         n_heatmaps = 17
@@ -117,17 +103,26 @@ class MobilePaf():
         if self.backbone == 'mobilenet_v1':
             logits, end_points = mobilenet_v1(features, num_classes=False, is_training=self.is_training, depth_multiplier=self.depth_multiplier)
             backbone_end = end_points['Conv2d_13_pointwise'] #1, 36, 46, 54
-            print(backbone_end)
+            nets = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
 
+            end_points['PAF'] = nets
+            end_points['outputs'] = [nets]
         elif self.backbone == 'mobilenet_v2':
             with tf.contrib.slim.arg_scope(training_scope(is_training=self.is_training)):
                 logits, end_points = mobilenet(features, num_classes=False, depth_multiplier=self.depth_multiplier)
             backbone_end = end_points['layer_19']
+            nets = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
 
+            end_points['PAF'] = nets
+            end_points['outputs'] = [nets]
         elif self.backbone == 'shufflenet_v2':
             basenet = ShuffleNetV2(depth_multiplier=self.depth_multiplier, is_training=self.is_training)
             end_points = basenet.build(features)
             backbone_end = end_points['base_net/out']
+            nets = self.headnet('paf', backbone_end, n_heatmaps, paf_nfields, paf_nvectors, paf_nscales)
+
+            end_points['PAF'] = nets
+            end_points['outputs'] = [nets]
 
         elif self.backbone == 'mobilenet_thin':
             out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
@@ -163,11 +158,13 @@ class MobilePaf():
             paf_out = tf.layers.conv2d(paf_duc, 36, kernel_size=[1, 1], name='paf_conv')  
             paf = tf.transpose(paf_out, [0, 3, 1, 2], name='paf_out')
 
+            end_points['heat_map'] = hm
+            end_points['PAF'] = paf
+
         elif self.backbone == 'hrnet':
             end_points = dict()
             out = HRNet(features)
             backbone_end = out
-            print(backbone_end)
             s2d_1 = tf.space_to_depth(backbone_end,
                                         block_size=int(4),
                                         data_format='NHWC',
@@ -242,50 +239,33 @@ class MobilePaf():
             downsample2 = tf.layers.conv2d(downsample1, 64, 1, strides=2, name='downsample_2')
             bn_downsample2 = tf.layers.batch_normalization(downsample2, name='downsample2_bn', training=is_training)
             downsample2 = tf.keras.activations.relu(bn_downsample2) #1/4 input size (1, 92, 108, 128)
-            conv_paf3 = tf.layers.conv2d(downsample2, 64, 1, strides=2, name='paf_conv3') #if need 1/8
+            conv_paf3 = tf.layers.conv2d(downsample2, 64, 1, strides=2, name='paf_conv3')
             bn_downsample3 = tf.layers.batch_normalization(conv_paf3, name='downsample3_bn', training=is_training)
             downsample3 = tf.keras.activations.relu(bn_downsample3) #(1, 46, 54, 128)
             
             #paf layer
             paf_final_conv1 = tf.layers.conv2d(downsample3, 192, 1, strides=1, name='final_conv1_paf')
             paf_final_conv2 = tf.layers.conv2d(paf_final_conv1, 192, 1, strides=1, name='final_conv2_paf')
-            # pad_final_conv2 = tf.pad(final_conv2, [[0, 0], [1, 1], [1, 1], [0, 0]], name='final_conv2_pad')
             paf_output = tf.concat(values=[paf_final_conv2, downsample3], axis=3, name='ouput_paf')
             paf_adjust = tf.layers.conv2d(paf_output, 36, 1, strides=1, name='adjust_paf')
             
             #FinalLayer
-            # print(downsample2)
-            # pad_downsample2 = tf.pad(downsample2, [[0, 0], [1, 1], [1, 1], [0, 0]], name='downsample2_pad')
             final_conv1 = tf.layers.conv2d(downsample2, 192, 1, strides=1, name='final_conv1')
             final_conv2 = tf.layers.conv2d(final_conv1, 192, 1, strides=1, name='final_conv2')
-            # pad_final_conv2 = tf.pad(final_conv2, [[0, 0], [1, 1], [1, 1], [0, 0]], name='final_conv2_pad')
             conc_final_conv2 = tf.concat(values=[final_conv2, downsample2], axis=3, name='concat_finalconv2_downsam2')
             #Deconv block
-            # print(conc_final_conv2)
-            # ps1 = self.PixelShuffle(conc_final_conv2, 2, scope='PixelShuffle1')
             ps1 = self.DUC(conc_final_conv2, filters=32, upscale_factor=2, is_training=self.is_training, scope='DUC1')
-            # print(ps1)
-            # ps2 = self.PixelShuffle(ps1, 2, scope='PixelShuffle2')
             ps2 = self.DUC(ps1, filters=32, upscale_factor=2, is_training=self.is_training, scope='DUC2')
-            # print(ps2)
             s2d_1 = tf.space_to_depth(ps2, block_size=int(4), data_format='NHWC', name='space_to_depth_1')
-            # print(s2d_1)
             s2d_2 = tf.space_to_depth(s2d_1, block_size=int(2), data_format='NHWC', name='space_to_depth_2')
-            # print(s2d_2)
             #BasicLayer
             basic1 = self.HR_BasicBlock(s2d_2, filters=32, is_training=self.is_training, scope='basic_block1')
-            # print(basic1)
             basic2 = self.HR_BasicBlock(basic1, filters=32, is_training=self.is_training, scope='basic_block2')
-            # print(basic2)
             basic3 = self.HR_BasicBlock(basic2, filters=32, is_training=self.is_training, scope='basic_block3')
-            # print(basic3)
             basic4 = self.HR_BasicBlock(basic3, filters=32, is_training=self.is_training, scope='basic_block4')
-            # basic5 = self.HR_BasicBlock(basic4, filters=17, is_training=self.is_training, scope='basic_block5')
             basic4 = tf.nn.relu(basic4)
-            # print(basic4)
             pad_basic4 = tf.pad(basic4, [[0, 0], [1, 1], [1, 1], [0, 0]], name='basic4_padding')
             adjust = tf.layers.conv2d(pad_basic4, 17, 3, strides=1, name='adjust')
-            # pad_adjust = tf.pad(adjust, [[0, 0], [1, 1], [1, 1], [0, 0]], name='adjust_padding')
             
             hm_out = tf.transpose(adjust, [0, 3, 1, 2], name='hm_out')
             paf_out = tf.transpose(paf_adjust, [0, 3, 1, 2], name='paf_out')
@@ -294,14 +274,9 @@ class MobilePaf():
 
         elif self.backbone == 'pre_hrnet':
             end_points = dict()
-            hrnet = HRNet(cfgfile='/cfgs/w30_s4.cfg')
+            hrnet = preHRnet(cfgfile='/cfgs/w30_s4.cfg')
             backbone_end = hrnet.forward_train(features)
             print(backbone_end)
-
-        if self.backbone == 'mobilenet_thin':
-            end_points['heat_map'] = hm
-            end_points['PAF'] = paf
-        
 
         return end_points
 
