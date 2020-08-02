@@ -33,6 +33,11 @@ Train, Test Model
 
 |Model|Train|Eval|log|
 | ----|----|----|----|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v19`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v19.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v19.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v20`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v20.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v20.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v21`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v21.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v21.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.log)|
 |`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26.log)|
 |`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27.log)|
 |`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28.log)|
