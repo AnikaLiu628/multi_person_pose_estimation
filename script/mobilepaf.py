@@ -100,10 +100,14 @@ class MobilePaf():
             out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
             end_points = out.get_layer()
             thin_hm = end_points['MConv_Stage6_L2_5']
-            hm_out = tf.layers.conv2d(thin_hm, 17, kernel_size=[1, 1], name='hm_conv')  
+            hm_ch1 = tf.layers.conv2d(thin_hm, 128, kernel_size=[1, 1], name='hm_channel1')  
+            ps1 = self.PixelShuffle(hm_ch1, 2, scope='PixelShuffle1')
+            hm_out = tf.layers.conv2d(ps1, 17, kernel_size=[1, 1], name='hm_channel2')  
             hm = tf.transpose(hm_out, [0, 3, 1, 2], name='hm_out')
             thin_paf = end_points['MConv_Stage6_L1_5']
-            paf_out = tf.layers.conv2d(thin_paf, 36, kernel_size=[1, 1], name='paf_conv')  
+            paf_ch1 = tf.layers.conv2d(thin_paf, 256, kernel_size=[1, 1], name='paf_channel1')  
+            ps2 = self.PixelShuffle(paf_ch1, 2, scope='PixelShuffle2')
+            paf_out = tf.layers.conv2d(ps2, 36, kernel_size=[1, 1], name='paf_channel2')  
             paf = tf.transpose(paf_out, [0, 3, 1, 2], name='paf_out')
 
         elif self.backbone == 'hrnet':
@@ -214,7 +218,7 @@ class MobilePaf():
 def main(_):
     print('Rebuild graph...')
     
-    model = MobilePifPaf(backbone='mobilenet_thin', is_training=True)
+    model = MobilePaf(backbone='mobilenet_thin', is_training=True)
 
     inputs = tf.placeholder(tf.float32,
                             shape=(1, 368, 432, 3),

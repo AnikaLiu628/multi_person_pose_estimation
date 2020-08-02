@@ -3,37 +3,43 @@ Multi Pose Estimation
 
 Dataset
 -----------------------
+* Since there is a problem with heavy data while preprocessor loading in multipose estimation experiments,the  data process part is highly recommended to do respectively. Hence, there is `Coco (rotated 90, 180, 270, flip) train` TFrecord.
 
-Fuse `Coco`, `Panoptic`, `PoseTrack`, `Mpii` datasets for training dataset.
+Fuse `Coco`, `Panoptic`, datasets for training dataset.
 
 |Dataset|Image|
 | ----|----|
-|Coco train|149,813 / 149,813|
-|Coco val|6,352 / 6,352|
-|Coco filterd 5 points|126,990 / 149,813|
+|Coco train|118,287 / 118,287|
+|Coco rotated 90 train|118,287 / 118,287|
+|Coco rotated 180 train|118,287 / 118,287|
+|Coco rotated 270 train|118,287 / 118,287|
+|Coco flip train|118,287 / 118,287|
+|Coco val|5,000 / 5,000|
 |Panoptic(171026pose3)|--|
 |Panoptic filtered 5 points(171026pose3)|222,611 / ------|
 |Panoptic train|17,565,778 / 18,089,009|
 |Panoptic train(w/o val)|11,541,269 / 11,948,561|
 |Panoptic val|5,556 / 5,556|
-|PoseTrack train|73,625 / 99,128|
-|PoseTrack val|32,005 / 45,562|
-|Mpii train|--/--|
-|--|--|
+|Panoptic test|2,066 / 2,066|
 
 |Fused datasets|Content|
 | ----|----|
-|F1|Coco train + PoseTrack train|
-|F2|Coco train + Panoptic train(w/o val)|
-|F3|Coco train + Mpii train|
-|F4|Coco train + PoseTrack train + Panoptic train + Mpii train|
+|F1|Coco train + Coco rotated 90 train + Coco rotated 180 train + Coco rotated 270 train + Coco flip train(output: 92, 108)|
+|-|Coco train + Coco rotated 90 train + Coco rotated 180 train + Coco rotated 270 train + Coco flip train|
+|-|Coco train + Coco rotated 90 train + Coco rotated 180 train + Coco rotated 270 train + Panoptic test|
 
 Train, Test Model
 -----------------------
 
 |Model|Train|Eval|log|
 | ----|----|----|----|
-|`MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1`|[train](setting/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.log)|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30`|[train](setting/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.md)|[eval](script/evaluate.py)|[log](logs/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.log)|
+
 
 Test error rate on panoptic validation set(5556)
 -----------------------
