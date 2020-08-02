@@ -77,6 +77,19 @@
 * Data: orginal + rotate90 + rotate270 + panoptic + rotate180
 * Model: pretrain `pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224_2017_06_14.ckpt` + one space_to_depth layer
 
+## (2020-06-23) ##
+### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.md) ###
+
+[Training loss diagram](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.png) | [Log file](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432)
+	* Build heatmaps and fullPAFs
+* Data: orginal + rotate90 + rotate270 + panoptic
+* Model: pretrain `pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224_2017_06_14.ckpt` + one space_to_depth layer
+
 ## (2020-06-22) ##
 ### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22.md) ###
 

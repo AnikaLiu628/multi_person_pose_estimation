@@ -158,6 +158,26 @@ class MobilePaf():
 
             end_points['heat_map'] = hm
             end_points['PAF'] = paf
+
+        elif self.backbone == 'mobilenet_thin_add_more_layers':
+            out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
+            end_points = out.get_layer()
+            
+            ###HEATMAP
+            thin_hm = end_points['MConv_Stage6_L2_5']
+            s2d_hm = tf.space_to_depth(thin_hm, block_size=int(2), data_format='NHWC', name='space_to_depth_hm')
+            hm_duc = self.DUC(s2d_hm, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm')
+            hm_out = tf.layers.conv2d(hm_duc, 17, kernel_size=[1, 1], name='hm_conv')  
+            hm = tf.transpose(hm_out, [0, 3, 1, 2], name='hm_out')
+            ###PAF
+            thin_paf = end_points['MConv_Stage6_L1_5']
+            s2d_paf = tf.space_to_depth(thin_paf, block_size=int(2), data_format='NHWC', name='space_to_depth_paf')
+            paf_duc = self.DUC(s2d_paf, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_paf')
+            paf_out = tf.layers.conv2d(paf_duc, 36, kernel_size=[1, 1], name='paf_conv')  
+            paf = tf.transpose(paf_out, [0, 3, 1, 2], name='paf_out')
+
+            end_points['heat_map'] = hm
+            end_points['PAF'] = paf
              
         elif self.backbone == 'mobilenet_thin_out4':
             out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
