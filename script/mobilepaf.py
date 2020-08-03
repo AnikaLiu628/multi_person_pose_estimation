@@ -124,6 +124,35 @@ class MobilePaf():
             end_points['PAF'] = nets
             end_points['outputs'] = [nets]
 
+        elif self.backbone == 'mobilenet_thin':
+            out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
+            end_points = out.get_layer()
+            hm = end_points['MConv_Stage6_L2_5']
+            hm = tf.transpose(hm, [0, 3, 1, 2], name='hm_out')
+            paf = end_points['MConv_Stage6_L1_5']
+            paf = tf.transpose(paf, [0, 3, 1, 2], name='paf_out')
+            end_points['heat_map'] = hm
+            end_points['PAF'] = paf
+
+        elif self.backbone == 'mobilenet_thin_s2d1':
+            out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
+            end_points = out.get_layer()
+            ###HEATMAP
+            thin_hm = end_points['MConv_Stage6_L2_5']
+            s2d_hm = tf.space_to_depth(thin_hm, block_size=int(2), data_format='NHWC', name='space_to_depth_hm')
+            hm_duc = self.DUC(s2d_hm, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_hm')
+            hm_out = tf.layers.conv2d(thin_hm, 17, kernel_size=[1, 1], name='hm_conv')  
+            hm = tf.transpose(hm_out, [0, 3, 1, 2], name='hm_out')
+            ###PAF
+            thin_paf = end_points['MConv_Stage6_L1_5']
+            s2d_paf = tf.space_to_depth(thin_paf, block_size=int(2), data_format='NHWC', name='space_to_depth_paf')
+            paf_duc = self.DUC(s2d_paf, filters=512, upscale_factor=2, is_training=self.is_training, scope='DUC_paf')
+            paf_out = tf.layers.conv2d(thin_paf, 36, kernel_size=[1, 1], name='paf_conv')  
+            paf = tf.transpose(paf_out, [0, 3, 1, 2], name='paf_out')
+            end_points['heat_map'] = hm
+            end_points['PAF'] = paf
+
+
         elif self.backbone == 'mobilenet_thin_FPN':
             out = MobilenetNetworkThin({'image': features}, conv_width=0.75, conv_width2=0.50, trainable=self.is_training)
             end_points = out.get_layer()
@@ -141,6 +170,7 @@ class MobilePaf():
             pad_hm1 = tf.pad(duc_hm1, [[0, 0], [1, 1], [1, 1], [0, 0]], name='pad_hm1')
             hm_duc = tf.concat(values=[pad_hm1, thin_hm], axis=3, name='concat_feat_p2')
             hm_out = tf.layers.conv2d(hm_duc, 17, kernel_size=[1, 1], name='hm_conv') 
+            hm = tf.transpose(hm_out, [0, 3, 1, 2], name='hm_out')
 
             ###PAF
             thin_paf = end_points['MConv_Stage6_L1_5']
@@ -155,6 +185,7 @@ class MobilePaf():
             pad_paf1 = tf.pad(duc_paf1, [[0, 0], [1, 1], [1, 1], [0, 0]], name='pad_paf1')
             paf_duc = tf.concat(values=[pad_paf1, thin_paf], axis=3, name='concat_feat_p2_paf')
             paf_out = tf.layers.conv2d(paf_duc, 36, kernel_size=[1, 1], name='paf_conv')  
+            paf = tf.transpose(paf_out, [0, 3, 1, 2], name='paf_out')
 
             end_points['heat_map'] = hm
             end_points['PAF'] = paf
