@@ -11,11 +11,11 @@ args = parser.parse_args()
 t_num = 1
 v_num = t_num //10
 
-loss_ylim = 0.1
-hm_ylim = 0.02
-paf_ylim = 0.08
+loss_ylim = 0.03
+hm_ylim = 0.0025
+paf_ylim = 0.007
 
-val_batch_size = 64
+val_batch_size = 32
 def main():
     model_name = args.model
     path_root = '../logs/{}.log'.format(model_name)
@@ -76,12 +76,13 @@ def main():
     
     P = plt.figure(1)
 
-    p1 = plt.subplot(211)
+    p1 = plt.subplot(311)
     # plt.plot(training_data[100:, 0], training_data[100:, 1], 'b')
     # plt.plot(evaluation_data[0:, 0], evaluation_data[10:, 1], 'k')
 
-    plt.plot(training_data[t_num:, 0], training_data[t_num:, 1], 'b')
-    plt.plot(evaluation_data[v_num:, 0], evaluation_data[v_num:, 1], 'k')
+    plt.plot(training_data[t_num:, 0], training_data[t_num:, 1], 'b', label='train loss')
+    plt.plot(evaluation_data[v_num:, 0], evaluation_data[v_num:, 1], 'k', label='eval loss')
+    plt.legend(loc='best',prop={'size':6})
     plt.ylim(0, loss_ylim)
     # plt.ylim(3.0, 15.0)
     avg_e_loss = np.average(evaluation_data[:, 1])
@@ -90,32 +91,45 @@ def main():
     # plt.axhline(avg, color= 'r')
     min_e_ind = evaluation_data[np.argmin(evaluation_data[:, 1]), 0]
     print('Minimum eval loss: {}, at steps: {}'.format(min_e_loss, min_e_ind))
-    plt.ylabel("Loss")
-    plt.title(
-        model_name + '\n' + 'Training Loss: blue line   ' +
-        ', Evaluation Loss: black line')
-    P.text(0.48,0.875,'-', ha='center', va='bottom', size=24,color='blue')
-    P.text(0.87,0.875,'-', ha='center', va='bottom', size=24,color='black')
-    p2 = plt.subplot(212)
-
-    plt.xlabel("Steps")
-    plt.ylabel("Evaluation Error")
-    plt.grid()
-    P.savefig("../logs/{}.png".format(model_name))
     
+    plt.title(model_name + '\n' + 'Heatmap loss + PAF loss',fontsize = 9)
+    plt.xticks([])
+    # P.text(0.48,0.87,'-', ha='center', va='bottom', size=24,color='blue')
+    # P.text(0.72,0.87,'-', ha='center', va='bottom', size=24,color='black')
+    p2 = plt.subplot(312)
 
-    PP = plt.figure(2)
+    # plt.xlabel("Steps")
+    # plt.ylabel("Evaluation Error")
+    # plt.grid()
+    # P.savefig("../logs/{}.png".format(model_name))
     plt.plot(training_data[t_num:, 0], training_data[t_num:, 2], 'b')
     plt.plot(evaluation_data[v_num:, 0], evaluation_data[v_num:, 2], 'k')
     plt.ylim(0, hm_ylim)
-    plt.title(model_name + '\n' + 'Training hm Loss: blue line   ' + ', Evaluation Loss: black line')
-    PP.savefig("../logs/{}_hm.png".format(model_name))
-    PPP = plt.figure(3)
+    plt.xticks([])
+    plt.ylabel("Loss",fontsize = 9)
+    plt.title('\n' + 'Heatmap Loss',fontsize = 9)
+    # P.savefig("../logs/{}_hm.png".format(model_name))
+
+    p3 = plt.subplot(313)
     plt.plot(training_data[t_num:, 0], training_data[t_num:, 3], 'b')
     plt.plot(evaluation_data[v_num:, 0], evaluation_data[v_num:, 3], 'k')
+    plt.xticks(fontsize=9)
     plt.ylim(0, paf_ylim)
-    plt.title(model_name + '\n' + 'Training paf Loss: blue line   ' + ', Evaluation Loss: black line')
-    PPP.savefig("../logs/{}_vect.png".format(model_name))
+    plt.title('\n' + 'PAF Loss',fontsize = 9)
+    P.savefig("../logs/{}.png".format(model_name))
+    # PP = plt.figure(2)
+    # plt.plot(training_data[t_num:, 0], training_data[t_num:, 2], 'b')
+    # plt.plot(evaluation_data[v_num:, 0], evaluation_data[v_num:, 2], 'k')
+    # plt.ylim(0, hm_ylim)
+    # plt.title(model_name + '\n' + 'Training hm Loss: blue line   ' + ', Evaluation Loss: black line')
+    # PP.savefig("../logs/{}_hm.png".format(model_name))
+    # PPP = plt.figure(3)
+    # plt.plot(training_data[t_num:, 0], training_data[t_num:, 3], 'b')
+    # plt.plot(evaluation_data[v_num:, 0], evaluation_data[v_num:, 3], 'k')
+    # plt.ylim(0, paf_ylim)
+    # plt.title(model_name + '\n' + 'Training paf Loss: blue line   ' + ', Evaluation Loss: black line')
+    # PPP.savefig("../logs/{}_vect.png".format(model_name))
+
     plt.show()
 
 if __name__ == '__main__':
