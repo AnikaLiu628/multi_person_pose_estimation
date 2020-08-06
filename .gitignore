@@ -11,3 +11,9 @@ script/eval.py
 script/test.py
 script/eval_plot_copy.py
 script/eval.py
+script/json
+script/cfgs
+script/net
+script/tf_pose
+
+

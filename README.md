@@ -43,7 +43,22 @@ Train, Test Model
 |`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28.log)|
 |`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29.log)|
 |`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30`|[train](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.md)|[eval](script/evaluate.py)|[log](logs/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.log)|
-|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30`|[train](setting/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.md)|[eval](script/evaluate.py)|[log](logs/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.log)|
+|`MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1`|[train](setting/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.md)|[eval](script/evaluate.py)|[log](logs/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.log)|
+
+Test AP score on coco validation set(6352)
+-----------------------
+|Model/Error|Average AP 50|Average AP|
+| ----|----|----|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v19`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v20`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v21`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v22`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v23`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v26`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27`|0.196573|0.044915|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v28`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v29`|-|
+|`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30`|-|
 
 
 Test error rate on panoptic validation set(5556)
@@ -56,5 +71,7 @@ Test error rate on coco validation set(6352)
 -----------------------
 |Model/Error|Average Error|
 | ----|----|
-|`MPPE_MOBILENET_V1_1.0_MSE_COCO_360_640_v1`|-|
+
+
+
 
