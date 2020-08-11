@@ -51,7 +51,7 @@ def write_coco_json(human, image_w, image_h):
         body_part = human[coco_id]
         body_part = body_part[1]
         # print(body_part)
-        keypoints.extend([round_int(body_part[1] * image_w), round_int(body_part[0] * image_h), 2])
+        keypoints.extend([round_int(body_part[0] * image_w), round_int(body_part[1] * image_h), 2])
     return keypoints
 
 def compute_oks(keypoints, anns):
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     parser.add_argument('--input-height', type=int, default=368)
     parser.add_argument('--stage-level', type=int, default=6)
     parser.add_argument('--use_tensorrt', type=bool, default=False)
-    parser.add_argument('--model', type=str, default='mobilenet_thin', help='mobilenet_original / mobilenet_thin / mobilenet_thin_FPN')
+    parser.add_argument('--model', type=str, default='mobilenet_thin', help='mobilenet_v1 / mobilenet_v2 / shufflenet_v2 / mobilenet_thin / mobilenet_thin_s2d1 / mobilenet_thin_FPN / mobilenet_thin_add_more_layers / mobilenet_thin_out4 / hrnet_tiny / higher_hrnet')
     parser.add_argument('--engine',  type=str, default="mobilepose_thin_656x368.engine")
     parser.add_argument('--half16', type=bool, default=False)
     parser.add_argument('--graph', type=str, default="../models/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27/output_model_1301000/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27.pb")
@@ -104,10 +104,10 @@ if __name__ == '__main__':
     parser.add_argument('--display', type=bool, default=False)
     args = parser.parse_args()
 
-    log_output_path = 'json/COCO_eval_%s_%d_%d.log'%(args.model, args.input_width, args.input_height)
+    log_output_path = 'json/COCO_eval_%s_%s_%d_%d.log'%(args.model, args.graph.split('/')[2], args.input_width, args.input_height)
     logging.basicConfig(filename=log_output_path,level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 
-    write_json = 'json/%s_%d_%d.json' %(args.model, args.input_width, args.input_height)
+    write_json = 'json/%s_%s_%d_%d.json' %(args.model, args.graph.split('/')[2], args.input_width, args.input_height)
     tf.reset_default_graph()
 
     from tensorflow.core.framework import graph_pb2

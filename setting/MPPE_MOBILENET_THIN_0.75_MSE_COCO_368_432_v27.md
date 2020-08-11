@@ -7,12 +7,21 @@ python3 train.py \
 --validationset_path=/datasets/t2/data/coco/intermediate/coco_mp_keypoints_fullfeature_gk3th3_val.record-00000-of-00001 \
 --output_model_path=../models/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v27 \
 --pretrained_model_path=../models/pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224.ckpt \
+--model_type=MobilePaf \
 --backbone=mobilenet_thin \
+--loss_fn=MSE \
+--layer_depth_multiplier=0.75 \
+--number_keypoints=17 \
+--batch_size=8 \
 --pretrained_model=True \
+--data_augmentation=False \
+--optimizer=Adam \
 --learning_rate=0.001 \
 --decay_steps=10000000 \
+--decay_factor=0.1 \
+--training_steps=1000000 \
+--validation_interval=1000 \
 --validation_batch_size=64 \
---batch_size=8 \
---training_steps=1000000
+--ohem_top_k=8 
 
 ```

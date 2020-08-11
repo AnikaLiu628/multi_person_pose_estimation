@@ -352,7 +352,7 @@ class MobilePaf():
 def main(_):
     print('Rebuild graph...')
     
-    model = MobilePaf(backbone='higher_hrnet', is_training=True)
+    model = MobilePaf(backbone='mobilenet_thin_FPN', is_training=True)
 
     inputs = tf.placeholder(tf.float32,
                             shape=(1, 368, 432, 3),

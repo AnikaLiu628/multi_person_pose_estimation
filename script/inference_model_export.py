@@ -20,12 +20,12 @@ flags.DEFINE_string(
 flags.DEFINE_string(
     'model_type',
     'MobilePaf',
-    'Model architecture in [MobilePifPaf, MobilePaf]'
+    'Model architecture in [MobilePifPaf, MobilePaf, MobilePaf_out4]'
 )
 flags.DEFINE_string(
     'backbone',
     'mobilenet_thin',
-    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2]'
+    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin, mobilenet_thin_s2d1, mobilenet_thin_FPN, hrnet_tiny, higher_hrnet]'
 )
 flags.DEFINE_string(
     'input_node',
@@ -131,6 +131,12 @@ def main(_):
     if FLAGS.model_type == 'MobilePaf':
         from mobilepaf import MobilePaf
         model_arch = MobilePaf
+    elif FLAGS.model_type == 'MobilePaf_out4':
+        from mobilepaf_out4 import MobilePaf
+        model_arch = MobilePaf
+    elif FLAGS.model_type == 'MobilePifPaf':
+        from mobilepifpaf import MobilePifPaf
+        model_arch = MobilePifPaf
     else:
         print('{} not supported.'.format(FLAGS.model_type))
         return 0

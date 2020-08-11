@@ -7,13 +7,14 @@ data/*
 figures/*
 !figures/.gitkeep 
 script/GTimage_test.py
-script/eval.py
 script/test.py
 script/eval_plot_copy.py
-script/eval.py
 script/json
 script/cfgs
-script/net
 script/tf_pose
+script/evaluate.py
+script/video.py
+script/web_cam.py
+
 
 

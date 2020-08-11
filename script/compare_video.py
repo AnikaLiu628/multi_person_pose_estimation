@@ -63,7 +63,7 @@ VideoList = os.listdir(video_path)
 
 for v in VideoList:
     vid_name = os.path.join(video_path,v)
-    video_name = vid_name.split('/')[5].split('.')[0]
+    video_name = vid_name.split('/')[-1].split('.')[0]
     # file1 = open("label_video.txt","a")
     # VideoWriter = cv2.VideoWriter('../data/video_record/output_{}_{}.avi'.format(video_name, args.model), cv2.VideoWriter_fourcc(*'XVID'), 1, (853, 480))
     cap = cv2.VideoCapture(vid_name)

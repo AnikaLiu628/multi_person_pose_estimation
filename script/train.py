@@ -32,13 +32,13 @@ flags.DEFINE_string(
 )
 flags.DEFINE_string(
     'model_type',
-    'MobilePaf',
-    'Model architecture in [MobilePifPaf, MobilePaf]'
+    'MobilePaf_out4',
+    'Model architecture in [MobilePifPaf, MobilePaf, MobilePaf_out4]'
 )
 flags.DEFINE_string(
     'backbone',
     'mobilenet_thin',
-    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, pafmodel, mobilenet_thin, hrnet]'
+    'Model backbone in [mobilenet_v1, mobilenet_v2, shufflenet_v2, mobilenet_thin, mobilenet_thin_s2d1, mobilenet_thin_FPN, hrnet_tiny, higher_hrnet]'
 )
 flags.DEFINE_string(
     'loss_fn',
@@ -132,12 +132,6 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         paf_l = labels[1] #ground thruth vector map
         hm_x = net_dict['heat_map'] #len(3) # predict heat map (xs, ys, vs)
         paf_x = net_dict['PAF']#?, 19, 46, 80 # predict vector map
-        
-        paf_shape = [None,18,46,80]
-        reg_shape = [None,38,46,80]
-
-        # hm_x = hm_x[:, :, :-2, :]
-        # paf_x = paf_x[:, :, :-2, :]
         
         # with tf.device('/cpu:0'):
         hm_loss = tf.losses.mean_squared_error(hm_l, hm_x)
@@ -234,6 +228,12 @@ def model_fn(features, labels, mode, params):
         model_arch = MobilePaf
         output = 'outputs'
         multi_head_labels = labels
+    elif FLAGS.model_type == 'MobilePaf_out4':
+        from mobilepaf_out4 import MobilePaf
+        model_arch = MobilePaf
+    elif FLAGS.model_type == 'MobilePifPaf':
+        from mobilepifpaf import MobilePifPaf
+        model_arch = MobilePifPaf
     else:
         raise ValueError(
             'Model type of {} is not supported.'
@@ -462,10 +462,10 @@ def main(_):
 if __name__ == '__main__':
     if not os.path.exists('../logs'):
         os.makedir('../logs')
-    # root = logging.getLogger()
-    # if root.handlers:
-    #     for handler in root.handlers:
-    #         root.removeHandler(handler)
+    root = logging.getLogger()
+    if root.handlers:
+        for handler in root.handlers:
+            root.removeHandler(handler)
     logging.basicConfig(
         filename='../logs/' + FLAGS.output_model_path.split('/')[-1] + '.log',
         level=logging.INFO

@@ -1,4 +1,30 @@
 # Changelog #
+## (2020-08-07) ##
+### [`MPPE_F1_FPN_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1`](setting/MPPE_F1_FPN_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.md) ###
+
+[Training loss diagram](logs/MPPE_F1_FPN_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.png) | [Log file](logs/MPPE_F1_FPN_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432), output (92, 108)
+	* Build heatmaps and fullPAFs
+* Data: orginal + rotate90 + rotate270 + rotate180 + flip
+* Model: `pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224_2017_06_14.ckpt` + FPN
+
+## (2020-08-03) ##
+### [`MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1`](setting/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.md) ###
+
+[Training loss diagram](logs/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.png) | [Log file](logs/MPPE_F1_MOBILENET_THIN_0.75_MSE_COCO_368_432_v1.log)
+
+**Implemented enhancements:**
+
+* Pre-build TFrecord for data preprocessing
+	* Input size: (368, 432), output (92, 108)
+	* Build heatmaps and fullPAFs
+* Data: orginal + rotate90 + rotate270 + rotate180 + flip
+* Model: `pretrained/mobilenet_v1_0.75_224_2017_06_14/mobilenet_v1_0.75_224_2017_06_14.ckpt`
+
 ## (2020-07-09) ##
 ### [`MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30`](setting/MPPE_MOBILENET_THIN_0.75_MSE_COCO_368_432_v30.md) ###
 

@@ -22,5 +22,5 @@ python3 train.py \
 --training_steps=300000 \
 --validation_interval=1000 \
 --validation_batch_size=64 \
---ohem_top_k=8
+--ohem_top_k=8 
 ```
