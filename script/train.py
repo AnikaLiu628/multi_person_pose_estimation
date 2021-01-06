@@ -33,7 +33,7 @@ flags.DEFINE_string(
 flags.DEFINE_string(
     'model_type',
     'MobilePaf_out4',
-    'Model architecture in [MobilePifPaf, MobilePaf, MobilePaf_out4]'
+    'Model architecture in [MobilePifPaf, MobilePaf, MobilePaf_out4, PAFMobilePose]'
 )
 flags.DEFINE_string(
     'backbone',
@@ -138,7 +138,7 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
         paf_loss = tf.losses.mean_squared_error(paf_l, paf_x)
 
         loss = hm_loss + paf_loss
-
+        
     elif loss_fn =='dice':
         paf_intensities_l = labels[1]
         paf_regression1_l = labels[4]
@@ -223,17 +223,12 @@ def train_op(labels, net_dict, loss_fn, learning_rate, Optimizer, global_step=0,
 
 
 def model_fn(features, labels, mode, params):
-    if params['model_arch'] == 'MobilePaf':
-        from mobilepaf import MobilePaf
-        model_arch = MobilePaf
+    if params['model_arch'] == 'PAFMobilePose':
+        from paf_mobilepose import PAFMobilePose
+        model_arch = PAFMobilePose
         output = 'outputs'
         multi_head_labels = labels
-    elif FLAGS.model_type == 'MobilePaf_out4':
-        from mobilepaf_out4 import MobilePaf
-        model_arch = MobilePaf
-    elif FLAGS.model_type == 'MobilePifPaf':
-        from mobilepifpaf import MobilePifPaf
-        model_arch = MobilePifPaf
+
     else:
         raise ValueError(
             'Model type of {} is not supported.'
@@ -379,7 +374,7 @@ def load_for_estimator(scaffold, session, data_path, saver):
 
 
 def LR(initial_learning_rate, global_step, decay_steps, decay_factor):
-    return initial_learning_rate * decay_factor ** (global_step // decay_steps)
+    return initial_learning_rate * (decay_factor ** (global_step // decay_steps))
 
 
 def main(_):
@@ -421,7 +416,7 @@ def main(_):
                 save_summary_steps=1000,
                 save_checkpoints_secs=None,
                 save_checkpoints_steps=FLAGS.validation_interval,
-                keep_checkpoint_max=1000,
+                keep_checkpoint_max=100,
                 log_step_count_steps=1000
             )
         )

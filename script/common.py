@@ -14,25 +14,6 @@ from scipy.ndimage.filters import maximum_filter
 
 
 class CocoPart(Enum):
-    # Nose = 0
-    # Neck = 1
-    # RShoulder = 2
-    # RElbow = 3
-    # RWrist = 4
-    # LShoulder = 5
-    # LElbow = 6
-    # LWrist = 7
-    # RHip = 8
-    # RKnee = 9
-    # RAnkle = 10
-    # LHip = 11
-    # LKnee = 12
-    # LAnkle = 13
-    # REye = 14
-    # LEye = 15
-    # REar = 16
-    # LEar = 17
-    # Background = 18
     Nose = 0
     REye = 1
     LEye = 2
@@ -51,18 +32,11 @@ class CocoPart(Enum):
     RAnkle = 15
     LAnkle = 16
 
-# CocoPairs = [
-#     (1, 2), (1, 5), (2, 3), (3, 4), (5, 6), (6, 7), (1, 8), (8, 9), (9, 10), (1, 11),
-#     (11, 12), (12, 13), (1, 0), (0, 14), (14, 16), (0, 15), (15, 17), (2, 16), (5, 17)
-# ]   # = 19 [[5, 7], [7, 9], [6, 8], [8, 10], [11, 13], [13, 15], [12, 14], [14, 16], [5, 6], [11, 12]]
 CocoPairs = [
     (5, 7), (7, 9), (6, 8), (8, 10), (11, 13), (13, 15), (12, 14), (14, 16), (5, 6), (11, 12), (6, 12), (5, 11), (0, 1), (1, 3), (3, 5), (0, 2), (2, 4), (4, 6)
 ]
 CocoPairsRender = CocoPairs[:-6]
-# CocoPairsNetwork = [
-#     (12, 13), (20, 21), (14, 15), (16, 17), (22, 23), (24, 25), (0, 1), (2, 3), (4, 5),
-#     (6, 7), (8, 9), (10, 11), (28, 29), (30, 31), (34, 35), (32, 33), (36, 37), (18, 19), (26, 27)
-#  ]  
+
 CocoPairsNetwork = [
     (0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (10, 11), (12, 13), (14, 15), (16, 17), (18, 19), (20, 21), (22, 23), (24, 25), (26, 27), (28, 29), (30, 31), (32, 33), (34, 35), (36, 37)
  ]  
@@ -72,11 +46,11 @@ CocoColors = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255
               [170, 0, 255], [255, 0, 255], [255, 0, 170], [255, 0, 85]]
 
 
-NMS_Threshold = 0.8 #0.8
+NMS_Threshold = 0.8 
 InterMinAbove_Threshold = 6
 Inter_Threashold = 0.1
-Min_Subset_Cnt = 4 #4
-Min_Subset_Score = 0.8 #0.8
+Min_Subset_Cnt = 4 
+Min_Subset_Score = 0.8 
 Max_Human = 96
 
 
@@ -97,18 +71,15 @@ def human_conns_to_human_parts(human_conns, heatMat):
 
 
 def non_max_suppression(heatmap, window_size=3, threshold=NMS_Threshold):
-    heatmap[heatmap < threshold] = 0 # set low values to 0
+    heatmap[heatmap < threshold] = 0 
     part_candidates = heatmap*(heatmap == maximum_filter(heatmap, footprint=np.ones((window_size, window_size))))
-    # print(np.where(part_candidates >= threshold))
     return part_candidates
 
 
 def estimate_pose(heatMat, pafMat):
     if heatMat.shape[2] == 17:
-        # transform from [height, width, n_parts] to [n_parts, height, width]
         heatMat = np.rollaxis(heatMat, 2, 0)
     if pafMat.shape[2] == 36:
-        # transform from [height, width, 2*n_pairs] to [2*n_pairs, height, width]
         pafMat = np.rollaxis(pafMat, 2, 0)
 
     # reliability issue.
@@ -118,74 +89,56 @@ def estimate_pose(heatMat, pafMat):
     _NMS_Threshold = max(np.average(heatMat) * 4.0, NMS_Threshold)
     _NMS_Threshold = min(_NMS_Threshold, 0.3)
 
-    #挑出hm中可能是kps的點 [17, (y, x)] <-可以多個
     k=0
-    coords = [] # for each part index, it stores coordinates of candidates
-    for heatmap in heatMat[:]: # heatMat = (17, 46, 54) # find the max. location by NMS
+    coords = [] 
+    for heatmap in heatMat[:]: 
         part_candidates = non_max_suppression(heatmap, 5, _NMS_Threshold)
         coords.append(np.where(part_candidates >= _NMS_Threshold))
         k+=1
 
-    #計算linear intergral, assignment
-    connection_all = [] # all connections detected. no information about what humans they belong to
+    connection_all = []
     for (idx1, idx2), (paf_x_idx, paf_y_idx) in zip(CocoPairs, CocoPairsNetwork):
         connection = estimate_pose_pair(coords, idx1, idx2, pafMat[paf_x_idx], pafMat[paf_y_idx])
         connection_all.extend(connection)
-    # example: connection_all = [{'score': 9.898817479610443, 'coord_p1': (22, 20), 'coord_p2': (23, 24), 'idx': (2, 2), 'partIdx': (5, 7), 'uPartIdx': ('22-20-5', '23-24-7')}, {.}, {.}...]
-
-    #給idx
+    
     conns_by_human = dict()
     for idx, c in enumerate(connection_all):
-        conns_by_human['human_%d' % idx] = [c] # at first, all connections belong to different humans
-    # example: conns_by_human = {'human_0': [{'score': 9.898817479610443, 'coord_p1': (22, 20), 'coord_p2': (23, 24), 
-    #                                           'idx': (2, 2), 'partIdx': (5, 7), 'uPartIdx': ('22-20-5', '23-24-7')}], 
-    #                            'human_1'[{...}], ...} #gives idx human%d
+        conns_by_human['human_%d' % idx] = [c]
 
     # Merging
     no_merge_cache = defaultdict(list)
     empty_set = set()
     while True:
         is_merged = False
-        for h1, h2 in itertools.combinations(conns_by_human.keys(), 2): #所有可能的連線 h1->所有h2, h2->所有h1  #itertools.combinations(range(3), 2) 求列表或生成器中指定數目的元素不重複的所有組合
-            # conns_by_human.keys() = ['human1', 'human2', ...]
+        for h1, h2 in itertools.combinations(conns_by_human.keys(), 2):
             if h1 == h2: 
                 continue
-            # print('no_merge_cache[h1]:  ', no_merge_cache[h1])
             if h2 in no_merge_cache[h1]:
                 continue
-            for c1, c2 in itertools.product(conns_by_human[h1], conns_by_human[h2]): #產生多個列表和迭代器的(積)
-                # print('conns_by_human[h1]:  ', conns_by_human[h1])
-                # print('conns_by_human[h2]:  ', conns_by_human[h2])
-                # if two humans share a part (same part idx and coordinates), merge those humans
+            for c1, c2 in itertools.product(conns_by_human[h1], conns_by_human[h2]): 
                 if set(c1['uPartIdx']) & set(c2['uPartIdx']) != empty_set:
-                    # print(c1['uPartIdx'])
                     # if abs(int(c1['uPartIdx'][2:])-int(c2['uPartIdx'][2:])) > 10:
                     #     break
                     # else:
                     is_merged = True
-                    # extend human1 connectios with human2 connections
                     conns_by_human[h1].extend(conns_by_human[h2])
-                    conns_by_human.pop(h2) # delete human2
+                    conns_by_human.pop(h2) 
                     break
-                # print('conns_by_human:  ', conns_by_human)
             if is_merged:
                 no_merge_cache.pop(h1, None)
                 break
             else:
                 no_merge_cache[h1].append(h2)
 
-        if not is_merged: # if no more mergings are possible, then break
+        if not is_merged: 
             break
-    # print('conns_by_human.items():  ', conns_by_human.items())
     # reject by subset count
     conns_by_human = {h: conns for (h, conns) in conns_by_human.items() if len(conns) >= Min_Subset_Cnt}
     # reject by subset max score
     conns_by_human = {h: conns for (h, conns) in conns_by_human.items() if max([conn['score'] for conn in conns]) >= Min_Subset_Score}
-
-    # print('conns_by_human:  ', conns_by_human)
     # list of humans
     humans = [human_conns_to_human_parts(human_conns, heatMat) for human_conns in conns_by_human.values()]
-    # print(humans)
+    
     return humans
 
 
@@ -203,21 +156,15 @@ def estimate_pose_pair(coords, partIdx1, partIdx2, pafMatX, pafMatY):
                 continue
             elif abs(x1-x2)>=17:
                 continue
-            # print((x1, y1), (x2, y2), (partIdx1, partIdx2))
-            # print('score:   ', score)
-            # print('coord_p1:    ', (x1, y1))
-            # print('coord_p2:    ', (x2, y2))
-            # print('idx: ', (idx1, idx2))
-            # print('partIdx: ', (partIdx1, partIdx2))
             connection_temp.append({
                 'score': score,
                 'coord_p1': (x1, y1),
                 'coord_p2': (x2, y2),
-                'idx': (idx1, idx2), # connection candidate identifier, NMS找出的許多點 哪個（idx）做連結
+                'idx': (idx1, idx2), 
                 'partIdx': (partIdx1, partIdx2), 
                 'uPartIdx': ('{}-{}-{}'.format(x1, y1, partIdx1), '{}-{}-{}'.format(x2, y2, partIdx2))
             })
-    # linear intergral -> 'Assignment' 把score由大排到小 選出最大score的連結 可以塞掉一些連結的candidate 
+    # linear intergral -> 'Assignment' 
     connection = []
     used_idx1, used_idx2 = [], []
     # sort possible connections by score, from maximum to minimum
@@ -289,7 +236,6 @@ def draw_humans(img, human_list):
     centers = {}
     for human in human_list:
         part_idxs = human.keys()
-
         # draw point
         for i in range(17):
             if i not in part_idxs:
@@ -307,3 +253,127 @@ def draw_humans(img, human_list):
             img_copied = cv2.line(img_copied, centers[pair[0]], centers[pair[1]], CocoColors[pair_order], 3)
 
     return img_copied
+
+def find_keypoints(human_list, w, h):
+    centers = {}
+    mul_centers = {}
+    j=0
+    for human in human_list:
+        part_idxs = human.keys()
+        for i in range(17):
+            if j == 0:
+                if i not in part_idxs:
+                    mul_centers[i] = (int(0),int(0))
+                    continue
+                part_coord = human[i][1]
+                center = (int(part_coord[0] * w + 0.5), int(part_coord[1] * h + 0.5)) #108, 92
+                centers[i] = center
+                mul_centers[i]=center
+            
+            else:
+                if i not in part_idxs:
+                    mul_centers[j*17+i] = (int(0),int(0))
+                    continue
+                part_coord = human[i][1]
+                center = (int(part_coord[0] * w + 0.5), int(part_coord[1] * h + 0.5))
+                centers[i] = center
+                mul_centers[j*17+i]=center
+        j+=1
+    
+    list_points=[]
+    visual_point = []
+    for c in range(len(mul_centers)):
+        list_points.append(mul_centers[c][0])
+        list_points.append(mul_centers[c][1])
+        visual_point.append((mul_centers[c][1], mul_centers[c][0]))
+
+    return list_points
+    # return visual_point
+    # return visual_point, list_points
+
+
+def compute_iou2oks(dts, gts, gt):
+    oks = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+    sigmas = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
+    variances = (sigmas * 2)**2
+    
+    if len(dts) * len(gts) == 0:
+        return np.array(0), np.array(0)
+
+    oks_mat = np.zeros((len(dts), len(gts)))
+    
+    #gt
+    if(gt==0):
+        xg = gts[0::2]; yg = gts[1::2]; vg = []
+        for i in range(len(xg)):
+            if(xg[i] == 0 and yg[i] ==0):
+                vg.append(0)
+            else:
+                vg.append(1)
+    else:
+        xg = gts[0::3]; yg = gts[1::3]; vg = gts[2::3]
+    xg, yg, vg = np.array(xg), np.array(yg), np.array(vg)
+
+    n_ppl = len(xg)//17
+    gt_bboxs = []
+    for j in range(n_ppl):
+        gt_bboxs.append((xg[j*17:j*17+17].min(),  
+                         yg[j*17:j*17+17].min(), 
+                         xg[j*17:j*17+17].max(),
+                         yg[j*17:j*17+17].max()))
+    
+    #pred
+    xd = dts[0::2]; yd = dts[1::2]
+    xd, yd = np.array(xd), np.array(yd)
+    pred_n_ppl = len(xd)//17
+    dt_bboxs = []
+    for j in range(pred_n_ppl):
+        dt_bboxs.append((xd[j*17:j*17+17].min(),  
+                         yd[j*17:j*17+17].min(), 
+                         xd[j*17:j*17+17].max(),
+                         yd[j*17:j*17+17].max()))
+    
+    iou_mat = np.zeros(n_ppl)
+    oks_mat = np.zeros(n_ppl)
+    for j in range(n_ppl):
+        ious = np.zeros(pred_n_ppl)
+        for i in range(pred_n_ppl):
+            # determine the (x, y)-coordinates of the intersection rectangle
+            boxA = gt_bboxs[j]
+            boxB = dt_bboxs[i]
+            xA = max(boxA[0], boxB[0])
+            yA = max(boxA[1], boxB[1])
+            xB = min(boxA[2], boxB[2])
+            yB = min(boxA[3], boxB[3])
+            # compute the area of intersection rectangle
+            interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+            # compute the area of both the prediction and ground-truth
+            # rectangles
+            boxAArea = (boxA[2] - boxA[0] + 1) * (boxA[3] - boxA[1] + 1)
+            boxBArea = (boxB[2] - boxB[0] + 1) * (boxB[3] - boxB[1] + 1)
+
+            # compute the intersection over union by taking the intersection
+            # area and dividing it by the sum of prediction + ground-truth
+            # areas - the interesection area
+            ious[i] = interArea / float(boxAArea + boxBArea - interArea)
+        iou_mat[j] = ious.max()
+        idx = np.argmax(ious) #dt index -> gt
+        #gt
+        gt_x = xg[j*17:j*17+17]; gt_y = yg[j*17:j*17+17]; gt_v = vg[j*17:j*17+17]
+        k1 = np.count_nonzero(gt_v > 0)
+        x0 = gt_bboxs[j][0]; x1 = gt_bboxs[j][2]
+        y0 = gt_bboxs[j][1]; y1 = gt_bboxs[j][3]
+        area = (x1 - x0 + 1) * (y1 - y0 + 1)
+        #dt
+        dt_x = xd[idx*17:idx*17+17]; dt_y = yd[idx*17:idx*17+17]
+        
+        oksup = np.zeros(17)
+        dx = abs(dt_x - gt_x)
+        dy = abs(dt_y - gt_y)
+        e = (dx**2 + dy**2) / variances / (area + np.spacing(1)) / 2
+        if (np.sum(np.exp(-e)) / k1) <= 0.3:
+            oks_mat[j] = 0.0    
+        else:
+            oks_mat[j] = np.sum(np.exp(-e)) / k1 
+        
+    return oks_mat, iou_mat
